@@ -31,7 +31,7 @@ const STR = {
   chooseRole: ['View the demo as', '以哪种身份浏览演示'],
   r_member: ['Member', '会员'], r_memberSub: ['Find salons, book, wallet', '找沙龙、预约、钱包'],
   r_admin: ['Owner / admin', '老板 / 管理员'], r_adminSub: ['Today, diary, counter, reports', '今日、日程、柜台、报表'],
-  r_therapist: ['Therapist (locum)', '美容师（自由职业）'], r_therapistSub: ['Schedule and earnings', '日程与收入'],
+  r_therapist: ['Staff / freelancer', '员工 / 自由职业'], r_therapistSub: ['Schedule, treatment times, sales and earnings', '日程、护理计时、销售与收入'],
   r_agent: ['Agent / introducer', '代理 / 介绍人'], r_agentSub: ['Referrals and commission', '推荐与佣金'],
   tabHome: ['Home', '首页'], tabBookings: ['Bookings', '预约'], tabWallet: ['Wallet', '钱包'], tabProfile: ['Profile', '我的'],
   loc: ['Location', '位置'], locVal: ['Kuala Lumpur, Malaysia', '马来西亚 吉隆坡'], searchPh: ['Search salon, studio or treatment', '搜索沙龙、工作室或护理项目'],
@@ -181,6 +181,50 @@ const STR = {
   weekAdded: ['{n} appointments sent to your calendar', '已将 {n} 个预约发送至日历'],
   calWhyT: ['You get a reminder 30 minutes before, with the client’s first name and room.', '提前 30 分钟提醒，并显示顾客名字与房间。'],
   firmPressure: ['Prefers firm pressure', '喜欢较重的力度'], pregnantNote: ['Pregnant — avoid certain essential oils', '孕期——避免部分精油'],
+  walletAll: ['All stores', '全部商家'], walletsN: ['Your balances at {n} stores', '你在 {n} 家商家的余额'],
+  storeRule: ['Each store’s packages and stored value can only be used at that store.', '每家商家的疗程与储值只能在该商家使用。'],
+  sessionsL: ['Sessions left', '剩余次数'], expInDays: ['Expires in {n} days', '{n} 天后到期'], leftN: ['{n} left', '剩 {n} 次'],
+  expiringN: ['{n} expiring soon', '{n} 项即将到期'], switchStore: ['Switch store', '切换商家'], branchesN: ['{n} branches', '{n} 家分店'],
+  brAllMember: ['Use at both branches: {l}', '两家分店通用：{l}'], brOriginMember: ['Use only at {l}, where you bought it', '仅限在购买分店 {l} 使用'],
+  storeOnly: ['Only {b} can see these balances.', '只有 {b} 能看到这些余额。'],
+  noPkgStore: ['No packages at this store', '在这家商家没有疗程'], noStoredStore: ['No stored value here. You can top up at the counter.', '这里没有储值，可到柜台充值。'],
+  noOffers: ['No offers from this store right now', '这家商家暂时没有优惠'],
+  qrAll: ['One QR for every store. Each store sees only its own balance with you.', '一个 QR 码通用所有商家，每家只能看到你在该店的余额。'],
+  n_exp: ['Package expiry reminders', '疗程到期提醒'],
+  ownOnly: ['Only {b} balances are shown. What this member holds at other businesses stays private.', '只显示在 {b} 的余额，顾客在其他商家的余额不会显示。'],
+  boughtAt: ['Bought at {b}', '{b} 购买'], branches: ['Branches', '分店'], mainTag: ['main', '总店'],
+  br_rule: ['Packages and stored value can be used at', '疗程与储值可使用于'], br_all: ['All branches', '所有分店'], br_origin: ['Only the branch where bought', '仅限购买分店'],
+  br_allNote: ['Cash stays with the branch that sold the package. Revenue goes to the branch that did the treatment, and branches settle the difference each month.', '收款归售出疗程的分店；营收归提供护理的分店，分店之间每月结算差额。'],
+  r_branch: ['By branch', '按分店'], th_cash: ['Cash', '收款'], th_earned: ['Earned', '营收'], th_unused: ['Unused', '未用'],
+  r_cross: ['Used at another branch', '跨分店使用'], crossLine: ['Bought at {a}, used at {b}', '{a} 购买，{b} 使用'],
+  settle: ['{a} pays {b} {v} for this period', '本期 {a} 需付 {b} {v}'],
+  crossOff: ['Packages can only be used at the branch where they were bought, so there is nothing to settle.', '疗程只限购买分店使用，无需跨店结算。'],
+  arrivedBtn: ['Client arrived', '顾客到店'], startBtn: ['Start', '开始'], endBtn: ['End', '结束'],
+  lg_arr: ['Arrived {t}', '{t} 到店'], lg_start: ['Started {t}', '{t} 开始'], lg_end: ['Ended {t} · {m} min (planned {p})', '{t} 结束 · {m} 分钟（预计 {p}）'],
+  lateBy: ['{n} min late', '迟到 {n} 分钟'], onTime: ['on time', '准时'], startLate: ['{n} min late start', '延迟 {n} 分钟开始'],
+  editTimes: ['Edit times', '修改时间'], recordTimes: ['Record times', '补记时间'], f_start: ['Treatment started', '开始护理'], f_end: ['Treatment ended', '结束护理'],
+  endBeforeStart: ['End time must be after the start', '结束时间必须晚于开始时间'], notRecorded: ['Times not recorded', '未记录时间'],
+  cxTitle: ['Who is cancelling?', '谁要取消？'], cx_client: ['Customer cancelled', '顾客取消'], cx_noshow: ['Customer didn’t show up', '顾客没有到店'],
+  cx_staff: ['I can’t make it', '我无法服务'], cx_staffA: ['Therapist can’t make it', '美容师无法服务'], cx_owner: ['Owner / admin cancelled', '老板 / 管理员取消'],
+  cxLast: ['Less than 12 hours before the start: this counts as a last-minute cancellation.', '距离开始不足 12 小时，算作临时取消。'],
+  cxLastShort: ['last minute', '临时取消'], cxBy: ['Cancelled by', '取消方：'], noShowL: ['no-show', '未到店'],
+  W_client: ['Customer', '顾客'], W_staff: ['Staff', '员工'], W_owner: ['Owner / admin', '老板 / 管理员'],
+  cxToast: ['Appointment cancelled and logged', '预约已取消并记录'], cxBySalon: ['Cancelled by {b}. No session was used.', '{b} 已取消，未扣除次数。'],
+  tmTitle: ['Time & cancellations', '时间与取消'], tmSub: ['From the start, end and cancel taps your staff record', '来自员工记录的开始、结束与取消'],
+  tmLost: ['Late starts cost {h} hours in the last 90 days, about {n} more treatments.', '最近 90 天因延迟开始损失 {h} 小时，约等于 {n} 次护理。'],
+  tmTreat: ['Treatment time: planned vs actual', '护理时间：预计与实际'], th_plan: ['Planned', '预计'], th_actual: ['Actual', '实际'], th_diff: ['Diff', '差'],
+  tmInsight: ['{s} runs {n} min over on average. Book it as {m} min so the next client isn’t kept waiting.', '{s} 平均超时 {n} 分钟，建议改为 {m} 分钟，避免下一位顾客等待。'],
+  tmLateCust: ['Customers often late', '经常迟到的顾客'], th_lateVisits: ['Late / visits', '迟到 / 到访'], th_avgLate: ['Avg late', '平均迟到'],
+  tmLateTip: ['Send their reminder an hour earlier, or book them just before a gap.', '提前 1 小时提醒他们，或安排在空档之前。'],
+  tmCancel: ['Cancellations by who', '取消来源'], th_total: ['Total', '总数'], th_lastMin: ['Last minute', '临时'],
+  tmCxCust: ['Customers who cancel last minute', '经常临时取消的顾客'], th_noShow: ['No-show', '未到'],
+  tmStaff: ['Staff & freelancers', '员工与自由职业者'], th_lateStart: ['Late starts', '迟开始'], th_overrun: ['Avg over', '平均超时'], th_cx: ['Cancels', '取消'],
+  tmToday: ['Recorded today', '今日记录'], ev_arr: ['arrived', '到店'], ev_start: ['started by {s}', '{s} 开始'], ev_end: ['finished in {m} min (planned {p})', '{m} 分钟完成（预计 {p}）'],
+  tm90: ['Last 90 days', '最近 90 天'],
+  staffId: ['ID {id}', '编号 {id}'], kind_free: ['Freelancer', '自由职业'], kind_staff: ['Staff', '员工'], kind_consult: ['Beauty consultant', '美容顾问'],
+  staffAccess: ['Staff, freelancers and beauty consultants each sign in with their own ID and see their own schedule, sales and commission.', '员工、自由职业者与美容顾问各自用自己的编号登录，查看自己的日程、销售与佣金。'],
+  mySales: ['My sales', '我的销售'], earnSplit: ['Treatments {a} · Sales commission {b}', '护理 {a} · 销售佣金 {b}'],
+  att5: ['{n} ({t}) is usually {m} min late', '{n}（{t}）通常迟到 {m} 分钟'],
   notFound: ['Page not found', '找不到页面'], goHome: ['Go home', '返回首页'], demoOnly: ['Available in the full version', '完整版提供此功能'],
 };
 /* Bahasa Melayu. Any key missing here falls back to English. */
@@ -199,7 +243,7 @@ const STR_MS = {
   chooseRole: 'Lihat demo sebagai',
   r_member: 'Ahli', r_memberSub: 'Cari salun, tempah, dompet',
   r_admin: 'Pemilik / admin', r_adminSub: 'Hari ini, diari, kaunter, laporan',
-  r_therapist: 'Terapis (lokum)', r_therapistSub: 'Jadual dan pendapatan',
+  r_therapist: 'Staf / pekerja bebas', r_therapistSub: 'Jadual, masa rawatan, jualan dan pendapatan',
   r_agent: 'Ejen / perujuk', r_agentSub: 'Rujukan dan komisen',
   tabHome: 'Utama', tabBookings: 'Tempahan', tabWallet: 'Dompet', tabProfile: 'Profil',
   loc: 'Lokasi', locVal: 'Kuala Lumpur, Malaysia', searchPh: 'Cari salun, studio atau rawatan',
@@ -349,6 +393,50 @@ const STR_MS = {
   weekAdded: '{n} temu janji dihantar ke kalendar anda',
   calWhyT: 'Anda menerima peringatan 30 minit sebelum, dengan nama pertama pelanggan dan bilik.',
   firmPressure: 'Suka tekanan kuat', pregnantNote: 'Hamil — elakkan minyak pati tertentu',
+  walletAll: 'Semua kedai', walletsN: 'Baki anda di {n} kedai',
+  storeRule: 'Pakej dan nilai tersimpan setiap kedai hanya boleh digunakan di kedai itu.',
+  sessionsL: 'Baki sesi', expInDays: 'Tamat dalam {n} hari', leftN: 'baki {n}',
+  expiringN: '{n} hampir tamat', switchStore: 'Tukar kedai', branchesN: '{n} cawangan',
+  brAllMember: 'Boleh guna di kedua-dua cawangan: {l}', brOriginMember: 'Hanya boleh guna di {l}, tempat anda membelinya',
+  storeOnly: 'Hanya {b} boleh melihat baki ini.',
+  noPkgStore: 'Tiada pakej di kedai ini', noStoredStore: 'Tiada nilai tersimpan di sini. Anda boleh tambah nilai di kaunter.',
+  noOffers: 'Tiada tawaran daripada kedai ini buat masa ini',
+  qrAll: 'Satu QR untuk semua kedai. Setiap kedai hanya melihat baki anda di kedai itu.',
+  n_exp: 'Peringatan pakej hampir tamat',
+  ownOnly: 'Hanya baki di {b} dipaparkan. Baki ahli ini di perniagaan lain kekal peribadi.',
+  boughtAt: 'Dibeli di {b}', branches: 'Cawangan', mainTag: 'utama',
+  br_rule: 'Pakej dan nilai tersimpan boleh digunakan di', br_all: 'Semua cawangan', br_origin: 'Cawangan pembelian sahaja',
+  br_allNote: 'Tunai kekal di cawangan yang menjual pakej. Hasil diberikan kepada cawangan yang menjalankan rawatan, dan cawangan menyelesaikan bezanya setiap bulan.',
+  r_branch: 'Mengikut cawangan', th_cash: 'Tunai', th_earned: 'Hasil', th_unused: 'Belum guna',
+  r_cross: 'Digunakan di cawangan lain', crossLine: 'Dibeli di {a}, diguna di {b}',
+  settle: '{a} bayar {b} {v} bagi tempoh ini',
+  crossOff: 'Pakej hanya boleh digunakan di cawangan pembelian, jadi tiada apa untuk diselesaikan.',
+  arrivedBtn: 'Pelanggan tiba', startBtn: 'Mula', endBtn: 'Tamat',
+  lg_arr: 'Tiba {t}', lg_start: 'Mula {t}', lg_end: 'Tamat {t} · {m} min (rancangan {p})',
+  lateBy: 'lewat {n} min', onTime: 'tepat masa', startLate: 'mula lewat {n} min',
+  editTimes: 'Ubah masa', recordTimes: 'Rekod masa', f_start: 'Rawatan bermula', f_end: 'Rawatan tamat',
+  endBeforeStart: 'Masa tamat mesti selepas masa mula', notRecorded: 'Masa belum direkod',
+  cxTitle: 'Siapa yang membatalkan?', cx_client: 'Pelanggan membatalkan', cx_noshow: 'Pelanggan tidak datang',
+  cx_staff: 'Saya tidak dapat hadir', cx_staffA: 'Terapis tidak dapat hadir', cx_owner: 'Pemilik / admin membatalkan',
+  cxLast: 'Kurang 12 jam sebelum bermula: ini dikira pembatalan saat akhir.',
+  cxLastShort: 'saat akhir', cxBy: 'Dibatalkan oleh', noShowL: 'tidak hadir',
+  W_client: 'Pelanggan', W_staff: 'Staf', W_owner: 'Pemilik / admin',
+  cxToast: 'Temu janji dibatalkan dan direkodkan', cxBySalon: 'Dibatalkan oleh {b}. Tiada sesi digunakan.',
+  tmTitle: 'Masa & pembatalan', tmSub: 'Daripada masa mula, tamat dan pembatalan yang direkod oleh staf',
+  tmLost: 'Mula lewat menelan {h} jam dalam 90 hari lepas, kira-kira {n} rawatan lagi.',
+  tmTreat: 'Masa rawatan: rancangan vs sebenar', th_plan: 'Rancangan', th_actual: 'Sebenar', th_diff: 'Beza',
+  tmInsight: '{s} purata lebih {n} min. Tempah sebagai {m} min supaya pelanggan seterusnya tidak menunggu.',
+  tmLateCust: 'Pelanggan yang kerap lewat', th_lateVisits: 'Lewat / lawatan', th_avgLate: 'Purata lewat',
+  tmLateTip: 'Hantar peringatan mereka sejam lebih awal, atau tempah sebelum slot kosong.',
+  tmCancel: 'Pembatalan mengikut pihak', th_total: 'Jumlah', th_lastMin: 'Saat akhir',
+  tmCxCust: 'Pelanggan yang batal saat akhir', th_noShow: 'Tidak hadir',
+  tmStaff: 'Staf & pekerja bebas', th_lateStart: 'Mula lewat', th_overrun: 'Purata lebih', th_cx: 'Batal',
+  tmToday: 'Direkod hari ini', ev_arr: 'tiba', ev_start: 'dimulakan oleh {s}', ev_end: 'selesai dalam {m} min (rancangan {p})',
+  tm90: '90 hari lepas',
+  staffId: 'ID {id}', kind_free: 'Pekerja bebas', kind_staff: 'Staf', kind_consult: 'Perunding kecantikan',
+  staffAccess: 'Staf, pekerja bebas dan perunding kecantikan log masuk dengan ID sendiri dan melihat jadual, jualan dan komisen masing-masing.',
+  mySales: 'Jualan saya', earnSplit: 'Rawatan {a} · Komisen jualan {b}',
+  att5: '{n} ({t}) biasanya lewat {m} min',
   notFound: 'Halaman tidak ditemui', goHome: 'Ke halaman utama', demoOnly: 'Tersedia dalam versi penuh',
 };
 function t(k, v) {
@@ -457,7 +545,7 @@ const THER = {
 const HOME_CATS = [['all', 'apps'], ['facial', 'face'], ['hair', 'scissors'], ['nails', 'polish'], ['body', 'leaf'], ['pilates', 'activity']];
 const BIZS = [
   { id: 'lumiere', cats: ['facial', 'nails', 'body'], name: { en: 'Lumière Skin Studio', zh: 'Lumière 护肤工作室' }, area: { en: 'Bangsar, Kuala Lumpur', zh: '吉隆坡 Bangsar' }, dist: 1.2, rating: 4.8, reviews: 412,
-    hours: { en: '10AM–8PM, daily', zh: '每天 10:00–20:00' }, img: IMG.facial, thumb: IMG.spa, staff: ['joanne', 'weiling', 'aida'],
+    hours: { en: '10AM–8PM, daily', zh: '每天 10:00–20:00' }, branches: ['Bangsar', 'Subang Jaya'], img: IMG.facial, thumb: IMG.spa, staff: ['joanne', 'weiling', 'aida'],
     desc: { en: 'Skin-first facials, lash and nail care, and calming body treatments. Members use packages and stored value right in the app.', zh: '以肌肤为本的面部护理、美睫美甲与舒缓身体护理。会员可直接在 App 内使用疗程与储值。' },
     tabs: [['facial', 'Facial', '面部护理'], ['lash', 'Lash & nails', '美睫美甲'], ['body', 'Body & scalp', '身体与头皮']] },
   { id: 'glow', cats: ['hair'], name: { en: 'Studio Glow Hair Lounge', zh: 'Studio Glow 美发沙龙' }, area: { en: 'Mont Kiara, Kuala Lumpur', zh: '吉隆坡 Mont Kiara' }, dist: 2.4, rating: 4.7, reviews: 312,
@@ -506,6 +594,8 @@ const PRODUCTS = [
   { id: 'p-lash4', type: 'package', serviceId: 'lash', sessions: 4, price: 600, months: 4, name: { en: 'Lash Extension · 4 sessions', zh: '睫毛嫁接 · 4 次疗程' } },
   { id: 'topup1000', type: 'topup', price: 1000, bonus: 150, name: { en: 'Stored value RM1,000 (+RM150)', zh: '储值 RM1,000（送 RM150）' } },
   { id: 'serum', type: 'product', price: 168, name: { en: 'Repair Serum 30ml', zh: '修护精华 30ml' } },
+  { id: 'p-wash10', biz: 'glow', type: 'package', serviceId: 'wash', sessions: 10, price: 200, months: 6, name: { en: 'Wash & blow-dry · 10 sessions', zh: '洗发吹干 · 10 次' } },
+  { id: 'p-ref10', biz: 'coreflow', type: 'package', serviceId: 'reformer', sessions: 10, price: 550, months: 6, name: { en: 'Reformer Flow · 10 classes', zh: '核心床团体课 · 10 堂' } },
 ];
 const product = id => PRODUCTS.find(p => p.id === id);
 const MS_DATA = {
@@ -527,7 +617,7 @@ const MS_DATA = {
     kera: ['Rawatan keratin'], spa: ['Spa kulit kepala'], reformer: ['Reformer Flow (berkumpulan)'], mat: ['Pilates Mat (berkumpulan)'],
     priv: ['Reformer persendirian 1:1'], duet: ['Sesi berdua (2 orang)'], gelm: ['Manikur gel'], gelp: ['Pedikur gel'], lset: ['Set bulu mata klasik'], llift: ['Lash lift & warna'],
   },
-  prod: { 'p-hydra6': 'Hydrating Glow · 6 sesi', 'p-deep5': 'Pembersihan Mendalam · 5 sesi', 'p-lash4': 'Sambungan Bulu Mata · 4 sesi', topup1000: 'Nilai tersimpan RM1,000 (+RM150)', serum: 'Serum Pemulih 30ml' },
+  prod: { 'p-hydra6': 'Hydrating Glow · 6 sesi', 'p-deep5': 'Pembersihan Mendalam · 5 sesi', 'p-lash4': 'Sambungan Bulu Mata · 4 sesi', topup1000: 'Nilai tersimpan RM1,000 (+RM150)', serum: 'Serum Pemulih 30ml', 'p-wash10': 'Cuci & blow-dry · 10 sesi', 'p-ref10': 'Reformer Flow · 10 kelas' },
 };
 Object.keys(THER).forEach(k => { THER[k].title.ms = MS_DATA.ther[k] || THER[k].title.en; });
 BIZS.forEach(b => {
@@ -536,7 +626,7 @@ BIZS.forEach(b => {
   b.tabs.forEach((tb, i) => { tb[3] = (m.tabs && m.tabs[i]) || tb[1]; });
 });
 SERVICES.forEach(s => { const m = MS_DATA.svc[s.id] || []; s.name.ms = m[0] || s.name.en; if (s.short) s.short.ms = m[1] || s.short.en; });
-PRODUCTS.forEach(p => { p.name.ms = MS_DATA.prod[p.id] || p.name.en; });
+PRODUCTS.forEach(p => { p.name.ms = MS_DATA.prod[p.id] || p.name.en; p.biz = p.biz || 'lumiere'; });
 const MEMBERS = [
   { id: 'meiling', name: 'Mei Ling Tan', tier: 'gold', seg: 'vip', last: 11, ltv: 6240, visits: 18, pk: 3, rebuy: 8, intro: 'Kelvin', consent: true },
   { id: 'grace', name: 'Grace Lim', tier: 'gold', seg: 'vip', last: 4, ltv: 5880, visits: 22, bal: 1200, pk: 4, rebuy: 7, consent: true },
@@ -566,8 +656,24 @@ const DAYPLAN = [
   { id: 'a7', t: '15:30', s: 'body', c: 'jessica', th: 'aida', room: 'r1' },
   { id: 'a8', t: '16:00', s: 'deep', c: 'farah', th: 'weiling', room: 'r2' },
   { id: 'a9', t: '17:30', s: 'gel', c: 'kavitha', th: 'aida' },
+  { id: 'a10', t: '17:30', s: 'deep', c: 'rachel', th: 'joanne', room: 'r2' },
 ];
 const BREAKS = [{ th: 'joanne', t: '12:45', m: 60 }, { th: 'weiling', t: '12:15', m: 60 }, { th: 'aida', t: '13:00', m: 60 }];
+/* everyone who works at Lumière signs in with their own ID: employees, freelancers and beauty consultants */
+const STAFF = { joanne: { id: 'LUM-F012', kind: 'free' }, weiling: { id: 'LUM-S004', kind: 'staff' }, aida: { id: 'LUM-F019', kind: 'free' }, sara: { name: 'Sara', id: 'LUM-C007', kind: 'consult' } };
+const staffName = k => (THER[k] || STAFF[k] || { name: k }).name;
+/* sample arrival / start offsets and treatment length (minutes) for today's appointments that are already over */
+const SAMPLE_T = { a1: [6, 9, 71], a2: [14, 15, 92], a3: [-3, 2, 68], a4: [0, 1, 58], a5: [-5, 0, 66], a6: [2, 4, 61], a7: [1, 12, 88], a8: [19, 20, 70], a9: [8, 10, 55] };
+const minsDiff = (a, b) => Math.round((new Date(a) - new Date(b)) / 60000);
+function logOf(id, start, mins) {
+  const L = S.tLog[id]; if (L) return L;
+  const s = SAMPLE_T[id]; if (!s || start.getTime() + mins * 60000 > Date.now()) return {};
+  const m = n => new Date(start.getTime() + n * 60000).toISOString();
+  return { arr: m(s[0]), start: m(s[1]), end: m(s[1] + s[2]), sample: true };
+}
+const stOf = L => L.cx ? 'cx' : L.end ? 'done' : L.start ? 'in' : L.arr ? 'arr' : 'todo';
+/* minutes the treatment started after the later of booked time and arrival */
+const startLateOf = (L, sched) => L.start ? Math.round((new Date(L.start) - Math.max(new Date(sched).getTime(), L.arr ? new Date(L.arr).getTime() : 0)) / 60000) : 0;
 
 /* ------------------------------------------------------------------ state */
 function seed() {
@@ -575,14 +681,25 @@ function seed() {
   const bought = addDays(t0, -39);
   const exp = new Date(bought); exp.setMonth(exp.getMonth() + 6);
   return {
-    v: 3, signedIn: false, role: null, phone: '12 345 6789', calAlways: null, favs: ['lumiere'],
-    notif: { rem: true, offers: true, after: true },
+    v: 4, signedIn: false, role: null, phone: '12 345 6789', calAlways: null, favs: ['lumiere'], branchRule: 'all',
+    notif: { rem: true, exp: true, offers: true, after: true },
     skin: { type: ['combo', 'sensitive'], concerns: ['dull', 'pores'], allergy: 'Salicylic acid', photo: 'archive', consent: addDays(t0, -39).toISOString() },
-    packages: [{ id: 'pk1', productId: 'p-hydra6', serviceId: 'hydra', total: 6, used: 2, price: 1800, purchased: bought.toISOString(), expires: exp.toISOString() }],
-    stored: 1150,
+    packages: [
+      { id: 'pk1', biz: 'lumiere', branch: 'Bangsar', productId: 'p-hydra6', serviceId: 'hydra', total: 6, used: 2, price: 1800, purchased: bought.toISOString(), expires: exp.toISOString() },
+      { id: 'pk2', biz: 'coreflow', productId: 'p-ref10', serviceId: 'reformer', total: 10, used: 7, price: 550, purchased: addDays(t0, -170).toISOString(), expires: addDays(t0, 12).toISOString() },
+      { id: 'pk3', biz: 'glow', productId: 'p-wash10', serviceId: 'wash', total: 10, used: 3, price: 200, purchased: addDays(t0, -50).toISOString(), expires: addDays(t0, 132).toISOString() },
+    ],
+    stored: { lumiere: 1150, glow: 245 },
     ledger: [
-      { id: 'l1', wallet: 'stored', date: addDays(t0, -60).toISOString(), kind: 'topup', amount: 1000, bal: 1000 },
-      { id: 'l2', wallet: 'stored', date: addDays(t0, -60).toISOString(), kind: 'bonus', amount: 150, bal: 1150 },
+      { id: 'l1', wallet: 'stored:lumiere', date: addDays(t0, -60).toISOString(), kind: 'topup', amount: 1000, bal: 1000 },
+      { id: 'l2', wallet: 'stored:lumiere', date: addDays(t0, -60).toISOString(), kind: 'bonus', amount: 150, bal: 1150 },
+      { id: 'g1', wallet: 'stored:glow', date: addDays(t0, -62).toISOString(), kind: 'topup', amount: 300, bal: 300 },
+      { id: 'g2', wallet: 'stored:glow', date: addDays(t0, -62).toISOString(), kind: 'bonus', amount: 30, bal: 330 },
+      { id: 'g3', wallet: 'stored:glow', date: addDays(t0, -18).toISOString(), kind: 'use', amount: -85, bal: 245, serviceId: 'cutw' },
+      { id: 'w0', wallet: 'pk3', date: addDays(t0, -50).toISOString(), kind: 'purchase', amount: 10, bal: 10 },
+      ...[-46, -32, -18].map((d, i) => ({ id: 'w' + (i + 1), wallet: 'pk3', date: addDays(t0, d).toISOString(), kind: 'use', amount: -1, bal: 9 - i, serviceId: 'wash' })),
+      { id: 'r0', wallet: 'pk2', date: addDays(t0, -170).toISOString(), kind: 'purchase', amount: 10, bal: 10 },
+      ...[-150, -128, -100, -71, -45, -20, -6].map((d, i) => ({ id: 'r' + (i + 1), wallet: 'pk2', date: addDays(t0, d).toISOString(), kind: 'use', amount: -1, bal: 9 - i, serviceId: 'reformer' })),
       { id: 'l3', wallet: 'pk1', date: bought.toISOString(), kind: 'purchase', amount: 6, bal: 6 },
       { id: 'l4', wallet: 'pk1', date: addDays(t0, -25).toISOString(), kind: 'use', amount: -1, bal: 5, serviceId: 'hydra' },
       { id: 'l5', wallet: 'pk1', date: addDays(t0, -11).toISOString(), kind: 'use', amount: -1, bal: 4, serviceId: 'hydra' },
@@ -593,11 +710,12 @@ function seed() {
       { id: 'b0', biz: 'lumiere', serviceId: 'hydra', extra: [], therapistId: 'joanne', room: 'r2', start: at(addDays(t0, -11), '14:30').toISOString(), status: 'completed', pay: 'package', pkg: 'pk1' },
       { id: 'bz', biz: 'lumiere', serviceId: 'hydra', extra: [], therapistId: 'joanne', room: 'r2', start: at(addDays(t0, -25), '15:00').toISOString(), status: 'completed', pay: 'package', pkg: 'pk1' },
     ],
-    vouchers: [], claimed: {}, sales: [], approvals: {}, arrived: {}, tSessions: {}, tExtra: 0, tCount: 0, installDismissed: false,
+    vouchers: [], claimed: {}, sales: [], approvals: {}, tLog: {}, tExtra: 0, tCount: 0, installDismissed: false,
   };
 }
 let S = LS.get(KEY, null);
-if (!S || S.v !== 3) S = seed();
+if (!S || S.v !== 4) S = seed();
+S.tLog = S.tLog || {};
 S.tNotif = S.tNotif || { rem: true, run: true, change: true };
 S.tAck = S.tAck || {}; S.tAdded = S.tAdded || {}; if (S.tCal === undefined) S.tCal = null;
 if (!S.mig4) { const b1 = S.bookings.find(b => b.id === 'b1'); if (b1) b1.staffNew = true; S.mig4 = true; }
@@ -611,14 +729,23 @@ const bPrice = b => bSvcs(b).reduce((a, s) => a + s.price, 0);
 const bBiz = b => biz(b.biz || svc(b.serviceId).biz);
 const heldFor = pk => S.bookings.filter(b => isBooked(b) && b.pay === 'package' && b.pkg === pk.id).length;
 const avail = pk => pk.total - pk.used - heldFor(pk);
-const heldRM = () => S.bookings.filter(b => isBooked(b) && b.pay === 'stored').reduce((a, b) => a + bPrice(b), 0);
-const storedAvail = () => S.stored - heldRM();
+const heldRM = id => S.bookings.filter(b => isBooked(b) && b.pay === 'stored' && bBiz(b).id === id).reduce((a, b) => a + bPrice(b), 0);
+const storedOf = id => (S.stored && S.stored[id]) || 0;
+const storedAvail = id => storedOf(id) - heldRM(id);
+const pkgLeft = pk => avail(pk) + heldFor(pk);
+const daysTo = d => Math.ceil((new Date(d) - today0()) / DAY);
+const activePk = id => S.packages.filter(p => p.biz === id && pkgLeft(p) > 0 && new Date(p.expires) > new Date());
+const expiring = pk => daysTo(pk.expires) <= 30;
+const hasExp = id => activePk(id).some(expiring) ? 1 : 0;
+/* stores where the member holds something; any store with a package about to expire comes first */
+const walletStores = () => BIZS.filter(b => activePk(b.id).length || storedOf(b.id) > 0 || S.vouchers.some(v => v.biz === b.id)).sort((a, b) => hasExp(b.id) - hasExp(a.id));
 const pkgFor = sid => S.packages.filter(p => p.serviceId === sid && avail(p) > 0 && new Date(p.expires) > new Date()).sort((a, b) => new Date(a.expires) - new Date(b.expires))[0];
 const pkgName = pk => { const p = product(pk.productId); return p ? p.name[lang] : ''; };
 const nextBooking = () => S.bookings.filter(b => isBooked(b) && new Date(b.start) > new Date()).sort((a, b) => new Date(a.start) - new Date(b.start))[0];
 const roomName = r => r ? t(r === 'r1' ? 'room1' : 'room2') : '';
 const calName = c => t(c === 'apple' ? 'appleCal' : c === 'google' ? 'googleCal' : 'otherCal');
-const meilingBalance = () => S.packages.reduce((a, p) => a + Math.max(0, avail(p) + heldFor(p)) * (p.price / p.total), 0) + S.stored;
+/* the admin demo is Lumière, so it only ever sees Mei Ling's Lumière balance */
+const meilingBalance = () => activePk('lumiere').reduce((a, p) => a + pkgLeft(p) * (p.price / p.total), 0) + storedOf('lumiere');
 const firstName = n => { const p = n.split(' '); return p.length > 2 ? p.slice(0, -1).join(' ') : p[0]; };
 
 function ledgerAdd(wallet, kind, amount, extra) {
@@ -712,9 +839,17 @@ function bizRows() {
     <span class="small muted row-start gap4">${icon('pin', 15)} ${b.area[lang]}</span>
     <span class="rating">${star()} <b>${b.rating}</b> <span class="muted">${t('reviews', { n: b.reviews })}</span></span></div></a>`).join('');
 }
+function walletStrip() {
+  const stores = walletStores(); if (!stores.length) return '';
+  if (stores.length === 1) {
+    const b = stores[0], s = activePk(b.id).reduce((a, p) => a + avail(p), 0);
+    return `<a class="card row" href="#/m/wallet/${b.id}"><span class="row-start">${pic(b.thumb, 120, 'biz-img sm')}<span><span class="small muted block">${t('yourWallet', { b: b.name[lang] })}</span><span class="strong">${t('walletLine', { s, v: rm(storedAvail(b.id)) })}</span></span></span>${icon('chevR', 18)}</a>`;
+  }
+  const all = stores.flatMap(b => activePk(b.id)), n = all.reduce((a, p) => a + pkgLeft(p), 0), exp = all.filter(expiring).length;
+  return `<a class="card row" href="#/m/wallet"><span class="row-start"><span class="thumbs">${stores.slice(0, 3).map(b => pic(b.thumb, 80, '')).join('')}</span><span><span class="small muted block">${t('walletsN', { n: stores.length })}</span><span class="strong block">${t('remaining', { n })}</span>${exp ? `<span class="small exp-txt">${t('expiringN', { n: exp })}</span>` : ''}</span></span>${icon('chevR', 18)}</a>`;
+}
 function vHome() {
   const nb = nextBooking();
-  const sessions = S.packages.reduce((a, p) => a + Math.max(0, avail(p)), 0);
   const body = `
   <div class="loc-row">
     <button class="loc" data-act="toast" data-msg="demoOnly"><span class="loc-l">${icon('pin', 15)} ${t('loc')}</span><span class="loc-v">${t('locVal')} ${icon('chevD', 16)}</span></button>
@@ -728,7 +863,7 @@ function vHome() {
   <div class="hscroll">${HOME_CATS.map(([c, ic]) => `<button class="chip ${hCat === c ? 'on' : ''}" data-act="hcat" data-c="${c}">${icon(ic, 17)} ${t('cat_' + c)}</button>`).join('')}</div>
   <div class="sec-head"><h2 class="sec-t">${t('nearby')}</h2><button class="link-btn" data-act="toast" data-msg="demoOnly">${icon('map', 16)} ${t('viewMap')}</button></div>
   <div class="stack" id="bizlist">${bizRows()}</div>
-  <a class="card row" href="#/m/wallet"><span class="row-start">${pic(BIZS[0].thumb, 120, 'biz-img sm')}<span><span class="small muted block">${t('yourWallet', { b: 'Lumière' })}</span><span class="strong">${t('walletLine', { s: sessions, v: rm(storedAvail()) })}</span></span></span>${icon('chevR', 18)}</a>
+  ${walletStrip()}
   <a class="card tint-sage row" href="#/m/aftercare"><span class="row-start">${icon('leaf')}<span class="strong">${t('aftercareCard')}</span></span>${icon('chevR', 18)}</a>`;
   return page({ tabs: 'm', active: '/m/home', body });
 }
@@ -772,7 +907,7 @@ function payOptions(ss, B, total) {
   const out = [];
   const pk = ss.length === 1 ? pkgFor(ss[0].id) : null;
   if (pk) out.push(['package', t('payPackage', { n: avail(pk) })]);
-  if (B.id === 'lumiere' && storedAvail() >= total) out.push(['stored', t('payStored', { b: rm(storedAvail()) })]);
+  if (storedAvail(B.id) > 0 && storedAvail(B.id) >= total) out.push(['stored', t('payStored', { b: rm(storedAvail(B.id)) })]);
   out.push(['store', t('payStore')]);
   return out;
 }
@@ -831,7 +966,7 @@ function bkCard(b, up) {
   const pill = { booked: 'gold', completed: 'sage', cancelled: 'grey', late: 'rose' }[b.status];
   return `<div class="card stack-sm"><div class="row-start" style="align-items:flex-start">${pic(B.thumb, 120, 'biz-img sm')}<div class="grow">
     <div class="row" style="align-items:flex-start"><span class="strong">${bName(b)}</span><span class="pill ${pill}">${t('st_' + b.status)}</span></div>
-    <span class="small muted block">${B.name[lang]}</span><span class="small muted">${fDay(d)} · ${hm(d)} · ${THER[b.therapistId].name}</span></div></div>
+    <span class="small muted block">${B.name[lang]}</span><span class="small muted">${fDay(d)} · ${hm(d)} · ${THER[b.therapistId].name}</span>${b.cancelBy && b.cancelBy !== 'client' ? `<span class="small block t-bad">${t('cxBySalon', { b: B.name[lang] })}</span>` : ''}</div></div>
   ${up ? `<div class="row-start gap8"><button class="btn btn-soft btn-sm" data-act="${S.calAlways ? 'calDo' : 'calSheet'}" data-ev="b:${b.id}" data-c="${S.calAlways || ''}">${icon('calendar', 16)} ${t('calendarSet')}</button><button class="btn btn-sm btn-outline" data-act="qr">${icon('qr', 16)} QR</button><button class="btn btn-sm btn-ghost" data-act="cancelBk" data-id="${b.id}">${t('cancel')}</button></div>` : ''}</div>`;
 }
 function vBookings(tab) {
@@ -859,30 +994,63 @@ function ledgerRows(wallet, unit) {
 function offerCard(id, title, sub, ic) {
   return `<div class="card tint-rose offer"><div class="row-start">${icon(ic)}<div><p class="offer-t">${title}</p><p class="small muted">${sub}</p></div></div>${S.claimed[id] ? `<span class="pill sage">${t('claimed')}</span>` : `<button class="btn btn-sm btn-primary" data-act="claim" data-id="${id}">${t('claim')}</button>`}</div>`;
 }
-function vWallet(tab) {
+function pkgCard(pk) {
+  const h = heldFor(pk), a = avail(pk), u = pk.used, dl = daysTo(pk.expires);
+  const dots = [...Array(pk.total)].map((_, i) => `<span class="dot ${i < u ? 'used' : i < u + h ? 'held' : ''}"></span>`).join('');
+  return `<div class="card gold stack-sm"><div class="row" style="align-items:flex-start"><p class="eyebrow">${pkgName(pk)}</p>${a + h > 0 && dl <= 30 ? `<span class="pill rose">${t('expInDays', { n: dl })}</span>` : ''}</div><h2 class="h-serif">${t('remaining', { n: a + h })}</h2><div class="dots" aria-hidden="true">${dots}</div><p class="small muted">${t('legend', { u, h, a })}<br>${t('validUntil', { d: fFull(pk.expires) })}</p></div>
+  <div class="row"><h2 class="h2">${t('statement')}</h2><button class="btn btn-sm btn-ghost" data-act="toast" data-msg="pdfToast">PDF</button></div>
+  <div class="card flat">${ledgerRows(pk.id, 'n')}</div>`;
+}
+function storeCard(b) {
+  const pks = activePk(b.id), sess = pks.reduce((a, p) => a + pkgLeft(p), 0), v = S.vouchers.filter(x => x.biz === b.id).length;
+  const warn = pks.filter(expiring).map(p => `<p class="note rose">${icon('clock', 16)}<span>${pkgName(p)} · ${t('leftN', { n: pkgLeft(p) })} · ${t('expInDays', { n: daysTo(p.expires) })}</span></p>`).join('');
+  return `<a class="card stack-sm" href="#/m/wallet/${b.id}"><div class="row"><span class="row-start">${pic(b.thumb, 120, 'biz-img sm')}<span><span class="strong block">${b.name[lang]}</span><span class="small muted">${b.area[lang]}${b.branches ? ' · ' + t('branchesN', { n: b.branches.length }) : ''}</span></span></span>${icon('chevR', 18)}</div>
+  <div class="store-stats"><span>${t('sessionsL')}<b>${sess}</b></span><span>${t('tabStored')}<b>${rm(storedAvail(b.id))}</b></span><span>${t('tabVouchers')}<b>${v}</b></span></div>${warn}</a>`;
+}
+function vWalletAll() {
+  const stores = walletStores();
+  const body = `<div class="stack-xs"><h1 class="h1">${t('walletTitle')}</h1><p class="muted">${t('walletsN', { n: stores.length })}</p></div>
+  <p class="note gold">${icon('wallet', 16)}<span>${t('storeRule')}</span></p>
+  ${stores.map(storeCard).join('')}`;
+  return page({ tabs: 'm', active: '/m/wallet', body });
+}
+function vWalletStore(id, tab) {
+  const B = biz(id); if (!B) return vNotFound();
   tab = ['pk', 'stored', 'vouchers'].includes(tab) ? tab : 'pk';
+  const base = '#/m/wallet/' + id, empty = k => `<div class="card center"><p class="muted">${t(k)}</p></div>`;
   let content = '';
   if (tab === 'pk') {
-    content = S.packages.map(pk => {
-      const h = heldFor(pk), a = avail(pk), u = pk.used;
-      const dots = [...Array(pk.total)].map((_, i) => `<span class="dot ${i < u ? 'used' : i < u + h ? 'held' : ''}"></span>`).join('');
-      return `<div class="card gold stack-sm"><p class="eyebrow">${pkgName(pk)}</p><h2 class="h-serif">${t('remaining', { n: a + h })}</h2><div class="dots" aria-hidden="true">${dots}</div><p class="small muted">${t('legend', { u, h, a })}<br>${t('validUntil', { d: fFull(pk.expires) })}</p></div>
-      <div class="row"><h2 class="h2">${t('statement')}</h2><button class="btn btn-sm btn-ghost" data-act="toast" data-msg="pdfToast">PDF</button></div>
-      <div class="card flat">${ledgerRows(pk.id, 'n')}</div>`;
-    }).join('');
+    const pks = S.packages.filter(p => p.biz === id).sort((a, b) => (pkgLeft(b) > 0) - (pkgLeft(a) > 0));
+    content = pks.length ? pks.map(pkgCard).join('') : empty('noPkgStore');
   } else if (tab === 'stored') {
-    const h = heldRM();
-    content = `<div class="card gold stack-sm"><p class="eyebrow">${t('available')}</p><h2 class="h-serif">${rm(storedAvail())}</h2>${h ? `<p class="small muted">${t('heldNote', { a: rm(h) })}</p>` : ''}</div>
+    const w = 'stored:' + id, h = heldRM(id);
+    content = storedOf(id) > 0 || S.ledger.some(l => l.wallet === w)
+      ? `<div class="card gold stack-sm"><p class="eyebrow">${t('available')}</p><h2 class="h-serif">${rm(storedAvail(id))}</h2>${h ? `<p class="small muted">${t('heldNote', { a: rm(h) })}</p>` : ''}</div>
       <div class="row"><h2 class="h2">${t('statement')}</h2><button class="btn btn-sm btn-ghost" data-act="toast" data-msg="pdfToast">PDF</button></div>
-      <div class="card flat">${ledgerRows('stored', 'rm')}</div>`;
+      <div class="card flat">${ledgerRows(w, 'rm')}</div>`
+      : empty('noStoredStore');
   } else {
-    content = `<h2 class="h2">${t('offersT')}</h2>${offerCard('o1', t('offer1'), t('offer1Sub', { d: fDate(addDays(today0(), 21)) }), 'gift')}${offerCard('o2', t('offer2'), t('offer2Sub'), 'sparkle')}
-    ${S.vouchers.length ? `<h2 class="h2">${t('myVouchers')}</h2>${S.vouchers.map(v => `<div class="card gold stack-xs"><p class="offer-t">${t(v.key)}</p><p class="small muted">${t('voucherUse')}</p></div>`).join('')}` : ''}`;
+    const offers = id === 'lumiere' ? offerCard('o1', t('offer1'), t('offer1Sub', { d: fDate(addDays(today0(), 21)) }), 'gift') + offerCard('o2', t('offer2'), t('offer2Sub'), 'sparkle') : '';
+    const mine = S.vouchers.filter(v => v.biz === id);
+    content = `${offers ? `<h2 class="h2">${t('offersT')}</h2>${offers}` : ''}
+    ${mine.length ? `<h2 class="h2">${t('myVouchers')}</h2>${mine.map(v => `<div class="card gold stack-xs"><p class="offer-t">${t(v.key)}</p><p class="small muted">${t('voucherUse')}</p></div>`).join('')}` : ''}
+    ${!offers && !mine.length ? empty('noOffers') : ''}`;
   }
-  const body = `<div class="row"><h1 class="h1">${t('walletTitle')}</h1><span class="pill grey">Lumière</span></div>
-  <div class="seg"><a class="${tab === 'pk' ? 'on' : ''}" href="#/m/wallet/pk">${t('tabPackages')}</a><a class="${tab === 'stored' ? 'on' : ''}" href="#/m/wallet/stored">${t('tabStored')}</a><a class="${tab === 'vouchers' ? 'on' : ''}" href="#/m/wallet/vouchers">${t('tabVouchers')}</a></div>
-  ${content}`;
-  return page({ tabs: 'm', active: '/m/wallet', body });
+  const others = walletStores().some(b => b.id !== id);
+  const brNote = B.branches ? `<p class="note gold">${icon('pin', 16)}<span>${S.branchRule === 'origin' ? t('brOriginMember', { l: B.branches[0] }) : t('brAllMember', { l: B.branches.join(' · ') })}</span></p>` : '';
+  const body = `<div class="row"><span class="row-start">${pic(B.thumb, 120, 'biz-img sm')}<span><span class="strong block">${B.name[lang]}</span><span class="small muted">${B.area[lang]}</span></span></span>
+    ${others ? `<button class="btn btn-sm btn-outline nowrap" data-act="storePick" data-id="${id}">${t('switchStore')}</button>` : ''}</div>
+  ${brNote}
+  <div class="seg"><a class="${tab === 'pk' ? 'on' : ''}" href="${base}/pk">${t('tabPackages')}</a><a class="${tab === 'stored' ? 'on' : ''}" href="${base}/stored">${t('tabStored')}</a><a class="${tab === 'vouchers' ? 'on' : ''}" href="${base}/vouchers">${t('tabVouchers')}</a></div>
+  ${content}
+  <p class="small muted center">${t('storeOnly', { b: B.name[lang] })}</p>`;
+  return page({ tabs: 'm', active: '/m/wallet', back: '/m/wallet', title: t('walletTitle'), body });
+}
+/* /m/wallet = all stores; /m/wallet/<store>/<tab> = one store; old /m/wallet/<tab> links open Lumière */
+function vWallet(a, b) {
+  if (['pk', 'stored', 'vouchers'].includes(a)) return vWalletStore('lumiere', a);
+  if (a) return vWalletStore(a, b);
+  return vWalletAll();
 }
 function vMe() {
   const favNames = S.favs.map(id => biz(id)).filter(Boolean).map(b => b.name[lang].split(' ')[0]).join(', ');
@@ -914,7 +1082,7 @@ function vSkin() {
   <button class="btn btn-primary btn-block" data-act="saveSkin">${t('save')}</button>` });
 }
 function vAftercare() {
-  const pk = S.packages[0], n = pk ? pk.used + heldFor(pk) + 1 : 3;
+  const pk = S.packages.find(p => p.serviceId === 'hydra'), n = pk ? pk.used + heldFor(pk) + 1 : 3;
   const next = at(addDays(today0(), 17), '14:30');
   return page({ back: '/m/home', title: t('aftercareTitle'), body: `
   ${pic(IMG.mask, 800, 'hero-img')}
@@ -930,20 +1098,32 @@ const isLumiere = b => bBiz(b).id === 'lumiere';
 function todayList() {
   const now = new Date();
   const items = DAYPLAN.map(a => {
-    const s = svc(a.s), start = at(today0(), a.t), end = new Date(start.getTime() + s.mins * 60000);
-    const status = end < now ? 'done' : S.arrived[a.id] ? 'arrived' : 'todo';
-    return { id: a.id, time: a.t, start, label: s.name[lang], client: member(a.c).name, th: a.th, room: a.room, status, mine: false };
+    const s = svc(a.s), start = at(today0(), a.t);
+    return { id: a.id, time: a.t, start, mins: s.mins, label: s.name[lang], name: s.name[lang], client: member(a.c).name, cid: a.c, sid: a.s, th: a.th, room: a.room, mine: false };
   });
-  S.bookings.filter(b => isBooked(b) && isLumiere(b) && sameDay(b.start, now)).forEach(b => {
+  S.bookings.filter(b => isLumiere(b) && sameDay(b.start, now) && (isBooked(b) || (S.tLog[b.id] && S.tLog[b.id].cx))).forEach(b => {
     const start = new Date(b.start);
-    items.push({ id: b.id, time: hm(start), start, label: bName(b), client: 'Mei Ling Tan', th: b.therapistId, room: b.room, status: S.arrived[b.id] ? 'arrived' : 'todo', mine: true });
+    items.push({ id: b.id, time: hm(start), start, mins: bMins(b), label: bName(b), name: bName(b), client: 'Mei Ling Tan', cid: 'meiling', sid: b.serviceId, th: b.therapistId, room: b.room, mine: true });
   });
+  items.forEach(i => { i.log = logOf(i.id, i.start, i.mins); i.status = stOf(i.log); });
   return items.sort((a, b) => a.start - b.start);
+}
+function adminRow(i) {
+  const L = i.log, st = i.status, late = L.arr ? minsDiff(L.arr, i.start) : 0, sl = startLateOf(L, i.start);
+  const pill = st === 'cx' ? `<span class="pill grey">${t('st_cancelled')}</span>` : st === 'done' ? `<span class="pill sage">${t('doneSt')}</span>` : st === 'in' ? `<span class="pill gold">${t('inProg')}</span>` : st === 'arr' ? `<span class="pill gold">${t('arrivedSt')}</span>` : '';
+  const btns = st === 'todo' ? `<button class="btn btn-sm btn-outline" data-act="checkin" data-id="${i.id}">${t('checkIn')}</button><button class="icon-btn" data-act="tCxSheet" data-who="a" data-id="${i.id}" aria-label="${t('cancel')}">${icon('x', 18)}</button>` : '';
+  const flags = [];
+  if (st === 'cx') flags.push(`<span class="small muted">${t('cxBy')} ${t('W_' + L.cx.by)}${L.cx.noshow ? ' · ' + t('noShowL') : L.cx.last ? ' · ' + t('cxLastShort') : ''}</span>`);
+  else {
+    if (late > 5) flags.push(`<span class="pill rose">${t('lateBy', { n: late })}</span>`);
+    if (sl > 5) flags.push(`<span class="pill amber">${THER[i.th].name}: ${t('startLate', { n: sl })}</span>`);
+  }
+  return `<div class="card appt ${i.mine ? 'gold' : ''} ${st === 'cx' ? 'is-cx' : ''}"><span class="appt-time">${i.time}</span><div class="grow"><p class="strong">${esc(i.client)}</p><p class="small muted">${i.label} · ${THER[i.th].name}${i.room ? ' · ' + roomName(i.room) : ''}</p>${flags.length ? `<div class="flags">${flags.join('')}</div>` : ''}</div><div class="appt-r">${pill}${btns}</div></div>`;
 }
 function vAToday() {
   const items = todayList();
   const salesToday = 6820 + S.sales.filter(x => sameDay(x.at, new Date())).reduce((a, x) => a + x.price, 0);
-  const arrived = items.filter(i => i.status !== 'todo').length;
+  const arrived = items.filter(i => ['arr', 'in', 'done'].includes(i.status)).length;
   const att = [['att1', '/a/members/away'], ['att2', '/a/reports'], ['att3', '/a/diary'], ['att4', '/a/commission']];
   const body = `
   <div class="row page-top"><div><p class="muted">Lumière · ${t('mainBranch')}</p><h1 class="h1">${fDay(new Date())}</h1></div><a class="btn btn-primary btn-sm" href="#/a/counter">${icon('plus', 16)} ${t('recordSale')}</a></div>
@@ -954,9 +1134,9 @@ function vAToday() {
     ${kpi(t('kRoom'), '78%', delta('5 pts', 'up'))}
   </div>
   <p class="small muted">${t('vsLastWeek')} ${t('sample')}.</p>
-  <section class="card stack-xs"><h2 class="h2">${t('needs')}</h2>${att.map(([k, href]) => `<a class="att" href="#${href}"><span>${t(k)}</span>${icon('chevR', 16)}</a>`).join('')}</section>
+  <section class="card stack-xs"><h2 class="h2">${t('needs')}</h2>${att.map(([k, href]) => `<a class="att" href="#${href}"><span>${t(k)}</span>${icon('chevR', 16)}</a>`).join('')}${(items.find(i => i.id === 'a8') || {}).status === 'todo' ? `<a class="att" href="#/a/timing"><span>${t('att5', { n: 'Farah', t: '16:00', m: 17 })}</span>${icon('chevR', 16)}</a>` : ''}</section>
   <h2 class="h2">${t('appts')}</h2>
-  ${items.map(i => `<div class="card appt ${i.mine ? 'gold' : ''}"><span class="appt-time">${i.time}</span><div class="grow"><p class="strong">${esc(i.client)}</p><p class="small muted">${i.label} · ${THER[i.th].name}${i.room ? ' · ' + roomName(i.room) : ''}</p></div>${i.status === 'done' ? `<span class="pill sage">${t('doneSt')}</span>` : i.status === 'arrived' ? `<span class="pill gold">${t('arrivedSt')}</span>` : `<button class="btn btn-sm btn-outline" data-act="checkin" data-id="${i.id}">${t('checkIn')}</button>`}</div>`).join('')}`;
+  ${items.map(adminRow).join('')}`;
   return page({ tabs: 'a', active: '/a/today', body });
 }
 function vADiary(dayStr) {
@@ -1016,7 +1196,7 @@ function vAMember(id) {
   const m = member(id); if (!m) return vNotFound();
   const isMe = id === 'meiling';
   const bal = isMe ? meilingBalance() : m.bal;
-  const pk = isMe ? S.packages.filter(p => avail(p) + heldFor(p) > 0) : [];
+  const pk = isMe ? activePk('lumiere') : [];
   const body = `
   <div class="row-start"><span class="avatar lg">${initials(m.name)}</span><div><p class="h-serif">${esc(m.name)}</p><p class="small muted">${m.tier === 'gold' ? t('goldMember') : 'Silver'} · ${t('seg_' + m.seg)}</p></div></div>
   <div class="chips">${m.intro ? `<span class="pill sage">${t('introBy', { n: m.intro })}</span>` : ''}<span class="pill ${m.consent ? 'sage' : 'rose'}">${t(m.consent ? 'consentOk' : 'consentMissing')}</span></div>
@@ -1024,26 +1204,28 @@ function vAMember(id) {
   <div class="card flat" style="padding:4px 16px">
     ${statrow(t('ltv'), rm(m.ltv))}
     ${statrow(t('balanceLeft'), rm(bal))}
-    ${pk.map(p => statrow(pkgName(p), (avail(p) + heldFor(p)) + ' / ' + p.total)).join('')}
+    ${pk.map(p => statrow(`${pkgName(p)}${p.branch ? `<br><span class="small muted">${t('boughtAt', { b: p.branch })}</span>` : ''}`, pkgLeft(p) + ' / ' + p.total)).join('')}
     ${statrow(t('visits12'), m.visits)}
     ${statrow(t('pkgsBought'), m.pk)}
     ${m.rebuy ? statrow(t('rebuy'), t('weeks', { n: m.rebuy })) : ''}
     ${statrow(t('lastVisitL'), t('daysAgo', { n: m.last }))}
   </div>
+  <p class="small muted">${t('ownOnly', { b: 'Lumière' })}</p>
   <div class="card tint-rose stack-xs"><p class="strong" style="color:var(--rose)">${t('notes')}</p><p>${isMe ? t('note1') : t('noteGen')}</p><p class="small muted">Joanne · ${fDate(addDays(today0(), -m.last))}</p></div>
   <div class="row-start gap8"><a class="btn btn-primary grow" href="#/a/counter/${m.id}">${t('recordSale')}</a><button class="btn btn-outline" data-act="toast" data-msg="demoOnly">${t('tabBookings')}</button></div>`;
   return page({ back: '/a/members', title: t('aMembers'), body });
 }
-let cdraft = { member: 'meiling', item: 'p-hydra6', method: 'card', receipt: '' };
+let cdraft = { member: 'meiling', item: 'p-hydra6', method: 'card', receipt: '', by: 'sara' };
 function vACounter(mid) {
-  if (mid && member(mid) && cdraft.member !== mid) cdraft = { member: mid, item: 'p-hydra6', method: 'card', receipt: '' };
+  if (mid && member(mid) && cdraft.member !== mid) cdraft = { member: mid, item: 'p-hydra6', method: 'card', receipt: '', by: 'sara' };
   const m = member(cdraft.member), p = product(cdraft.item);
   const body = `<h1 class="h1">${t('recordSale')}</h1>
   <section class="stack-sm"><h2 class="label">${t('customer')}</h2><select class="field" id="csel">${MEMBERS.map(x => `<option value="${x.id}" ${x.id === cdraft.member ? 'selected' : ''}>${esc(x.name)}</option>`).join('')}</select></section>
-  <section class="stack-sm"><h2 class="label">${t('item')}</h2><div class="stack-xs">${PRODUCTS.map(x => `<button class="opt ${x.id === cdraft.item ? 'on' : ''}" data-act="citem" data-id="${x.id}"><span class="radio"></span><span class="grow">${x.name[lang]}</span><b>${rm(x.price)}</b></button>`).join('')}</div></section>
+  <section class="stack-sm"><h2 class="label">${t('item')}</h2><div class="stack-xs">${PRODUCTS.filter(x => x.biz === 'lumiere').map(x => `<button class="opt ${x.id === cdraft.item ? 'on' : ''}" data-act="citem" data-id="${x.id}"><span class="radio"></span><span class="grow">${x.name[lang]}</span><b>${rm(x.price)}</b></button>`).join('')}</div></section>
   <section class="stack-sm"><h2 class="label">${t('payMethod')}</h2><div class="chips">${['cash', 'card', 'duitnow', 'ewallet'].map(k => `<button class="chip ${cdraft.method === k ? 'on' : ''}" data-act="cmethod" data-k="${k}">${t('m_' + k)}</button>`).join('')}</div></section>
   <section class="stack-sm"><h2 class="label">${t('receiptNo')}</h2><input class="field" id="receipt" value="${esc(cdraft.receipt)}" placeholder="e.g. T-20481" autocomplete="off"></section>
-  <div class="card flat" style="padding:4px 16px">${statrow(t('soldBy'), t('frontDesk'))}${statrow(t('introducer'), m.intro || t('none'))}${statrow(t('total'), rm(p.price))}</div>
+  <section class="stack-sm"><h2 class="label">${t('soldBy')}</h2><div class="chips">${['sara', 'joanne', 'weiling', 'aida'].map(k => `<button class="chip ${cdraft.by === k ? 'on' : ''}" data-act="cby" data-k="${k}">${staffName(k)}</button>`).join('')}</div></section>
+  <div class="card flat" style="padding:4px 16px">${statrow(t('introducer'), m.intro || t('none'))}${statrow(t('total'), rm(p.price))}</div>
   <button class="btn btn-primary btn-block" data-act="recordSale">${t('recordSale')} · ${rm(p.price)}</button>`;
   return page({ back: '/a/today', title: t('recordSale'), body });
 }
@@ -1051,7 +1233,7 @@ function vASaleDone() {
   const x = S.lastSale; if (!x) return vNotFound();
   const m = member(x.member), p = product(x.item);
   const what = p.type === 'package' ? p.name[lang] : p.type === 'topup' ? t('plusBonus', { a: rm(p.price), b: rm(p.bonus) }) : '';
-  const lines = [`Sara · ${t('salesComm')} · ${rm(p.price * 0.05, 2)}`];
+  const lines = [`${staffName(x.by || 'sara')} · ${t('salesComm')} · ${rm(p.price * 0.05, 2)}`];
   if (m.intro) lines.push(`${m.intro} · ${t('introComm')} · ${rm(p.price * 0.1, 2)}`);
   return page({ cls: 'center-main', body: `<div class="done stack-lg center">
     <div class="done-icon">${icon('checkCircle', 68)}</div>
@@ -1061,7 +1243,7 @@ function vASaleDone() {
       <p class="small muted">✓ ${t('pushSent')}</p>
       <p class="strong" style="padding-top:6px">${t('commLines')}</p><p class="small muted">${lines.join('<br>')}</p>
     </div>
-    <div class="stack w100">${x.member === 'meiling' ? `<button class="btn btn-outline btn-block" data-act="role" data-role="member" data-to="/m/wallet">${t('seeMember')}</button>` : ''}<a class="btn btn-primary btn-block" href="#/a/counter">${t('newSale')}</a></div></div>` });
+    <div class="stack w100">${x.member === 'meiling' ? `<button class="btn btn-outline btn-block" data-act="role" data-role="member" data-to="/m/wallet/lumiere">${t('seeMember')}</button>` : ''}<a class="btn btn-primary btn-block" href="#/a/counter">${t('newSale')}</a></div></div>` });
 }
 
 /* ---- reports data (sample) ---- */
@@ -1154,6 +1336,25 @@ function quadSVG() {
   g += `<text x="${x1}" y="${H - 6}" font-size="9.5" fill="#6B7280" text-anchor="end">${t('axSessions')}</text><text x="${x0 + 2}" y="${y0 - 2}" font-size="9.5" fill="#6B7280">${t('axProfit')}</text>`;
   return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${t('quad')}">${g}</svg>`;
 }
+function branchSection(cur) {
+  const BR = biz('lumiere').branches, share = { cash: 0.62, earned: 0.57, close: 0.64 };
+  const part = (k, i) => i === 0 ? Math.round(cur[k] * share[k]) : cur[k] - Math.round(cur[k] * share[k]);
+  const rows = BR.map((n, i) => `<tr><td><b>${n}</b>${i === 0 ? ` <span class="small muted">· ${t('mainTag')}</span>` : ''}</td><td class="num">${rm(part('cash', i))}</td><td class="num">${rm(part('earned', i))}</td><td class="num">${rm(part('close', i))}</td></tr>`).join('');
+  let cross;
+  if (S.branchRule === 'origin') cross = `<p class="note gold">${icon('check', 16)}<span>${t('crossOff')}</span></p>`;
+  else {
+    const ab = Math.round(cur.earned * 0.09 / 10) * 10, ba = Math.round(cur.earned * 0.035 / 10) * 10;
+    cross = `<h3 class="label" style="padding-top:6px">${t('r_cross')}</h3>
+    <table class="tbl"><tbody>
+      <tr><td>${t('crossLine', { a: BR[0], b: BR[1] })}</td><td class="num small muted">${t('sessionsN', { n: Math.round(ab / 290) })}</td><td class="num">${rm(ab)}</td></tr>
+      <tr><td>${t('crossLine', { a: BR[1], b: BR[0] })}</td><td class="num small muted">${t('sessionsN', { n: Math.round(ba / 260) })}</td><td class="num">${rm(ba)}</td></tr>
+    </tbody></table>
+    <p class="note gold">${icon('coins', 16)}<span>${t('settle', { a: BR[0], b: BR[1], v: rm(ab - ba) })}</span></p>`;
+  }
+  return `<section class="card stack-sm"><h2 class="h2">${t('r_branch')}</h2>
+    <table class="tbl"><thead><tr><th></th><th class="num">${t('th_cash')}</th><th class="num">${t('th_earned')}</th><th class="num">${t('th_unused')}</th></tr></thead><tbody>${rows}</tbody></table>
+    ${cross}</section>`;
+}
 function vAReports() {
   const cur = agg(range(RP.period, 'cur')), base = agg(range(RP.period, RP.cmp));
   const scale = cur.earned / RANK.reduce((a, r) => a + r.rev, 0);
@@ -1168,6 +1369,7 @@ function vAReports() {
   const top = MEMBERS.slice().sort((a, b) => b.ltv - a.ltv).slice(0, 5);
   const body = `<div class="row"><h1 class="h1">${t('rTitle')}</h1><span class="pill grey">${t('sample')}</span></div>
   ${ctrl}
+  <a class="card row" href="#/a/timing"><span class="row-start"><span style="color:var(--primary)">${icon('clock')}</span><span><span class="strong block">${t('tmTitle')}</span><span class="small muted">${t('tmSub')}</span></span></span>${icon('chevR', 18)}</a>
   <p class="small muted">${periodLabel(cur)} · ${t('c_' + RP.cmp)} (${periodLabel(base)})</p>
   <div class="kpis">
     ${kpi(t('r_cash'), rm(cur.cash), dPct(cur.cash, base.cash))}
@@ -1199,6 +1401,7 @@ function vAReports() {
     <h3 class="label" style="padding-top:6px">${t('byExpiry')}</h3>
     <div class="stackbar">${bucketsP.map((p, i) => `<span style="flex:${p};background:${bucketsC[i]}"></span>`).join('')}</div>
     <table class="tbl"><tbody>${['e30', 'e90', 'e180', 'eLater'].map((k, i) => `<tr><td><span class="legend"><span><i style="background:${bucketsC[i]}"></i>${t(k)}</span></span></td><td class="num">${rm(cur.close * bucketsP[i])}</td><td class="num small muted">${t('custN', { n: bucketsN[i] })}</td></tr>`).join('')}</tbody></table></section>
+  ${branchSection(cur)}
   <section class="card stack-sm"><h2 class="h2">${t('ranking')}</h2>
     <div class="chips">${['rev', 'sessions', 'profit', 'growth'].map(k => `<button class="chip ${RP.metric === k ? 'on' : ''}" data-act="rp" data-k="metric" data-v="${k}">${t('mt_' + k)}</button>`).join('')}</div>
     <div>${rows.map((r, i) => `<div class="rk"><div class="row"><span class="strong">${svc(r.id).name[lang]}</span><span class="row-start gap8">${i === 0 ? `<span class="pill sage">${t('highest')}</span>` : ''}${i === rows.length - 1 ? `<span class="pill rose">${t('lowest')}</span>` : ''}<b class="nowrap">${fmtV(r)}</b></span></div><div class="bar ${val(r) < 0 ? 'neg' : ''}"><span style="width:${Math.max(3, Math.abs(val(r)) / maxV * 100).toFixed(1)}%"></span></div></div>`).join('')}</div></section>
@@ -1209,9 +1412,84 @@ function vAReports() {
     <p class="note gold">${icon('users', 16)} ${t('conc', { p: '41%' })}</p></section>`;
   return page({ tabs: 'a', active: '/a/reports', body });
 }
+/* time & cancellations: 90 days of sample history plus whatever staff record in this demo */
+const TM = {
+  treat: [['hydra', 67, 142], ['deep', 72, 118], ['calm', 63, 64], ['lash', 104, 71], ['gel', 57, 96], ['body', 92, 58], ['scalp', 44, 39]],
+  late: [['farah', 5, 6, 17], ['siti', 4, 7, 12], ['kavitha', 3, 9, 9], ['rachel', 3, 11, 8]],
+  cx: { client: [38, 14], staff: [6, 2], owner: [3, 1] },
+  lastMin: [['rachel', 3, 1], ['emily', 2, 1], ['kavitha', 2, 0]],
+  staff: { joanne: [1, 3, 0], weiling: [4, 6, 2], aida: [6, 9, 3] },
+  lostMin: 690,
+};
+function timingData() {
+  const treat = TM.treat.map(([sid, avg, n]) => ({ sid, avg, n }));
+  const late = {}, last = {}, staff = {}, events = [];
+  TM.late.forEach(([cid, l, v, a]) => { late[cid] = { cid, late: l, visits: v, sum: a * l }; });
+  TM.lastMin.forEach(([cid, l, ns]) => { last[cid] = { cid, last: l, noshow: ns }; });
+  Object.keys(TM.staff).forEach(k => { const [ls, ov, c] = TM.staff[k]; staff[k] = { late: ls, over: ov, cx: c }; });
+  const cx = { client: TM.cx.client.slice(), staff: TM.cx.staff.slice(), owner: TM.cx.owner.slice() };
+  let lost = TM.lostMin;
+  Object.keys(S.tLog).forEach(id => {
+    const L = S.tLog[id]; if (!L.live || !L.sched) return;
+    const who = member(L.cid) ? member(L.cid).name : '', s = svc(L.sid);
+    if (L.arr) {
+      const d = minsDiff(L.arr, L.sched), r = late[L.cid] || (late[L.cid] = { cid: L.cid, late: 0, visits: 0, sum: 0 });
+      r.visits++; if (d > 5) { r.late++; r.sum += d; }
+      events.push({ at: L.arr, txt: `${esc(who)} · ${t('ev_arr')} · <span class="${d > 5 ? 't-bad' : 't-ok'}">${d > 5 ? t('lateBy', { n: d }) : t('onTime')}</span>` });
+    }
+    if (L.start) {
+      const d = startLateOf(L, L.sched);
+      if (d > 5) { if (staff[L.th]) staff[L.th].late++; lost += d; }
+      events.push({ at: L.start, txt: `${esc(who)} · ${t('ev_start', { s: staffName(L.th) })}${d > 5 ? ` · <span class="t-bad">${t('startLate', { n: d })}</span>` : ''}` });
+    }
+    if (L.end && L.start && s) {
+      const d = minsDiff(L.end, L.start), tr = treat.find(x => x.sid === L.sid) || (treat[treat.push({ sid: L.sid, avg: d, n: 0 }) - 1]);
+      tr.avg = (tr.avg * tr.n + d) / (tr.n + 1); tr.n++;
+      events.push({ at: L.end, txt: `${esc(who)} · ${t('ev_end', { m: d, p: s.mins })}` });
+    }
+    if (L.cx) {
+      const c = cx[L.cx.by]; c[0]++; if (L.cx.last) c[1]++;
+      if (L.cx.by === 'client' && L.cx.last) { const r = last[L.cid] || (last[L.cid] = { cid: L.cid, last: 0, noshow: 0 }); r.last++; if (L.cx.noshow) r.noshow++; }
+      if (L.cx.by === 'staff' && staff[L.th]) staff[L.th].cx++;
+      events.push({ at: L.cx.at, txt: `${esc(who)} · ${t('st_cancelled')} · ${t('W_' + L.cx.by)}${L.cx.noshow ? ` · <span class="t-bad">${t('noShowL')}</span>` : L.cx.last ? ` · <span class="t-bad">${t('cxLastShort')}</span>` : ''}` });
+    }
+  });
+  events.sort((a, b) => new Date(b.at) - new Date(a.at));
+  return { treat, late, last, staff, cx, lost, events };
+}
+function vATiming() {
+  const D = timingData();
+  const rows = D.treat.map(r => Object.assign({ s: svc(r.sid) }, r)).filter(r => r.s).map(r => Object.assign(r, { diff: Math.round(r.avg) - r.s.mins })).sort((a, b) => b.diff - a.diff);
+  const worst = rows[0], sn = s => s.short ? s.short[lang] : s.name[lang];
+  const sign = n => (n > 0 ? '+' : n < 0 ? '−' : '±') + Math.abs(n);
+  const lateRows = Object.values(D.late).filter(r => r.late > 0).sort((a, b) => b.late / b.visits - a.late / a.visits).slice(0, 5);
+  const lastRows = Object.values(D.last).sort((a, b) => b.last - a.last).slice(0, 5);
+  const body = `<div class="row"><h1 class="h1">${t('tmTitle')}</h1><span class="pill grey">${t('sample')}</span></div>
+  <p class="small muted">${t('tmSub')} · ${t('tm90')}</p>
+  ${D.events.length ? `<section class="card stack-sm gold"><h2 class="h2">${t('tmToday')}</h2><div>${D.events.map(e => `<div class="ev"><span class="ev-t">${hm(e.at)}</span><span>${e.txt}</span></div>`).join('')}</div></section>` : ''}
+  <p class="note gold">${icon('clock', 16)}<span>${t('tmLost', { h: (D.lost / 60).toFixed(1), n: Math.floor(D.lost / 70) })}</span></p>
+  <section class="card stack-sm"><h2 class="h2">${t('tmTreat')}</h2>
+    <table class="tbl"><thead><tr><th></th><th class="num">${t('th_plan')}</th><th class="num">${t('th_actual')}</th><th class="num">${t('th_diff')}</th></tr></thead><tbody>
+    ${rows.map(r => `<tr><td>${sn(r.s)}</td><td class="num">${r.s.mins}</td><td class="num">${Math.round(r.avg)}</td><td class="num ${r.diff > 5 ? 't-bad' : r.diff < -2 ? 't-ok' : ''}">${sign(r.diff)}</td></tr>`).join('')}</tbody></table>
+    ${worst && worst.diff > 5 ? `<p class="note rose">${icon('sparkle', 16)}<span>${t('tmInsight', { s: sn(worst.s), n: worst.diff, m: Math.ceil(worst.avg / 5) * 5 })}</span></p>` : ''}</section>
+  <section class="card stack-sm"><h2 class="h2">${t('tmLateCust')}</h2>
+    <table class="tbl"><thead><tr><th></th><th class="num">${t('th_lateVisits')}</th><th class="num">${t('th_avgLate')}</th></tr></thead><tbody>
+    ${lateRows.map(r => `<tr><td><a class="strong" href="#/a/member/${r.cid}">${esc(member(r.cid).name)}</a></td><td class="num">${r.late} / ${r.visits}</td><td class="num t-bad">${Math.round(r.sum / r.late)} min</td></tr>`).join('')}</tbody></table>
+    <p class="small muted">${t('tmLateTip')}</p></section>
+  <section class="card stack-sm"><h2 class="h2">${t('tmCancel')}</h2>
+    <table class="tbl"><thead><tr><th></th><th class="num">${t('th_total')}</th><th class="num">${t('th_lastMin')}</th></tr></thead><tbody>
+    ${['client', 'staff', 'owner'].map(k => `<tr><td>${t('W_' + k)}</td><td class="num">${D.cx[k][0]}</td><td class="num">${D.cx[k][1]}</td></tr>`).join('')}</tbody></table>
+    <h3 class="label" style="padding-top:6px">${t('tmCxCust')}</h3>
+    <table class="tbl"><thead><tr><th></th><th class="num">${t('th_lastMin')}</th><th class="num">${t('th_noShow')}</th></tr></thead><tbody>
+    ${lastRows.map(r => `<tr><td><a class="strong" href="#/a/member/${r.cid}">${esc(member(r.cid).name)}</a></td><td class="num">${r.last}</td><td class="num">${r.noshow}</td></tr>`).join('')}</tbody></table></section>
+  <section class="card stack-sm"><h2 class="h2">${t('tmStaff')}</h2>
+    <table class="tbl"><thead><tr><th></th><th class="num">${t('th_lateStart')}</th><th class="num">${t('th_overrun')}</th><th class="num">${t('th_cx')}</th></tr></thead><tbody>
+    ${Object.keys(D.staff).map(k => `<tr><td><b>${staffName(k)}</b><br><span class="small muted">${t('kind_' + STAFF[k].kind)} · <span class="nowrap">${STAFF[k].id}</span></span></td><td class="num">${D.staff[k].late}</td><td class="num">+${D.staff[k].over} min</td><td class="num">${D.staff[k].cx}</td></tr>`).join('')}</tbody></table></section>`;
+  return page({ back: '/a/reports', title: t('aReports'), body });
+}
 function vAMore() {
   const body = `<h1 class="h1">${t('aMore')}</h1>
-  <div class="card menu">${menuLink('/a/commission', 'coins', t('commission'))}${menuLink('/a/promos', 'gift', t('promotions'))}${menuLink('/a/settings', 'settings', t('settings'))}${menuLink('/a/counter', 'cash', t('recordSale'))}</div>
+  <div class="card menu">${menuLink('/a/timing', 'clock', t('tmTitle'))}${menuLink('/a/commission', 'coins', t('commission'))}${menuLink('/a/promos', 'gift', t('promotions'))}${menuLink('/a/settings', 'settings', t('settings'))}${menuLink('/a/counter', 'cash', t('recordSale'))}</div>
   <div class="card menu">${menuBtn('lang', 'globe', t('language'), langName())}${menuBtn('roles', 'users', t('switchRole'))}${menuBtn('reset', 'refresh', t('resetDemo'))}${menuBtn('signout', 'logout', t('signOut'))}</div>`;
   return page({ tabs: 'a', active: '/a/more', body });
 }
@@ -1243,6 +1521,10 @@ function vAPromos() {
 }
 function vASettings() {
   const body = `<h1 class="h1">${t('settings')}</h1>
+  <div class="card stack-sm"><p class="strong">${t('branches')}</p><p class="small muted">${biz('lumiere').branches.map((n, i) => i === 0 ? `${n} (${t('mainTag')})` : n).join(' · ')}</p>
+    <p class="label" style="padding-top:4px">${t('br_rule')}</p>
+    <div class="stack-xs">${['all', 'origin'].map(k => `<button class="opt ${S.branchRule === k ? 'on' : ''}" data-act="branchRule" data-k="${k}"><span class="radio"></span><span>${t('br_' + k)}</span></button>`).join('')}</div>
+    ${S.branchRule === 'all' ? `<p class="small muted">${t('br_allNote')}</p>` : ''}</div>
   <div class="card flat" style="padding:4px 16px">${statrow(t('set_window'), t('v_7d'))}${statrow(t('set_cut'), t('v_12h'))}${statrow(t('set_grace'), t('v_15m'))}${statrow(t('set_buffer'), t('v_buf'))}${statrow(t('set_expiry'), t('v_6m'))}${statrow(t('set_rem'), t('v_rem'))}</div>
   <div class="card stack-sm"><p class="strong">${t('set_brand')}</p><div class="row-start gap8">${['#FFFFFF', '#111827', '#93701F', '#B42318', '#027A48'].map(c => `<span style="width:36px;height:36px;border-radius:18px;background:${c};border:1px solid var(--line-2)"></span>`).join('')}</div></div>
   <p class="small muted">${t('editFull')}</p>`;
@@ -1258,41 +1540,60 @@ function tAppointments(days) {
   for (let i = 0; i < days; i++) {
     const day = addDays(today0(), i);
     if (i === 0) {
-      DAYPLAN.filter(a => a.th === 'joanne').forEach(a => { const s = svc(a.s); out.push({ id: a.id, start: at(day, a.t), mins: s.mins, name: s.name[lang], price: s.price, client: masked(member(a.c).name), room: a.room, note: a.c === 'priya' ? t('firmPressure') : '' }); });
+      DAYPLAN.filter(a => a.th === 'joanne').forEach(a => { const s = svc(a.s); out.push({ id: a.id, start: at(day, a.t), mins: s.mins, name: s.name[lang], price: s.price, client: masked(member(a.c).name), cid: a.c, sid: a.s, th: 'joanne', room: a.room, note: a.c === 'priya' ? t('firmPressure') : '' }); });
     } else {
       T_TEMPLATE.forEach(([tm, sid, room], j) => {
         const h = hash(day.toDateString() + tm);
         if (h % 10 < 4) return;
         const s = svc(sid), c = member(T_CLIENTS[h % T_CLIENTS.length]);
-        out.push({ id: `d${i}s${j}`, start: at(day, tm), mins: s.mins, name: s.name[lang], price: s.price, client: masked(c.name), room, note: c.id === 'rachel' ? t('pregnantNote') : c.id === 'priya' ? t('firmPressure') : '' });
+        out.push({ id: `d${i}s${j}`, start: at(day, tm), mins: s.mins, name: s.name[lang], price: s.price, client: masked(c.name), cid: c.id, sid, th: 'joanne', room, note: c.id === 'rachel' ? t('pregnantNote') : c.id === 'priya' ? t('firmPressure') : '' });
       });
     }
-    S.bookings.filter(b => isBooked(b) && isLumiere(b) && b.therapistId === 'joanne' && sameDay(b.start, day)).forEach(b => out.push({ id: b.id, start: new Date(b.start), mins: bMins(b), name: bName(b), price: bPrice(b), client: 'Mei L.', room: b.room, note: t('note1'), member: true, isNew: !!b.staffNew && !S.tAck[b.id] }));
+    S.bookings.filter(b => (isBooked(b) || (S.tLog[b.id] && S.tLog[b.id].cx)) && isLumiere(b) && b.therapistId === 'joanne' && sameDay(b.start, day)).forEach(b => out.push({ id: b.id, start: new Date(b.start), mins: bMins(b), name: bName(b), price: bPrice(b), client: 'Mei L.', cid: 'meiling', sid: b.serviceId, th: 'joanne', room: b.room, note: t('note1'), member: true, isNew: !!b.staffNew && !S.tAck[b.id] }));
   }
   const mine = out.filter(a => a.member);
   return out.filter(a => a.member || !mine.some(m => Math.abs(m.start - a.start) < 60 * 60000)).sort((a, b) => a.start - b.start).map(a => {
-    const end = new Date(a.start.getTime() + a.mins * 60000);
-    a.state = S.tSessions[a.id] || (end < now ? 'done' : 'todo');
+    a.log = logOf(a.id, a.start, a.mins); a.state = stOf(a.log);
+    a.past = a.start.getTime() + a.mins * 60000 < now.getTime();
     return a;
   });
 }
 const tCalBtn = (a, label, cls) => `<button class="btn btn-sm ${cls || 'btn-soft'}" ${S.tCal ? `data-act="calDo" data-c="${S.tCal}"` : 'data-act="calSheet"'} data-ev="t:${a.id}">${icon('calendar', 16)} ${label}</button>`;
+function timingLine(a) {
+  const L = a.log, parts = [];
+  if (L.cx) parts.push(`${t('cxBy')} ${t('W_' + L.cx.by)}${L.cx.noshow ? ` · <span class="t-bad">${t('noShowL')}</span>` : L.cx.last ? ` · <span class="t-bad">${t('cxLastShort')}</span>` : ''}`);
+  else {
+    if (L.arr) { const d = minsDiff(L.arr, a.start); parts.push(`${t('lg_arr', { t: hm(L.arr) })} · <span class="${d > 5 ? 't-bad' : 't-ok'}">${d > 5 ? t('lateBy', { n: d }) : t('onTime')}</span>`); }
+    if (L.start) { const d = startLateOf(L, a.start); parts.push(`${t('lg_start', { t: hm(L.start) })}${d > 5 ? ` · <span class="t-bad">${t('startLate', { n: d })}</span>` : ''}`); }
+    if (L.end) { const d = minsDiff(L.end, L.start || a.start); parts.push(`${t('lg_end', { t: hm(L.end), m: d, p: a.mins })}${d - a.mins > 5 ? ` · <span class="t-bad">${sign5(d - a.mins)}</span>` : ''}`); }
+    if (!parts.length && a.past && a.state === 'todo') parts.push(`<span class="t-bad">${t('notRecorded')}</span>`);
+  }
+  return parts.length ? `<div class="tlog">${parts.map(p => `<span>${p}</span>`).join('')}</div>` : '';
+}
+const sign5 = n => '+' + n + ' min';
 function apptCard(a, isToday) {
-  const end = new Date(a.start.getTime() + a.mins * 60000);
-  const status = a.state === 'done' ? `<span class="pill sage">${t('doneSt')}</span>` : a.state === 'in' ? `<span class="pill gold">${t('inProg')}</span>` : a.isNew ? `<span class="pill amber">${t('newBooking')}</span>` : S.tAdded[a.id] ? `<span class="pill grey">${t('inCal')}</span>` : '';
-  const action = !isToday || a.state === 'done' ? '' : a.state === 'in'
-    ? `<button class="btn btn-sm btn-primary" data-act="tAct" data-id="${a.id}" data-p="${a.price}">${t('completeS')}</button>`
-    : `<button class="btn btn-sm btn-outline" data-act="tAct" data-id="${a.id}">${t('startS')}</button>`;
-  return `<div class="card stack-xs ${a.state === 'in' || a.isNew ? 'gold' : ''}"><div class="row"><span class="small muted">${hm(a.start)} – ${hm(end)}${a.room ? ' · ' + roomName(a.room) : ''}</span>${status}</div>
-  <p class="strong">${a.name}</p><p class="small muted">${esc(a.client)}</p>${a.note ? `<p class="note rose">${icon('heart', 16)} ${esc(a.note)}</p>` : ''}
-  ${a.state === 'done' ? '' : `<div class="row-start gap8">${tCalBtn(a, t('calendarSet'))}${action}</div>`}</div>`;
+  const end = new Date(a.start.getTime() + a.mins * 60000), st = a.state;
+  const status = st === 'cx' ? `<span class="pill grey">${t('st_cancelled')}</span>` : st === 'done' ? `<span class="pill sage">${t('doneSt')}</span>` : st === 'in' ? `<span class="pill gold">${t('inProg')}</span>` : st === 'arr' ? `<span class="pill gold">${t('arrivedSt')}</span>` : a.isNew ? `<span class="pill amber">${t('newBooking')}</span>` : S.tAdded[a.id] ? `<span class="pill grey">${t('inCal')}</span>` : '';
+  const cxBtn = `<button class="btn btn-sm btn-ghost" data-act="tCxSheet" data-id="${a.id}">${t('cancel')}</button>`;
+  const editBtn = label => `<button class="btn btn-sm btn-outline" data-act="tEdit" data-id="${a.id}">${icon('clock', 16)} ${label}</button>`;
+  let actions = '';
+  if (st === 'cx') actions = '';
+  else if (!isToday) actions = tCalBtn(a, t('calendarSet')) + cxBtn;
+  else if (st === 'todo') actions = a.past ? editBtn(t('recordTimes')) + cxBtn : `<button class="btn btn-sm btn-outline" data-act="tArr" data-id="${a.id}">${t('arrivedBtn')}</button><button class="btn btn-sm btn-primary" data-act="tStart" data-id="${a.id}">${t('startBtn')}</button>${cxBtn}`;
+  else if (st === 'arr') actions = `<button class="btn btn-sm btn-primary" data-act="tStart" data-id="${a.id}">${t('startBtn')}</button>${cxBtn}`;
+  else if (st === 'in') actions = `<button class="btn btn-sm btn-primary" data-act="tEnd" data-id="${a.id}" data-p="${a.price}">${t('endBtn')}</button>${editBtn(t('editTimes'))}`;
+  else actions = editBtn(t('editTimes'));
+  return `<div class="card stack-xs ${st === 'in' || st === 'arr' || (a.isNew && st === 'todo') ? 'gold' : ''} ${st === 'cx' ? 'is-cx' : ''}"><div class="row"><span class="small muted">${hm(a.start)} – ${hm(end)}${a.room ? ' · ' + roomName(a.room) : ''}</span>${status}</div>
+  <p class="strong">${a.name}</p><p class="small muted">${esc(a.client)}</p>${a.note && st !== 'cx' ? `<p class="note rose">${icon('heart', 16)} ${esc(a.note)}</p>` : ''}
+  ${timingLine(a)}
+  ${actions ? `<div class="row-start gap8 wrap">${actions}</div>` : ''}</div>`;
 }
 function vTToday(di) {
   di = Math.max(0, Math.min(6, Number(di) || 0));
   const all = tAppointments(7), day = addDays(today0(), di);
   const items = all.filter(a => sameDay(a.start, day)), fresh = all.filter(a => a.isNew);
   const days = [...Array(7)].map((_, i) => addDays(today0(), i));
-  const count = d => all.filter(a => sameDay(a.start, d)).length;
+  const count = d => all.filter(a => sameDay(a.start, d) && a.state !== 'cx').length;
   const body = `<div class="row"><div><p class="muted">${t('hi', { n: 'Joanne' })}</p><h1 class="h1">${t('tSchedule')}</h1></div>${mark('J')}</div>
   ${fresh.map(a => `<div class="card gold stack-sm"><div class="row"><span class="pill amber">${t('newBooking')}</span><span class="small muted">${fDay(a.start)} · ${hm(a.start)}</span></div>
     <p class="strong">${a.name} · ${esc(a.client)}</p>
@@ -1302,14 +1603,26 @@ function vTToday(di) {
   <div class="hscroll">${days.map((d, i) => `<a class="date ${i === di ? 'on' : ''}" href="#/t/today/${i}"><span>${i === 0 ? t('today') : dayShort(d)}</span><b>${d.getDate()}</b><small>${count(d) || '–'}</small></a>`).join('')}</div>
   <div class="row"><h2 class="h2">${fDay(day)}</h2><span class="small muted">${t('apptsN', { n: items.length })}</span></div>
   ${items.length ? items.map(a => apptCard(a, di === 0)).join('') : `<p class="muted center" style="padding:12px 0">${t('noAppts')}</p>`}
-  <a class="card tint-gold row" href="#/t/earnings"><span><span class="small muted">${t('earnedMonth')}</span><br><span class="h-serif">${rm(2340 + S.tExtra)}</span></span><span class="small muted">${t('sessionsN', { n: 26 + S.tCount })}</span></a>`;
+  <a class="card tint-gold row" href="#/t/earnings"><span><span class="small muted">${t('earnedMonth')}</span><br><span class="h-serif">${rm(tEarn().total)}</span></span><span class="small muted">${t('sessionsN', { n: 26 + S.tCount })}</span></a>`;
   return page({ tabs: 't', active: '/t/today', body });
+}
+const T_SALES = [[-3, 'p-hydra6', 'Grace L.'], [-9, 'serum', 'Lina O.']];
+function tSalesLines() {
+  return T_SALES.map(([d, pid, c]) => ({ at: addDays(today0(), d), p: product(pid), c }))
+    .concat(S.sales.filter(x => x.by === 'joanne').map(x => ({ at: new Date(x.at), p: product(x.item), c: masked(member(x.member).name) })))
+    .sort((a, b) => b.at - a.at);
+}
+function tEarn() {
+  const treat = 2340 + S.tExtra, sales = tSalesLines().reduce((a, l) => a + l.p.price * 0.05, 0);
+  return { treat, sales, total: treat + sales };
 }
 function vTEarnings() {
   const lines = [[-1, 'hydra', 'Lina O.'], [-1, 'deep', 'Nur A.'], [-2, 'calm', 'Priya N.'], [-3, 'hydra', 'Grace L.'], [-4, 'body', 'Jessica W.']];
   const lm = new Date(); lm.setDate(1); lm.setMonth(lm.getMonth() - 1);
   const body = `<h1 class="h1">${t('tEarnings')}</h1>
-  <div class="card gold stack-sm"><p class="eyebrow">${t('earnedMonth')}</p><h2 class="h-serif">${rm(2340 + S.tExtra)}</h2><p class="small muted">${t('sessionsN', { n: 26 + S.tCount })} · 30%</p></div>
+  <div class="card gold stack-sm"><p class="eyebrow">${t('earnedMonth')}</p><h2 class="h-serif">${rm(tEarn().total, 2)}</h2><p class="small muted">${t('earnSplit', { a: rm(tEarn().treat, 2), b: rm(tEarn().sales, 2) })}<br>${t('sessionsN', { n: 26 + S.tCount })} · 30%</p></div>
+  <h2 class="h2">${t('mySales')}</h2>
+  <div class="card flat" style="padding:4px 16px">${tSalesLines().map(l => `<div class="li"><div><p class="strong">${l.p.name[lang]}</p><p class="small muted">${fDate(l.at)} · ${esc(l.c)} · ${rm(l.p.price)}</p></div><div class="r"><p class="plus">+${rm(l.p.price * 0.05, 2)}</p><p class="small muted">5%</p></div></div>`).join('')}</div>
   <h2 class="h2">${t('lines')}</h2>
   <div class="card flat" style="padding:4px 16px">${lines.map(([d, s, c]) => `<div class="li"><div><p class="strong">${svc(s).name[lang]}</p><p class="small muted">${fDate(addDays(today0(), d))} · ${c}</p></div><div class="r"><p class="plus">+${rm(svc(s).price * 0.3, 2)}</p></div></div>`).join('')}</div>
   <h2 class="h2">${t('payoutHist')}</h2>
@@ -1319,7 +1632,8 @@ function vTEarnings() {
 function vTMe() {
   const link = 'webcal://www.appt4u.com/feed/joanne-demo.ics';
   const body = `<h1 class="h1">${t('tabProfile')}</h1>
-  <div class="card row-start">${mark('J')}<div><p class="strong">Joanne</p><p class="small muted">${THER.joanne.title[lang]} · Lumière</p></div></div>
+  <div class="card stack-sm"><div class="row-start">${mark('J')}<div><p class="strong">Joanne</p><p class="small muted">${THER.joanne.title[lang]} · Lumière</p><p class="small"><span class="pill gold">${t('kind_' + STAFF.joanne.kind)}</span> <span class="muted">${t('staffId', { id: STAFF.joanne.id })}</span></p></div></div>
+    <p class="small muted">${t('staffAccess')}</p></div>
   <div class="card stack-xs"><p class="strong">${t('remSet')}</p>
     <label class="row toggle-row"><span>${t('rem2h')}</span><input type="checkbox" class="switch" data-tnotif="rem" ${S.tNotif.rem ? 'checked' : ''}></label>
     <label class="row toggle-row"><span>${t('runSheet')}</span><input type="checkbox" class="switch" data-tnotif="run" ${S.tNotif.run ? 'checked' : ''}></label>
@@ -1369,10 +1683,10 @@ const ROUTES = [
   [/^\/m\/home$/, vHome], [/^\/m\/biz\/(\w+)(?:\/(\w+))?$/, vBiz], [/^\/m\/time$/, vTime], [/^\/m\/done\/(\w+)$/, vDone],
   [/^\/m\/book(?:\/\w+)?$/, () => redirect('/m/home')],
   [/^\/m\/service\/(\w+)$/, id => { const s = svc(id); if (!s) return vNotFound(); draft = { biz: s.biz, ids: [id], therapist: 'any', day: today0().toISOString(), time: null, pay: null }; return redirect('/m/time'); }],
-  [/^\/m\/bookings(?:\/(\w+))?$/, vBookings], [/^\/m\/wallet(?:\/(\w+))?$/, vWallet], [/^\/m\/me$/, vMe], [/^\/m\/skin$/, vSkin], [/^\/m\/aftercare$/, vAftercare],
+  [/^\/m\/bookings(?:\/(\w+))?$/, vBookings], [/^\/m\/wallet(?:\/(\w+))?(?:\/(\w+))?$/, vWallet], [/^\/m\/me$/, vMe], [/^\/m\/skin$/, vSkin], [/^\/m\/aftercare$/, vAftercare],
   [/^\/a\/today$/, vAToday], [/^\/a\/diary(?:\/([\d-]+))?$/, vADiary], [/^\/a\/members(?:\/(\w+))?$/, vAMembers], [/^\/a\/member\/(\w+)$/, vAMember],
   [/^\/a\/counter(?:\/(\w+))?$/, vACounter], [/^\/a\/sale$/, vASaleDone], [/^\/a\/reports$/, vAReports], [/^\/a\/more$/, vAMore],
-  [/^\/a\/commission$/, vACommission], [/^\/a\/promos$/, vAPromos], [/^\/a\/settings$/, vASettings],
+  [/^\/a\/commission$/, vACommission], [/^\/a\/timing$/, vATiming], [/^\/a\/promos$/, vAPromos], [/^\/a\/settings$/, vASettings],
   [/^\/t\/today(?:\/(\d+))?$/, vTToday], [/^\/t\/earnings$/, vTEarnings], [/^\/t\/me$/, vTMe],
   [/^\/g\/home$/, vGHome], [/^\/g\/share$/, vGShare], [/^\/g\/payouts$/, vGPayouts],
 ];
@@ -1474,6 +1788,21 @@ async function copyText(s) {
     ta.remove();
   }
 }
+/* staff time log: one record per appointment, with what is needed for the owner's report */
+function findAppt(id) { return tAppointments(7).find(x => x.id === id) || todayList().find(x => x.id === id) || null; }
+function recLog(id, patch, meta) {
+  const a = meta ? null : findAppt(id);
+  const base = S.tLog[id] || (a ? Object.assign({}, logOf(id, a.start, a.mins)) : {});
+  delete base.sample;
+  Object.assign(base, meta || (a ? { cid: a.cid, th: a.th, sid: a.sid, sched: a.start.toISOString(), mins: a.mins } : {}));
+  Object.keys(patch).forEach(k => { if (patch[k] !== undefined) base[k] = patch[k]; });
+  base.live = true; S.tLog[id] = base;
+}
+function logCancel(id, by, noshow, meta) {
+  const a = meta ? null : findAppt(id), sched = meta ? meta.sched : a ? a.start.toISOString() : new Date().toISOString();
+  const hrs = (new Date(sched) - Date.now()) / 36e5;
+  recLog(id, { cx: { by, noshow: !!noshow, at: new Date().toISOString(), last: !!noshow || hrs < 12 } }, meta);
+}
 function setLang(l) { if (!LANGS.some(x => x[0] === l)) return; lang = l; LS.set('appt4u-lang', l); document.documentElement.lang = htmlLang(l); closeSheet(true); render(); }
 const ACT = {
   lang: () => openSheet(`<h2 class="h2">${t('language')}</h2><div class="stack-xs">${LANGS.map(([k, n]) => `<button class="opt ${k === lang ? 'on' : ''}" data-act="setLang" data-l="${k}" lang="${htmlLang(k)}"><span class="radio"></span><span>${n}</span></button>`).join('')}</div>`),
@@ -1483,8 +1812,11 @@ const ACT = {
   sendCode: () => { const v = ($('#phone').value || '').replace(/[^\d ]/g, '').trim(); if (v.replace(/\D/g, '').length < 8) { toast(t('phoneInvalid')); return; } S.phone = v; save(); go('/otp'); },
   verify: () => { const v = ($('#otp').value || '').trim(); if (!/^\d{6}$/.test(v)) { toast(t('otpInvalid')); return; } S.signedIn = true; S.role = 'member'; save(); go('/m/home'); },
   toast: el => toast(t(el.dataset.msg)),
-  qr: () => openSheet(`<div class="center stack"><h2 class="h2">${t('myQR')}</h2><div class="qr">${fakeQR('meiling-tan')}</div><p class="strong">Mei Ling Tan · ${t('goldMember')}</p><p class="small muted">${t('qrHint')}<br>${t('qrDemo')}</p></div>`),
-  claim: el => { const id = el.dataset.id; S.claimed[id] = true; S.vouchers.push({ id, key: id === 'o1' ? 'offer1' : 'offer2' }); save(); render(); toast(t('claimedToast')); },
+  qr: () => openSheet(`<div class="center stack"><h2 class="h2">${t('myQR')}</h2><div class="qr">${fakeQR('meiling-tan')}</div><p class="strong">Mei Ling Tan · ${t('goldMember')}</p><p class="small muted">${t('qrHint')}<br>${t('qrDemo')}</p><p class="note gold">${icon('wallet', 16)}<span>${t('qrAll')}</span></p></div>`),
+  storePick: el => openSheet(`<h2 class="h2">${t('switchStore')}</h2><div class="stack-xs">${walletStores().map(b => `<a class="opt ${b.id === el.dataset.id ? 'on' : ''}" href="#/m/wallet/${b.id}">${pic(b.thumb, 80, 'biz-img xs')}<span class="grow"><b>${b.name[lang]}</b><br><span class="small muted">${t('remaining', { n: activePk(b.id).reduce((a, p) => a + pkgLeft(p), 0) })} · ${rm(storedAvail(b.id))}</span></span>${icon('chevR', 16)}</a>`).join('')}
+    <a class="opt" href="#/m/wallet">${icon('wallet', 20)}<span class="grow"><b>${t('walletAll')}</b></span>${icon('chevR', 16)}</a></div>`),
+  branchRule: el => { S.branchRule = el.dataset.k === 'origin' ? 'origin' : 'all'; save(); render(); },
+  claim: el => { const id = el.dataset.id; S.claimed[id] = true; S.vouchers.push({ id, biz: 'lumiere', key: id === 'o1' ? 'offer1' : 'offer2' }); save(); render(); toast(t('claimedToast')); },
   dismissInstall: () => { S.installDismissed = true; save(); render(); },
   install: async () => { if (!deferredPrompt) return; deferredPrompt.prompt(); try { await deferredPrompt.userChoice; } catch (e) { /* ignore */ } deferredPrompt = null; render(); },
   hcat: el => { hCat = el.dataset.c; render(); },
@@ -1538,10 +1870,12 @@ const ACT = {
   doCancel: el => {
     const b = S.bookings.find(x => x.id === el.dataset.id); if (!b) return;
     const late = (new Date(b.start) - new Date()) / 36e5 < 12;
+    logCancel(b.id, 'client', false, { cid: 'meiling', th: b.therapistId, sid: b.serviceId, sched: b.start, mins: bMins(b) });
+    b.cancelBy = 'client';
     if (late) {
       b.status = 'late';
       if (b.pay === 'package') { const pk = S.packages.find(p => p.id === b.pkg); if (pk) { pk.used++; ledgerAdd(pk.id, 'late', -1, { serviceId: b.serviceId }); } }
-      else if (b.pay === 'stored') { const p = bPrice(b); S.stored -= p; ledgerAdd('stored', 'late', -p); }
+      else if (b.pay === 'stored') { const p = bPrice(b), id = bBiz(b).id; S.stored[id] = storedOf(id) - p; ledgerAdd('stored:' + id, 'late', -p); }
     } else b.status = 'cancelled';
     save(); closeSheet(); render(); toast(t(late ? 'lateToast' : 'cancelledToast'));
   },
@@ -1553,13 +1887,14 @@ const ACT = {
     openSheet(`<h2 class="h2">${t('calendarSet')}</h2><div class="stack-xs">${[[null, t('calAsk')], ['apple', t('appleCal')], ['google', t('googleCal')], ['ics', t('otherCal')]].map(([k, l]) => `<button class="opt ${cur === k ? 'on' : ''}" data-act="setCal" data-who="${who}" data-k="${k || ''}"><span class="radio"></span><span>${l}</span></button>`).join('')}</div>`);
   },
   setCal: el => { const v = el.dataset.k || null; if (el.dataset.who === 't') S.tCal = v; else S.calAlways = v; save(); closeSheet(); render(); },
-  notifSettings: () => openSheet(`<h2 class="h2">${t('notifications')}</h2>${['rem', 'offers', 'after'].map(k => `<label class="row toggle-row"><span>${t('n_' + k)}</span><input type="checkbox" class="switch" data-notif="${k}" ${S.notif[k] ? 'checked' : ''}></label>`).join('')}<p class="small muted">${t('n_note')}</p>`),
+  notifSettings: () => openSheet(`<h2 class="h2">${t('notifications')}</h2>${['rem', 'exp', 'offers', 'after'].map(k => `<label class="row toggle-row"><span>${t('n_' + k)}</span><input type="checkbox" class="switch" data-notif="${k}" ${S.notif[k] !== false ? 'checked' : ''}></label>`).join('')}<p class="small muted">${t('n_note')}</p>`),
   refer: () => openSheet(`<h2 class="h2">${t('refer')}</h2>${shareBlock('meiling')}`),
   copy: el => copyText(el.dataset.v),
   reset: () => openSheet(`<h2 class="h2">${t('resetQ')}</h2><p class="muted">${t('resetInfo')}</p><button class="btn btn-primary btn-block" data-act="doReset">${t('resetDemo')}</button><button class="btn btn-ghost btn-block" data-act="closeSheet">${t('notNow')}</button>`),
-  doReset: () => { LS.del(KEY); S = seed(); draft = null; sel = null; hCat = 'all'; hQuery = ''; cdraft = { member: 'meiling', item: 'p-hydra6', method: 'card', receipt: '' }; shownCal.clear(); closeSheet(true); go('/welcome'); },
+  doReset: () => { LS.del(KEY); S = seed(); S.tLog = {}; draft = null; sel = null; hCat = 'all'; hQuery = ''; cdraft = { member: 'meiling', item: 'p-hydra6', method: 'card', receipt: '', by: 'sara' }; shownCal.clear(); closeSheet(true); go('/welcome'); },
   signout: () => { S.signedIn = false; S.role = null; save(); go('/welcome'); },
-  checkin: el => { S.arrived[el.dataset.id] = true; save(); render(); toast(t('arrivedSt')); },
+  checkin: el => { recLog(el.dataset.id, { arr: new Date().toISOString() }); save(); render(); toast(t('arrivedSt')); },
+  cby: el => { cdraft.by = el.dataset.k; render(); },
   citem: el => { cdraft.item = el.dataset.id; render(); },
   cmethod: el => { cdraft.method = el.dataset.k; render(); },
   recordSale: () => {
@@ -1570,21 +1905,63 @@ const ACT = {
       if (p.type === 'package') {
         const exp = new Date(now); exp.setMonth(exp.getMonth() + p.months);
         const id = 'pk' + Date.now().toString(36);
-        S.packages.push({ id, productId: p.id, serviceId: p.serviceId, total: p.sessions, used: 0, price: p.price, purchased: now.toISOString(), expires: exp.toISOString() });
+        S.packages.push({ id, biz: 'lumiere', branch: biz('lumiere').branches[0], productId: p.id, serviceId: p.serviceId, total: p.sessions, used: 0, price: p.price, purchased: now.toISOString(), expires: exp.toISOString() });
         ledgerAdd(id, 'purchase', p.sessions);
-      } else if (p.type === 'topup') { S.stored += p.price + p.bonus; ledgerAdd('stored', 'topup', p.price); ledgerAdd('stored', 'bonus', p.bonus); }
+      } else if (p.type === 'topup') { S.stored.lumiere = storedOf('lumiere') + p.price + p.bonus; ledgerAdd('stored:lumiere', 'topup', p.price); ledgerAdd('stored:lumiere', 'bonus', p.bonus); }
     }
-    S.sales.push({ at: now.toISOString(), member: cdraft.member, item: p.id, price: p.price, method: cdraft.method, receipt: r.trim() });
-    S.lastSale = { member: cdraft.member, item: p.id, method: cdraft.method, receipt: r.trim() };
+    S.sales.push({ at: now.toISOString(), member: cdraft.member, item: p.id, price: p.price, method: cdraft.method, receipt: r.trim(), by: cdraft.by });
+    S.lastSale = { member: cdraft.member, item: p.id, method: cdraft.method, receipt: r.trim(), by: cdraft.by };
     cdraft.receipt = ''; save(); go('/a/sale');
   },
   rp: el => { RP[el.dataset.k] = el.dataset.v; render(); },
   approve: el => { const id = el.dataset.id; S.approvals[id] = S.approvals[id] ? 'paid' : 'approved'; save(); render(); },
-  tAct: el => {
-    const id = el.dataset.id, cur = S.tSessions[id];
-    if (!cur || cur === 'todo') S.tSessions[id] = 'in';
-    else if (cur === 'in') { S.tSessions[id] = 'done'; S.tAck[id] = true; const c = Number(el.dataset.p) * 0.3; S.tExtra += c; S.tCount += 1; toast(t('commAdded', { a: rm(c, 2) })); }
-    save(); render();
+  tArr: el => { recLog(el.dataset.id, { arr: new Date().toISOString() }); S.tAck[el.dataset.id] = true; save(); render(); },
+  tStart: el => { const id = el.dataset.id, L = S.tLog[id] || {}, now = new Date().toISOString(); recLog(id, { arr: L.arr || now, start: now }); S.tAck[id] = true; save(); render(); },
+  tEnd: el => {
+    recLog(el.dataset.id, { end: new Date().toISOString() });
+    const c = Number(el.dataset.p) * 0.3; S.tExtra += c; S.tCount += 1; save(); render(); toast(t('commAdded', { a: rm(c, 2) }));
+  },
+  tEdit: el => {
+    const a = findAppt(el.dataset.id); if (!a) return;
+    const L = logOf(a.id, a.start, a.mins), v = (iso, d) => iso ? hm(iso) : hm(d);
+    openSheet(`<h2 class="h2">${t('editTimes')}</h2><p class="small muted">${a.name} · ${esc(a.client)} · ${hm(a.start)}</p>
+      <label class="stack-xs"><span class="label">${t('arrivedBtn')}</span><input class="field" type="time" id="te-arr" value="${v(L.arr, a.start)}"></label>
+      <label class="stack-xs"><span class="label">${t('f_start')}</span><input class="field" type="time" id="te-start" value="${v(L.start, a.start)}"></label>
+      <label class="stack-xs"><span class="label">${t('f_end')}</span><input class="field" type="time" id="te-end" value="${v(L.end, new Date(a.start.getTime() + a.mins * 60000))}"></label>
+      <button class="btn btn-primary btn-block" data-act="tSaveTimes" data-id="${a.id}">${t('save')}</button><button class="btn btn-ghost btn-block" data-act="closeSheet">${t('notNow')}</button>`);
+  },
+  tSaveTimes: el => {
+    const a = findAppt(el.dataset.id); if (!a) return;
+    const val = k => { const x = ($('#te-' + k) || {}).value; return /^\d\d:\d\d$/.test(x || '') ? at(a.start, x).toISOString() : null; };
+    const arr = val('arr'), start = val('start'), end = val('end');
+    if (start && end && new Date(end) <= new Date(start)) { toast(t('endBeforeStart')); return; }
+    recLog(a.id, { arr, start, end }); S.tAck[a.id] = true; save(); closeSheet(); render(); toast(t('saved'));
+  },
+  tCxSheet: el => {
+    const a = findAppt(el.dataset.id); if (!a) return;
+    const hrs = (a.start - Date.now()) / 36e5, admin = el.dataset.who === 'a';
+    const opts = (hrs < 0 ? [['noshow', 'cx_noshow']] : []).concat([['client', 'cx_client'], ['staff', admin ? 'cx_staffA' : 'cx_staff'], ['owner', 'cx_owner']]);
+    const ic = { noshow: 'x', client: 'user', staff: 'sparkle', owner: 'chart' };
+    openSheet(`<h2 class="h2">${t('cxTitle')}</h2><p class="small muted">${a.name} · ${esc(a.client)} · ${fDay(a.start)} ${hm(a.start)}</p>
+      ${hrs >= 0 && hrs < 12 ? `<p class="note rose">${icon('clock', 16)}<span>${t('cxLast')}</span></p>` : ''}
+      <div class="stack-xs">${opts.map(([k, l]) => `<button class="opt" data-act="tCancel" data-id="${a.id}" data-by="${k}">${icon(ic[k], 20)}<span class="grow">${t(l)}</span>${icon('chevR', 16)}</button>`).join('')}</div>
+      <button class="btn btn-ghost btn-block" data-act="closeSheet">${t('keep')}</button>`);
+  },
+  tCancel: el => {
+    const id = el.dataset.id, a = findAppt(id); if (!a) return;
+    const noshow = el.dataset.by === 'noshow', by = noshow ? 'client' : ['client', 'staff', 'owner'].includes(el.dataset.by) ? el.dataset.by : 'owner';
+    logCancel(id, by, noshow);
+    const b = S.bookings.find(x => x.id === id);
+    if (b && isBooked(b)) {
+      b.cancelBy = by;
+      const late = (new Date(b.start) - new Date()) / 36e5 < 12;
+      if (by === 'client' && late) {
+        b.status = 'late';
+        if (b.pay === 'package') { const pk = S.packages.find(p => p.id === b.pkg); if (pk) { pk.used++; ledgerAdd(pk.id, 'late', -1, { serviceId: b.serviceId }); } }
+        else if (b.pay === 'stored') { const p = bPrice(b), sid = bBiz(b).id; S.stored[sid] = storedOf(sid) - p; ledgerAdd('stored:' + sid, 'late', -p); }
+      } else b.status = 'cancelled';
+    }
+    S.tAck[id] = true; save(); closeSheet(); render(); toast(t('cxToast'));
   },
 };
 document.addEventListener('click', e => {

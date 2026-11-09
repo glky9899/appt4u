@@ -335,3 +335,26 @@ select.field{appearance:none;-webkit-appearance:none;background-image:url("data:
 html[lang^="zh"] .side-title{font-size:36px;letter-spacing:0;line-height:1.25}
 .side-roles{display:flex;flex-wrap:wrap;gap:8px}
 .side .muted{color:#4B5563}
+
+/* wallet across several stores */
+.store-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding-top:12px;margin-top:4px;border-top:1px solid var(--line)}
+.store-stats span{display:flex;flex-direction:column;gap:2px;font-size:12px;color:var(--body);min-width:0}
+.store-stats b{font-size:17px;font-weight:800;color:var(--ink)}
+.thumbs{display:flex;flex:none}
+.thumbs img{width:36px;height:36px;border-radius:50%;border:2px solid #fff;object-fit:cover;background:var(--sand);margin-left:-12px}
+.thumbs img:first-child{margin-left:0}
+.biz-img.xs{width:40px;height:40px;border-radius:10px}
+.exp-txt{color:var(--rose);font-weight:600}
+.note>span{min-width:0}
+
+/* staff timing and cancellations */
+.tlog{display:flex;flex-direction:column;gap:3px;font-size:13px;color:var(--body);padding:8px 10px;background:var(--sand-2);border-radius:10px}
+.t-bad{color:var(--rose);font-weight:700}
+.t-ok{color:var(--sage);font-weight:600}
+.is-cx{opacity:.62}
+.is-cx .strong{text-decoration:line-through}
+.appt-r{display:flex;align-items:center;gap:4px;flex:none}
+.flags{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
+.ev{display:flex;gap:10px;padding:7px 0;border-bottom:1px solid var(--primary-100);font-size:13.5px}
+.ev:last-child{border-bottom:0}
+.ev-t{font-weight:800;width:42px;flex:none;font-variant-numeric:tabular-nums}
