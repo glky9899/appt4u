@@ -1,5 +1,5 @@
 /* appt4u service worker: network first, cached copy when offline. */
-const CACHE = 'appt4u-v1';
+const CACHE = 'appt4u-v2';
 const SHELL = ['./', './index.html', './styles.css', './app.js', './manifest.webmanifest', './icons/icon-192.png', './icons/icon-512.png', './icons/apple-touch-icon.png', './icons/favicon.svg'];
 
 self.addEventListener('install', e => {

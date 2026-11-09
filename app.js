@@ -3,7 +3,7 @@
 'use strict';
 
 /* ------------------------------------------------------------------ storage */
-const KEY = 'appt4u-demo-v2';
+const KEY = 'appt4u-demo-v3';
 const LS = {
   get(k, d) { try { const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
   set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* storage unavailable: demo still works for this visit */ } },
@@ -14,64 +14,69 @@ let lang = LS.get('appt4u-lang', null) || ((navigator.language || '').toLowerCas
 /* ------------------------------------------------------------------ strings */
 const STR = {
   back: ['Back', '返回'], done: ['Done', '完成'], save: ['Save', '保存'], saved: ['Saved', '已保存'], notNow: ['Not now', '暂不'],
-  any: ['Any', '任意'], mins: ['{n} min', '{n} 分钟'], today: ['Today', '今天'],
-  welcomeTo: ['Welcome to', '欢迎来到'],
-  tagline: ['Book treatments, track your packages and get care tips — all in one place.', '预约护理、查看疗程、收到护理贴士——一站完成。'],
+  any: ['Any', '任意'], mins: ['{n} mins', '{n} 分钟'], today: ['Today', '今天'],
+  welcomeT: ['Book beauty & wellness near you', '预约附近的美容与健康服务'],
+  welcomeSub: ['Facials, hair, nails and pilates — book in seconds, track your packages and get reminders.', '面部护理、美发、美甲与普拉提——几秒完成预约，查看疗程，按时提醒。'],
   signInPhone: ['Sign in with phone number', '用电话号码登录'], exploreDemo: ['Explore the demo', '浏览演示'],
-  poweredBy: ['Powered by', '技术支持'], demoNote: ['demo with sample data', '示例数据演示'],
+  demoNote: ['Demo with sample data', '示例数据演示'],
   phoneTitle: ['Your phone number', '你的电话号码'], phoneSub: ['We’ll send you a 6-digit code by SMS.', '我们会以短信发送 6 位验证码。'],
   sendCode: ['Send code', '发送验证码'], phoneInvalid: ['Enter a valid phone number', '请输入有效的电话号码'],
   otpTitle: ['Enter the code', '输入验证码'], otpSub: ['Sent to {p}. Demo: any 6 digits will work.', '已发送至 {p}。演示：任意 6 位数字即可。'],
   verify: ['Verify', '验证'], otpInvalid: ['Enter the 6-digit code', '请输入 6 位验证码'],
-  agree: ['By continuing you agree to this business’s PDPA notice and booking terms.', '继续即表示你同意本商家的 PDPA 声明与预约条款。'],
+  agree: ['By continuing you agree to the PDPA notice and booking terms of the businesses you book with.', '继续即表示你同意所预约商家的 PDPA 声明与预约条款。'],
   chooseRole: ['View the demo as', '以哪种身份浏览演示'],
-  r_member: ['Member', '会员'], r_memberSub: ['Book, wallet, skin profile', '预约、钱包、皮肤档案'],
+  r_member: ['Member', '会员'], r_memberSub: ['Find salons, book, wallet', '找沙龙、预约、钱包'],
   r_admin: ['Owner / admin', '老板 / 管理员'], r_adminSub: ['Today, diary, counter, reports', '今日、日程、柜台、报表'],
   r_therapist: ['Therapist (locum)', '美容师（自由职业）'], r_therapistSub: ['Schedule and earnings', '日程与收入'],
   r_agent: ['Agent / introducer', '代理 / 介绍人'], r_agentSub: ['Referrals and commission', '推荐与佣金'],
-  tabHome: ['Home', '首页'], tabBook: ['Book', '预约'], tabWallet: ['Wallet', '钱包'], tabMe: ['Me', '我的'],
-  gm: ['Good morning,', '早上好，'], ga: ['Good afternoon,', '下午好，'], ge: ['Good evening,', '晚上好，'],
-  noNotifs: ['No new notifications', '暂无新通知'], upNext: ['Next appointment', '下一次预约'], showQR: ['Show QR', '出示 QR'],
-  change: ['Change', '更改'], noBooking: ['No upcoming appointments', '暂无即将到来的预约'], bookNow: ['Book now', '立即预约'],
-  packages: ['Package', '疗程'], storedValue: ['Stored value', '储值'], sessionsLeft: ['{n} left', '剩 {n} 次'],
-  aftercareCard: ['Care tips after your last facial', '上次护理后的护理贴士'], forYou: ['For you', '专属优惠'],
-  offer1: ['Top up RM1,000, get RM150 free', '储值 RM1,000 送 RM150'], offer1Sub: ['In store, until {d}', '到店充值，至 {d}'],
-  offer2: ['Birthday month: 15% off a facial', '生日月：面部护理 85 折'], offer2Sub: ['Valid all this month', '本月内有效'],
-  claim: ['Claim', '领取'], claimed: ['Claimed', '已领取'], claimedToast: ['Saved to your wallet as a voucher', '已作为礼券存入钱包'],
-  myBookings: ['My bookings', '我的预约'],
+  tabHome: ['Home', '首页'], tabBookings: ['Bookings', '预约'], tabWallet: ['Wallet', '钱包'], tabProfile: ['Profile', '我的'],
+  loc: ['Location', '位置'], locVal: ['Kuala Lumpur, Malaysia', '马来西亚 吉隆坡'], searchPh: ['Search salon, studio or treatment', '搜索沙龙、工作室或护理项目'],
+  services: ['Services', '服务'], nearby: ['Nearby salons & studios', '附近的沙龙与工作室'], viewMap: ['View on map', '地图查看'],
+  km: ['{n} km', '{n} 公里'], reviews: ['({n})', '（{n}）'], noResults: ['No matches nearby', '附近没有符合的结果'],
+  cat_all: ['All', '全部'], cat_facial: ['Facial', '面部护理'], cat_hair: ['Hair', '美发'], cat_nails: ['Nails & lash', '美甲美睫'], cat_body: ['Body & spa', '身体与水疗'], cat_pilates: ['Pilates', '普拉提'],
+  promoEyebrow: ['Weekday special!', '平日特惠！'], promoTitle: ['Get 20% off', '享 8 折优惠'], promoSub: ['Facials booked 10am–1pm, Mon–Fri', '周一至周五 10:00–13:00 面部护理'], bookNowBtn: ['Book now', '立即预约'],
+  noNotifs: ['No new notifications', '暂无新通知'], upNext: ['Upcoming', '即将到来'], showQR: ['Show QR', '出示 QR'],
+  yourWallet: ['Your wallet at {b}', '你在 {b} 的钱包'], walletLine: ['{s} sessions · {v} stored value', '{s} 次疗程 · 储值 {v}'],
+  aftercareCard: ['Care tips after your last facial', '上次护理后的护理贴士'],
+  favAdded: ['Saved to favourites', '已加入收藏'], favRemoved: ['Removed from favourites', '已取消收藏'],
+  continueN: ['Continue ({n})', '继续（{n}）'], selectSvc: ['Select services', '请选择服务'],
+  inPackage: ['In your package · {n} left', '已含在疗程中 · 剩 {n} 次'],
   installTitle: ['Install appt4u', '安装 appt4u'], installIOS: ['Tap Share, then “Add to Home Screen”.', '点「分享」，再点「添加到主屏幕」。'],
   installAndroid: ['Add it to your home screen for one-tap booking.', '添加到主屏幕，一键预约。'], installBtn: ['Install', '安装'],
-  bookTitle: ['Book', '预约'], inPackage: ['In your package · {n} left', '已含在疗程中 · 剩 {n} 次'],
-  therapist: ['Therapist', '美容师'], pickDate: ['Date', '日期'], pickTime: ['Time', '时间'], full: ['full', '满'],
+  bookTitle: ['Choose a time', '选择时间'], staff: ['Staff', '服务人员'], pickDate: ['Date', '日期'], pickTime: ['Time', '时间'], full: ['full', '满'],
   payWith: ['Pay with', '付款方式'], payPackage: ['Package · {n} left', '疗程 · 剩 {n} 次'], payStored: ['Stored value · {b}', '储值 · {b}'],
-  payStore: ['Pay in store', '到店付款'], roomAuto: ['Room and device are assigned for you', '护理室与仪器将自动安排'],
+  payStore: ['Pay at the counter', '到店付款'], roomAuto: ['Room and device are assigned for you', '护理室与仪器将自动安排'],
   policy: ['Free cancellation up to {h} hours before.', '预约前 {h} 小时可免费取消。'], chooseTime: ['Choose a time', '请选择时间'],
-  confirmAt: ['Confirm · {d}, {t}', '确认 · {d} {t}'],
+  bookNowAt: ['Book now · {p}', '立即预约 · {p}'], totalLine: ['{p} · {m} mins', '{p} · {m} 分钟'],
   booked: ['You’re booked', '预约成功'], heldPkg: ['1 session held from your package', '已从疗程预留 1 次'],
   heldStored: ['{a} held from stored value', '已从储值预留 {a}'], payAtStore: ['Pay at the counter on the day', '当天在柜台付款'],
   addCal: ['Add to your calendar?', '加入日历？'], calWhy: ['Get it in your phone’s calendar with a reminder 2 hours before.', '加入手机日历，提前 2 小时提醒。'],
   appleCal: ['Apple Calendar', 'Apple 日历'], googleCal: ['Google Calendar', 'Google 日历'], otherCal: ['Outlook or other (.ics)', 'Outlook 或其他（.ics）'],
   alwaysDo: ['Always do this', '以后都这样做'], addTo: ['Add to {c}', '加入{c}'], addToCalendar: ['Add to calendar', '加入日历'],
   addedCal: ['Sent to your calendar', '已发送至日历'],
-  upcoming: ['Upcoming', '即将到来'], past: ['Past', '过往'], noPast: ['No past bookings yet', '暂无过往预约'], cancel: ['Cancel', '取消'],
-  cancelQ: ['Cancel this booking?', '取消这个预约？'],
+  upcoming: ['Upcoming', '即将到来'], past: ['Past', '过往'], noBooking: ['No upcoming bookings', '暂无即将到来的预约'], noPast: ['No past bookings yet', '暂无过往预约'],
+  findSalon: ['Find a salon', '寻找沙龙'], cancel: ['Cancel', '取消'], cancelQ: ['Cancel this booking?', '取消这个预约？'],
   cancelFreeInfo: ['You’re more than {h} hours before, so nothing is charged.', '距离预约超过 {h} 小时，不会扣除任何费用。'],
   cancelLateInfo: ['Less than {h} hours to go: this is a late cancel and the session is used.', '距离预约不足 {h} 小时：视为逾时取消，将扣除次数。'],
   keep: ['Keep booking', '保留预约'], yesCancel: ['Yes, cancel', '确认取消'],
-  cancelledToast: ['Cancelled. Your session is back in your wallet.', '已取消，次数已退回钱包。'],
+  cancelledToast: ['Cancelled. Nothing was charged.', '已取消，未扣除任何费用。'],
   lateToast: ['Cancelled late. The session was used as per policy.', '已逾时取消，按规定扣除次数。'],
   st_booked: ['Booked', '已预约'], st_completed: ['Completed', '已完成'], st_cancelled: ['Cancelled', '已取消'], st_late: ['Late cancel', '逾时取消'],
   walletTitle: ['Wallet', '钱包'], tabPackages: ['Packages', '疗程'], tabStored: ['Stored value', '储值'], tabVouchers: ['Vouchers', '礼券'],
   remaining: ['{n} sessions left', '剩余 {n} 次'], legend: ['Used {u} · Booked {h} · Available {a}', '已用 {u} · 已预约 {h} · 可用 {a}'],
   validUntil: ['Valid until {d}', '有效期至 {d}'], statement: ['Statement', '账单'], available: ['Available balance', '可用余额'],
   heldNote: ['{a} held for upcoming bookings', '{a} 已为即将到来的预约预留'],
-  noVouchers: ['No vouchers yet. Claim offers on Home.', '暂无礼券，可在首页领取优惠。'], voucherUse: ['Show your member QR at the counter to use it.', '在柜台出示会员 QR 码即可使用。'],
+  offersT: ['Offers to claim', '可领取的优惠'], myVouchers: ['My vouchers', '我的礼券'], voucherUse: ['Show your member QR at the counter to use it.', '在柜台出示会员 QR 码即可使用。'],
+  offer1: ['Top up RM1,000, get RM150 free', '储值 RM1,000 送 RM150'], offer1Sub: ['In store, until {d}', '到店充值，至 {d}'],
+  offer2: ['Birthday month: 15% off a facial', '生日月：面部护理 85 折'], offer2Sub: ['Valid all this month', '本月内有效'],
+  claim: ['Claim', '领取'], claimed: ['Claimed', '已领取'], claimedToast: ['Saved to your wallet as a voucher', '已作为礼券存入钱包'],
   k_purchase: ['Bought in store', '门店购买'], k_use: ['Used', '已使用'], k_topup: ['Top-up in store', '门店充值'], k_bonus: ['Top-up bonus', '充值赠送'],
-  k_late: ['Late cancel', '逾时取消'], k_pay: ['Paid for treatment', '护理扣款'], balShort: ['bal {b}', '余 {b}'],
+  k_late: ['Late cancel', '逾时取消'], balShort: ['bal {b}', '余 {b}'],
   pdfToast: ['PDF statements come in the full version', '完整版提供 PDF 账单'],
-  meTitle: ['Me', '我的'], goldMember: ['Gold member', '金卡会员'], myQR: ['My member QR', '我的会员 QR 码'],
+  goldMember: ['Gold member', '金卡会员'], myQR: ['My member QR', '我的会员 QR 码'],
   qrHint: ['Show at the counter to pay, redeem or check in.', '在柜台出示，用于付款、核销或签到。'], qrDemo: ['Demo code — not scannable', '演示用，无法扫描'],
-  skinProfile: ['Skin profile & consent', '皮肤档案与同意书'], calendarSet: ['Calendar', '日历'], calAsk: ['Ask every time', '每次询问'],
+  skinProfile: ['Skin profile & consent', '皮肤档案与同意书'], myBookings: ['My bookings', '我的预约'], favourites: ['Favourites', '收藏'],
+  calendarSet: ['Calendar', '日历'], calAsk: ['Ask every time', '每次询问'],
   notifications: ['Notifications', '通知'], n_rem: ['Booking reminders', '预约提醒'], n_offers: ['Offers', '优惠'], n_after: ['Aftercare tips', '护理贴士'],
   n_note: ['Booking confirmations and changes are always sent.', '预约确认与变更通知一定会发送。'],
   language: ['Language', '语言'], refer: ['Refer a friend', '推荐好友'], switchRole: ['Switch demo view', '切换演示身份'],
@@ -96,7 +101,6 @@ const STR = {
   att1: ['2 clients haven’t signed consent', '2 位顾客未签同意书'], att2: ['3 packages expire within 14 days', '3 个疗程 14 天内到期'],
   att3: ['3 open slots this afternoon', '下午仍有 3 个空档'], att4: ['Kelvin’s commission statement to approve', 'Kelvin 的佣金账单待批'],
   appts: ['Today’s appointments', '今日预约'], checkIn: ['Check in', '签到'], arrivedSt: ['Arrived', '已到店'], doneSt: ['Done', '已完成'],
-  checkedIn: ['{n} checked in', '{n} 已签到'],
   diaryNote: ['A time is only offered when the therapist, room and device are all free.', '只有美容师、房间与仪器同时空闲，才会开放该时段。'],
   room1: ['Room 1', '护理室 1'], room2: ['Room 2', '护理室 2'], hydraDevice: ['Hydra device', '水光仪'], clean: ['Clean', '清洁'], lunch: ['Lunch', '午休'],
   lg_treat: ['Therapist', '美容师'], lg_room: ['Room / device', '房间 / 仪器'], lg_mine: ['Mei Ling (member demo)', 'Mei Ling（会员演示）'], lg_clean: ['Cleaning / break', '清洁 / 休息'],
@@ -123,7 +127,7 @@ const STR = {
   c_prev: ['vs previous', '较上期'], c_ly: ['vs last year', '较去年同期'],
   r_cash: ['Cash collected', '收款金额'], r_earned: ['Revenue earned', '已实现营收'], r_unused: ['Unused package value', '未用疗程价值'],
   r_active: ['Active customers / month', '月活跃顾客'], r_avg: ['Spend per customer / month', '每位顾客月消费'], r_ret: ['Returning customers', '回头客比例'],
-  r_ren: ['Package renewal', '疗程续购率'], r_room: ['Room use', '房间使用率'], r_new: ['New customers', '新顾客'],
+  r_ren: ['Package renewal', '疗程续购率'], r_new: ['New customers', '新顾客'],
   trend: ['Cash vs revenue earned · 13 months', '收款与已实现营收 · 13 个月'], cashL: ['Cash collected', '收款'], earnedL: ['Revenue earned', '已实现营收'],
   why: ['Why revenue changed', '营收变化原因'], whySub: ['Revenue = customers × visits each × spend per visit', '营收 = 顾客数 × 人均到访 × 每次消费'],
   w_cust: ['Customers', '顾客数'], w_visits: ['Visits each', '人均到访'], w_spend: ['Spend / visit', '每次消费'],
@@ -143,7 +147,7 @@ const STR = {
   approve: ['Approve', '批准'], approved: ['Approved', '已批准'], markPaid: ['Mark paid', '标记已付'], paidSt: ['Paid', '已付'],
   stmtFor: ['Statements for {m}', '{m}账单'], sessionsN: ['{n} sessions', '{n} 次'], salesComm: ['Sales commission 5%', '销售提成 5%'], introComm: ['Introducer 10%', '介绍人佣金 10%'],
   promoStats: ['Shown {a} · claimed {b} · used {c}', '展示 {a} · 领取 {b} · 使用 {c}'], promoConv: ['{a} new customers · {b} bought a package', '{a} 位新客 · {b} 购买配套'],
-  pr1: ['Top-up bonus RM150', '充值赠送 RM150'], pr2: ['Birthday 15% off', '生日 85 折'], pr3: ['Win-back: free add-on', '回流：免费加购'], pr4: ['First facial RM98', '首次面部护理 RM98'],
+  pr1: ['Top-up bonus RM150', '充值赠送 RM150'], pr2: ['Birthday 15% off', '生日 85 折'], pr3: ['Weekday 20% off facials', '平日面部护理 8 折'], pr4: ['First facial RM98', '首次面部护理 RM98'],
   set_window: ['Booking window', '开放预约'], set_cut: ['Free cancellation until', '免费取消时限'], set_grace: ['No-show after', '未到判定'],
   set_buffer: ['Cleaning buffer', '清洁缓冲'], set_expiry: ['Package validity', '疗程有效期'], set_rem: ['Reminders', '提醒'], set_brand: ['Brand colours', '品牌颜色'],
   v_7d: ['7 days ahead', '提前 7 天'], v_12h: ['12 hours before', '提前 12 小时'], v_15m: ['15 minutes late', '迟到 15 分钟'], v_buf: ['15 minutes', '15 分钟'],
@@ -161,7 +165,7 @@ const STR = {
   waMsg: ['Hi! Try {b} — book online in seconds and get your first facial for RM98: {l}', '你好！推荐你试试 {b}，在线预约，首次面部护理只需 RM98：{l}'],
   sideTitle: ['Interactive demo', '互动演示'],
   sideText: ['A mobile web app for studios and salons. On your phone, open appt4u.com and add it to your Home Screen — it opens full screen like a native app.', '为工作室与沙龙打造的手机网页 App。在手机打开 appt4u.com 并添加到主屏幕，即可像原生 App 一样全屏使用。'],
-  sideRoles: ['View as', '切换身份'], sideData: ['Sample data only. Your changes stay in this browser.', '仅示例数据，改动只保存在此浏览器。'],
+  sideRoles: ['View as', '切换身份'], sideData: ['Sample businesses and data only. Your changes stay in this browser.', '仅示例商家与数据，改动只保存在此浏览器。'],
   notFound: ['Page not found', '找不到页面'], goHome: ['Go home', '返回首页'], demoOnly: ['Available in the full version', '完整版提供此功能'],
 };
 function t(k, v) {
@@ -192,9 +196,8 @@ const fMonth = d => { d = new Date(d); return lang === 'zh' ? `${d.getFullYear()
 const fMon = d => { d = new Date(d); return lang === 'zh' ? `${d.getMonth() + 1}月` : EN_M[d.getMonth()]; };
 const dayShort = d => (lang === 'zh' ? ZH_D : EN_D)[new Date(d).getDay()];
 const rm = (n, dp = 0) => 'RM' + Number(n).toLocaleString('en-MY', { minimumFractionDigits: dp, maximumFractionDigits: dp });
-const daysAgo = n => Math.round((today0() - n) / DAY);
 
-/* ------------------------------------------------------------------ icons & art */
+/* ------------------------------------------------------------------ icons, photos & art */
 const IC = {
   home: '<path d="M3.5 10.5 12 3.8l8.5 6.7V20a1 1 0 0 1-1 1h-4.8v-6h-5.4v6H4.5a1 1 0 0 1-1-1z"/>',
   calendar: '<rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M8 3v4M16 3v4M3.5 10h17"/>',
@@ -206,7 +209,7 @@ const IC = {
   more: '<circle cx="5.5" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="18.5" cy="12" r="1.3"/>',
   coins: '<ellipse cx="9" cy="7" rx="5.5" ry="2.5"/><path d="M3.5 7v4c0 1.4 2.5 2.5 5.5 2.5s5.5-1.1 5.5-2.5V7"/><path d="M9.5 15.5c0 1.4 2.5 2.5 5.5 2.5s5.5-1.1 5.5-2.5v-4c0-1.4-2.5-2.5-5.5-2.5"/><path d="M9.5 15.5v3c0 1.4 2.5 2.5 5.5 2.5s5.5-1.1 5.5-2.5v-3"/>',
   share: '<path d="M5 12v7a1.5 1.5 0 0 0 1.5 1.5h11A1.5 1.5 0 0 0 19 19v-7M12 3.5v12M7.5 8 12 3.5 16.5 8"/>',
-  chevL: '<path d="M15 5.5 8.5 12l6.5 6.5"/>', chevR: '<path d="M9 5.5 15.5 12 9 18.5"/>',
+  chevL: '<path d="M15 5.5 8.5 12l6.5 6.5"/>', chevR: '<path d="M9 5.5 15.5 12 9 18.5"/>', chevD: '<path d="M6 9.5 12 15.5l6-6"/>',
   check: '<path d="M5 12.5 10 17.5 19 7"/>', checkCircle: '<circle cx="12" cy="12" r="9"/><path d="M8 12.3 11 15.3 16.5 9.3"/>',
   x: '<path d="M6 6l12 12M18 6 6 18"/>',
   bell: '<path d="M6 9a6 6 0 1 1 12 0c0 6.5 2.5 8 2.5 8h-17S6 15.5 6 9z"/><path d="M10 20a2 2 0 0 0 4 0"/>',
@@ -221,80 +224,93 @@ const IC = {
   gift: '<rect x="4" y="9" width="16" height="11" rx="1.5"/><path d="M3 9h18M12 9v11M12 9c-1.5-3.5-5.5-4-5.5-1.5S10 9 12 9zm0 0c1.5-3.5 5.5-4 5.5-1.5S14 9 12 9z"/>',
   heart: '<path d="M12 20s-7.5-4.3-7.5-10A4.3 4.3 0 0 1 12 7.6 4.3 4.3 0 0 1 19.5 10c0 5.7-7.5 10-7.5 10z"/>',
   link: '<path d="M10 14a4 4 0 0 0 5.7 0l3-3A4 4 0 0 0 13 5.3l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3A4 4 0 0 0 11 18.7l1-1"/>',
-  lock: '<rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/>',
   refresh: '<path d="M4.5 12a7.5 7.5 0 0 1 13-5.1L19.5 9M19.5 4v5h-5M19.5 12a7.5 7.5 0 0 1-13 5.1L4.5 15M4.5 20v-5h5"/>',
   phone: '<rect x="7" y="3" width="10" height="18" rx="2.5"/><path d="M11 18h2"/>',
   download: '<path d="M12 4v11M7.5 10.5 12 15l4.5-4.5M5 19.5h14"/>',
-  doc: '<path d="M7 3.5h7l4 4V20a.5.5 0 0 1-.5.5h-10A.5.5 0 0 1 7 20z"/><path d="M14 3.5V8h4M9.5 12h5M9.5 15.5h5"/>',
   settings: '<circle cx="12" cy="12" r="3"/><path d="M12 3v2.5M12 18.5V21M3 12h2.5M18.5 12H21M5.6 5.6l1.8 1.8M16.6 16.6l1.8 1.8M5.6 18.4l1.8-1.8M16.6 7.4l1.8-1.8"/>',
   cash: '<rect x="3" y="6.5" width="18" height="11" rx="2"/><circle cx="12" cy="12" r="2.5"/><path d="M6.5 9.5v5M17.5 9.5v5"/>',
+  pin: '<path d="M12 21s-6.5-5.4-6.5-11a6.5 6.5 0 0 1 13 0c0 5.6-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/>',
+  map: '<path d="M9 4.5 3.5 6.5v13l5.5-2 6 2 5.5-2v-13l-5.5 2z"/><path d="M9 4.5v13M15 6.5v13"/>',
+  scissors: '<circle cx="6.5" cy="17.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/><path d="M8.3 15.7 19 4M15.7 15.7 5 4"/>',
+  polish: '<rect x="9" y="3" width="6" height="7" rx="1"/><rect x="6.5" y="10" width="11" height="11" rx="3"/>',
+  face: '<circle cx="12" cy="12" r="8.5"/><path d="M9 10.5h.01M15 10.5h.01M9.5 15c1.4 1 3.6 1 5 0"/>',
+  activity: '<path d="M3 12h4l3-7 4 14 3-7h4"/>',
+  apps: '<rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/>',
 };
-const icon = (n, s = 22) => `<svg class="ic" viewBox="0 0 24 24" width="${s}" height="${s}" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IC[n] || ''}</svg>`;
-
-const THUMBS = {
-  dropper: '<rect x="20" y="24" width="16" height="22" rx="5" fill="#EADBC6" stroke="#2B2622" stroke-width="1.4"/><rect x="23" y="19" width="10" height="5" rx="1.5" fill="#2B2622"/><path d="M24.5 19v-6a3.5 3.5 0 0 1 7 0v6z" fill="#2B2622"/><rect x="23" y="31" width="10" height="8" rx="1.5" fill="#FFFEFC"/>',
-  leaf: '<path d="M15 42C17 26 27 16 42 13c-1 16-10 27-27 29z" fill="#E3EBE5" stroke="#4F6B5C" stroke-width="1.4"/><path d="M15 42c7-8 14-15 23-24" fill="none" stroke="#4F6B5C" stroke-width="1.2"/>',
-  flower: '<g fill="#F6EBE9" stroke="#9C5562" stroke-width="1.2"><ellipse cx="28" cy="18" rx="6" ry="9"/><ellipse cx="28" cy="38" rx="6" ry="9"/><ellipse cx="18" cy="28" rx="9" ry="6"/><ellipse cx="38" cy="28" rx="9" ry="6"/></g><circle cx="28" cy="28" r="4.5" fill="#CDB48C"/>',
-  eye: '<path d="M10 30c8-9 28-9 36 0" fill="none" stroke="#2B2622" stroke-width="1.6" stroke-linecap="round"/><path d="M14 27l-3-5M20 24l-2-6M28 23v-6M36 24l2-6M42 27l3-5" stroke="#2B2622" stroke-width="1.4" stroke-linecap="round"/><path d="M12 31c8 7 24 7 32 0" fill="none" stroke="#CDB48C" stroke-width="1.4"/>',
-  polish: '<rect x="22" y="11" width="12" height="16" rx="3" fill="#2B2622"/><rect x="17" y="26" width="22" height="19" rx="6" fill="#E9C9C9" stroke="#2B2622" stroke-width="1.4"/>',
-  stone: '<ellipse cx="28" cy="40" rx="15" ry="5" fill="#EADBC6" stroke="#2B2622" stroke-width="1.3"/><ellipse cx="28" cy="31" rx="11" ry="4.5" fill="#F6EFE4" stroke="#2B2622" stroke-width="1.3"/><ellipse cx="28" cy="23.5" rx="7.5" ry="3.5" fill="#EADBC6" stroke="#2B2622" stroke-width="1.3"/><path d="M36 13c3 2 3 6 0 8" fill="none" stroke="#4F6B5C" stroke-width="1.3"/>',
-  serum: '<rect x="20" y="24" width="16" height="22" rx="5" fill="#EADBC6" stroke="#2B2622" stroke-width="1.4"/><rect x="23" y="19" width="10" height="5" rx="1.5" fill="#2B2622"/><path d="M24.5 19v-6a3.5 3.5 0 0 1 7 0v6z" fill="#2B2622"/><rect x="23" y="31" width="10" height="8" rx="1.5" fill="#FFFEFC"/>',
+const icon = (n, s = 22) => `<svg class="ic" viewBox="0 0 24 24" width="${s}" height="${s}" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IC[n] || ''}</svg>`;
+const star = () => '<svg class="ic star" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M12 3.5l2.6 5.3 5.9.9-4.2 4.1 1 5.8L12 16.9l-5.3 2.7 1-5.8-4.2-4.1 5.9-.9z"/></svg>';
+const photo = (id, w) => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w}&q=70`;
+const IMG = {
+  facial: '1570172619644-dfd03ed5d881', mask: '1616394584738-fc6e612e71b9', salon: '1560066984-138dadb4c035', stylist: '1562322140-8baeececf3df',
+  pclass: '1588286840104-8957b019727f', pmat: '1518611012118-696072aa579a', pink: '1521590832167-7bcbfaa6381f', nails: '1607779097040-26e80aa78e66', spa: '1512290923902-8a9f81dc236c',
 };
-const thumb = k => `<svg viewBox="0 0 56 56" aria-hidden="true">${THUMBS[k] || THUMBS.leaf}</svg>`;
-
-const HERO = `<svg viewBox="28 78 504 612" role="img" aria-label="Skincare bottles and botanicals">
-<path d="M60 700 V330 A220 220 0 0 1 500 330 V700 Z" fill="#F6EBE9"/>
-<path d="M36 700 V330 A244 244 0 0 1 524 330 V700" fill="none" stroke="#CDB48C" stroke-width="1.5"/>
-<path d="M430 190 L436 206 L452 212 L436 218 L430 234 L424 218 L408 212 L424 206 Z" fill="#CDB48C"/>
-<path d="M120 250 L124 260 L134 264 L124 268 L120 278 L116 268 L106 264 L116 260 Z" fill="#CDB48C"/>
-<path d="M118 660 C104 580 116 500 150 420 C170 372 200 330 236 300" fill="none" stroke="#4F6B5C" stroke-width="2" stroke-linecap="round"/>
-<g fill="#E3EBE5" stroke="#4F6B5C" stroke-width="1.5">
-<ellipse cx="92" cy="598" rx="13" ry="32" transform="rotate(-35 92 598)"/><ellipse cx="136" cy="556" rx="13" ry="32" transform="rotate(35 136 556)"/>
-<ellipse cx="98" cy="500" rx="13" ry="32" transform="rotate(-30 98 500)"/><ellipse cx="152" cy="452" rx="13" ry="32" transform="rotate(40 152 452)"/>
-<ellipse cx="132" cy="406" rx="12" ry="30" transform="rotate(-20 132 406)"/><ellipse cx="196" cy="372" rx="12" ry="30" transform="rotate(55 196 372)"/>
-<ellipse cx="176" cy="334" rx="11" ry="28" transform="rotate(-5 176 334)"/><ellipse cx="240" cy="306" rx="11" ry="28" transform="rotate(65 240 306)"/></g>
-<line x1="20" y1="660" x2="540" y2="660" stroke="#CDB48C" stroke-width="1.5"/>
-<rect x="160" y="400" width="100" height="260" rx="20" fill="#FFFEFC" stroke="#2B2622" stroke-width="2"/>
-<rect x="176" y="480" width="68" height="96" rx="4" fill="#F6EFE4"/>
-<line x1="190" y1="506" x2="230" y2="506" stroke="#B89466" stroke-width="2"/><line x1="196" y1="522" x2="224" y2="522" stroke="#B89466" stroke-width="1.5"/>
-<rect x="188" y="370" width="44" height="30" rx="4" fill="#CDB48C" stroke="#2B2622" stroke-width="2"/>
-<rect x="203" y="334" width="14" height="36" fill="#FFFEFC" stroke="#2B2622" stroke-width="2"/>
-<rect x="194" y="318" width="70" height="16" rx="5" fill="#FFFEFC" stroke="#2B2622" stroke-width="2"/>
-<rect x="298" y="520" width="84" height="140" rx="16" fill="#EADBC6" stroke="#2B2622" stroke-width="2"/>
-<rect x="312" y="566" width="56" height="56" rx="3" fill="#FFFEFC"/><line x1="322" y1="586" x2="358" y2="586" stroke="#B89466" stroke-width="2"/>
-<rect x="322" y="496" width="36" height="24" rx="3" fill="#2B2622"/><path d="M326 496 V452 C326 428 354 428 354 452 V496 Z" fill="#2B2622"/>
-<ellipse cx="278" cy="650" rx="22" ry="10" fill="#EADBC6" stroke="#2B2622" stroke-width="1.5"/>
-<rect x="398" y="594" width="104" height="26" rx="7" fill="#CDB48C" stroke="#2B2622" stroke-width="2"/>
-<rect x="404" y="618" width="92" height="42" rx="10" fill="#FFFEFC" stroke="#2B2622" stroke-width="2"/></svg>`;
+const SERUM = '<svg viewBox="0 0 56 56" aria-hidden="true"><rect x="20" y="24" width="16" height="22" rx="5" fill="#DCE4FF" stroke="#111827" stroke-width="1.4"/><rect x="23" y="19" width="10" height="5" rx="1.5" fill="#111827"/><path d="M24.5 19v-6a3.5 3.5 0 0 1 7 0v6z" fill="#111827"/><rect x="23" y="31" width="10" height="8" rx="1.5" fill="#fff"/></svg>';
 
 function fakeQR(seed, size = 176) {
   const n = 25, c = size / n; let r = '';
   let h = hash(seed);
-  const finder = (x, y) => `<rect x="${x * c}" y="${y * c}" width="${7 * c}" height="${7 * c}" fill="#2B2622"/><rect x="${(x + 1) * c}" y="${(y + 1) * c}" width="${5 * c}" height="${5 * c}" fill="#FFFEFC"/><rect x="${(x + 2) * c}" y="${(y + 2) * c}" width="${3 * c}" height="${3 * c}" fill="#2B2622"/>`;
+  const finder = (x, y) => `<rect x="${x * c}" y="${y * c}" width="${7 * c}" height="${7 * c}" fill="#111827"/><rect x="${(x + 1) * c}" y="${(y + 1) * c}" width="${5 * c}" height="${5 * c}" fill="#fff"/><rect x="${(x + 2) * c}" y="${(y + 2) * c}" width="${3 * c}" height="${3 * c}" fill="#111827"/>`;
   for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) {
     if ((x < 8 && y < 8) || (x > n - 9 && y < 8) || (x < 8 && y > n - 9)) continue;
     h = (Math.imul(h, 1103515245) + 12345) >>> 0;
     if ((h >>> 16) % 100 < 46) r += `<rect x="${(x * c).toFixed(2)}" y="${(y * c).toFixed(2)}" width="${c.toFixed(2)}" height="${c.toFixed(2)}"/>`;
   }
-  return `<svg viewBox="0 0 ${size} ${size}" width="${size}" height="${size}" role="img" aria-label="QR"><rect width="${size}" height="${size}" fill="#FFFEFC"/><g fill="#2B2622">${r}</g>${finder(0, 0)}${finder(n - 7, 0)}${finder(0, n - 7)}</svg>`;
+  return `<svg viewBox="0 0 ${size} ${size}" width="${size}" height="${size}" role="img" aria-label="QR"><rect width="${size}" height="${size}" fill="#fff"/><g fill="#111827">${r}</g>${finder(0, 0)}${finder(n - 7, 0)}${finder(0, n - 7)}</svg>`;
 }
 
-/* ------------------------------------------------------------------ catalogue */
-const BIZ = { name: { en: 'Lumière Skin Studio', zh: 'Lumière 护肤工作室' }, place: { en: 'Kuala Lumpur · demo outlet', zh: '吉隆坡 · 演示门店' } };
+/* ------------------------------------------------------------------ catalogue (sample businesses) */
 const THER = {
   joanne: { name: 'Joanne', title: { en: 'Senior therapist', zh: '资深美容师' } },
   weiling: { name: 'Wei Ling', title: { en: 'Therapist', zh: '美容师' } },
   aida: { name: 'Aida', title: { en: 'Nail & lash artist', zh: '美甲美睫师' } },
+  marcus: { name: 'Marcus', title: { en: 'Senior stylist', zh: '资深发型师' } }, ying: { name: 'Ying', title: { en: 'Colourist', zh: '染发师' } },
+  sarah: { name: 'Sarah', title: { en: 'Instructor', zh: '导师' } }, hana: { name: 'Hana', title: { en: 'Instructor', zh: '导师' } },
+  nina: { name: 'Nina', title: { en: 'Nail artist', zh: '美甲师' } }, mei: { name: 'Mei', title: { en: 'Lash artist', zh: '美睫师' } },
 };
-const CATS = [{ id: 'facial', en: 'Facial', zh: '面部护理' }, { id: 'lash', en: 'Lash & nails', zh: '美睫美甲' }, { id: 'body', en: 'Body & scalp', zh: '身体与头皮' }];
+const HOME_CATS = [['all', 'apps'], ['facial', 'face'], ['hair', 'scissors'], ['nails', 'polish'], ['body', 'leaf'], ['pilates', 'activity']];
+const BIZS = [
+  { id: 'lumiere', cats: ['facial', 'nails', 'body'], name: { en: 'Lumière Skin Studio', zh: 'Lumière 护肤工作室' }, area: { en: 'Bangsar, Kuala Lumpur', zh: '吉隆坡 Bangsar' }, dist: 1.2, rating: 4.8, reviews: 412,
+    hours: { en: '10AM–8PM, Tue–Sun', zh: '周二至周日 10:00–20:00' }, img: IMG.facial, thumb: IMG.spa, staff: ['joanne', 'weiling', 'aida'],
+    desc: { en: 'Skin-first facials, lash and nail care, and calming body treatments. Members use packages and stored value right in the app.', zh: '以肌肤为本的面部护理、美睫美甲与舒缓身体护理。会员可直接在 App 内使用疗程与储值。' },
+    tabs: [['facial', 'Facial', '面部护理'], ['lash', 'Lash & nails', '美睫美甲'], ['body', 'Body & scalp', '身体与头皮']] },
+  { id: 'glow', cats: ['hair'], name: { en: 'Studio Glow Hair Lounge', zh: 'Studio Glow 美发沙龙' }, area: { en: 'Mont Kiara, Kuala Lumpur', zh: '吉隆坡 Mont Kiara' }, dist: 2.4, rating: 4.7, reviews: 312,
+    hours: { en: '9AM–9PM, Mon–Sun', zh: '周一至周日 9:00–21:00' }, img: IMG.salon, thumb: IMG.stylist, staff: ['marcus', 'ying'],
+    desc: { en: 'Precision cuts, colour and scalp care by senior stylists, with free consultation on your first visit.', zh: '资深发型师提供精剪、染发与头皮护理，首次到访免费咨询。' },
+    tabs: [['cut', 'Hair cut', '剪发'], ['colour', 'Colour', '染发'], ['treat', 'Treatments', '护理']] },
+  { id: 'coreflow', cats: ['pilates'], name: { en: 'Core & Flow Pilates', zh: 'Core & Flow 普拉提' }, area: { en: 'Damansara Heights, KL', zh: '吉隆坡 Damansara Heights' }, dist: 3.1, rating: 4.9, reviews: 208,
+    hours: { en: '7AM–10PM, Mon–Sat', zh: '周一至周六 7:00–22:00' }, img: IMG.pclass, thumb: IMG.pmat, staff: ['sarah', 'hana'],
+    desc: { en: 'Small reformer classes of up to 8 people, plus private and duet sessions.', zh: '每班最多 8 人的核心床小班课，另有私教与双人课。' },
+    tabs: [['class', 'Group classes', '团体课'], ['private', 'Private', '私教']] },
+  { id: 'polished', cats: ['nails'], name: { en: 'Polished Nail & Lash Bar', zh: 'Polished 美甲美睫' }, area: { en: 'Bukit Bintang, Kuala Lumpur', zh: '吉隆坡 Bukit Bintang' }, dist: 4.0, rating: 4.6, reviews: 189,
+    hours: { en: '10AM–10PM, Mon–Sun', zh: '周一至周日 10:00–22:00' }, img: IMG.pink, thumb: IMG.nails, staff: ['nina', 'mei'],
+    desc: { en: 'Gel nails, pedicures and lash sets in a calm pink studio.', zh: '在温柔的粉色空间里，提供凝胶美甲、美足与睫毛嫁接。' },
+    tabs: [['nails', 'Nails', '美甲'], ['lash', 'Lashes', '美睫']] },
+];
+const biz = id => BIZS.find(b => b.id === id);
+const S_ = (id, b, cat, mins, price, by, en, zh, extra) => Object.assign({ id, biz: b, cat, mins, price, by, name: { en, zh } }, extra || {});
 const SERVICES = [
-  { id: 'hydra', cat: 'facial', icon: 'dropper', mins: 60, price: 320, by: ['joanne', 'weiling'], device: true, name: { en: 'Hydrating Glow Facial', zh: '水光焕肤护理' }, short: { en: 'Hydra', zh: '水光' }, desc: { en: 'Deep hydration with the hydra device. Best for dull, dehydrated skin.', zh: '以水光仪深层补水，适合暗沉、缺水肌肤。' } },
-  { id: 'deep', cat: 'facial', icon: 'leaf', mins: 75, price: 220, by: ['joanne', 'weiling'], name: { en: 'Deep Cleansing Facial', zh: '深层清洁护理' }, short: { en: 'Deep cleanse', zh: '深层清洁' }, desc: { en: 'Gentle extraction and a clay mask for clearer pores.', zh: '温和清理毛孔，配合泥膜，让毛孔更干净。' } },
-  { id: 'calm', cat: 'facial', icon: 'flower', mins: 60, price: 260, by: ['joanne'], name: { en: 'Sensitive Skin Calming', zh: '敏感肌舒缓护理' }, short: { en: 'Calming', zh: '舒缓' }, desc: { en: 'Soothing, fragrance-free care for reactive skin.', zh: '无香精舒缓护理，适合易敏感肌肤。' } },
-  { id: 'lash', cat: 'lash', icon: 'eye', mins: 90, price: 180, by: ['aida', 'weiling'], name: { en: 'Lash Extension (Classic)', zh: '睫毛嫁接（自然款）' }, short: { en: 'Lashes', zh: '睫毛' }, desc: { en: 'Natural, lightweight lashes. Refill every 3–4 weeks.', zh: '自然轻盈的睫毛，建议每 3–4 周补睫。' } },
-  { id: 'gel', cat: 'lash', icon: 'polish', mins: 60, price: 98, by: ['aida'], name: { en: 'Gel Manicure', zh: '凝胶美甲' }, short: { en: 'Gel nails', zh: '美甲' }, desc: { en: 'Long-lasting gel colour with cuticle care.', zh: '持久凝胶甲油，含甘皮护理。' } },
-  { id: 'body', cat: 'body', icon: 'stone', mins: 90, price: 240, by: ['joanne', 'aida'], name: { en: 'Aromatherapy Body Massage', zh: '芳香精油身体按摩' }, short: { en: 'Body', zh: '身体' }, desc: { en: 'Full-body massage with warm essential oils.', zh: '温热精油全身按摩。' } },
-  { id: 'scalp', cat: 'body', icon: 'leaf', mins: 45, price: 150, by: ['aida'], name: { en: 'Scalp Detox Treatment', zh: '头皮净化护理' }, short: { en: 'Scalp', zh: '头皮' }, desc: { en: 'Deep-cleansing scalp care with a relaxing massage.', zh: '深层清洁头皮，配合放松按摩。' } },
+  S_('hydra', 'lumiere', 'facial', 60, 320, ['joanne', 'weiling'], 'Hydrating Glow Facial', '水光焕肤护理', { device: true, short: { en: 'Hydra', zh: '水光' } }),
+  S_('deep', 'lumiere', 'facial', 75, 220, ['joanne', 'weiling'], 'Deep Cleansing Facial', '深层清洁护理', { short: { en: 'Deep cleanse', zh: '深层清洁' } }),
+  S_('calm', 'lumiere', 'facial', 60, 260, ['joanne'], 'Sensitive Skin Calming', '敏感肌舒缓护理', { short: { en: 'Calming', zh: '舒缓' } }),
+  S_('lash', 'lumiere', 'lash', 90, 180, ['aida', 'weiling'], 'Lash Extension (Classic)', '睫毛嫁接（自然款）', { short: { en: 'Lashes', zh: '睫毛' } }),
+  S_('gel', 'lumiere', 'lash', 60, 98, ['aida'], 'Gel Manicure', '凝胶美甲', { short: { en: 'Gel nails', zh: '美甲' } }),
+  S_('body', 'lumiere', 'body', 90, 240, ['joanne', 'aida'], 'Aromatherapy Body Massage', '芳香精油身体按摩', { short: { en: 'Body', zh: '身体' } }),
+  S_('scalp', 'lumiere', 'body', 45, 150, ['aida'], 'Scalp Detox Treatment', '头皮净化护理', { short: { en: 'Scalp', zh: '头皮' } }),
+  S_('cutw', 'glow', 'cut', 45, 85, ['marcus', 'ying'], 'Women’s haircut', '女士剪发'),
+  S_('cutm', 'glow', 'cut', 30, 45, ['marcus'], 'Men’s haircut', '男士剪发'),
+  S_('wash', 'glow', 'cut', 20, 25, ['marcus', 'ying'], 'Hair wash & blow-dry', '洗发吹干'),
+  S_('root', 'glow', 'colour', 90, 180, ['ying'], 'Root touch-up', '补染发根'),
+  S_('bala', 'glow', 'colour', 180, 480, ['ying'], 'Balayage', '手刷挑染'),
+  S_('kera', 'glow', 'treat', 120, 350, ['marcus', 'ying'], 'Keratin treatment', '角蛋白护理'),
+  S_('spa', 'glow', 'treat', 45, 120, ['marcus', 'ying'], 'Scalp spa', '头皮水疗'),
+  S_('reformer', 'coreflow', 'class', 50, 65, ['sarah', 'hana'], 'Reformer Flow (group)', '核心床团体课'),
+  S_('mat', 'coreflow', 'class', 50, 45, ['sarah', 'hana'], 'Mat Pilates (group)', '垫上普拉提团体课'),
+  S_('priv', 'coreflow', 'private', 55, 180, ['sarah', 'hana'], 'Private reformer 1:1', '核心床私教 1:1'),
+  S_('duet', 'coreflow', 'private', 55, 260, ['sarah'], 'Duet session (2 people)', '双人课'),
+  S_('gelm', 'polished', 'nails', 60, 98, ['nina'], 'Gel manicure', '凝胶美甲'),
+  S_('gelp', 'polished', 'nails', 60, 120, ['nina'], 'Gel pedicure', '凝胶美足'),
+  S_('lset', 'polished', 'lash', 90, 180, ['mei'], 'Classic lash set', '自然款睫毛嫁接'),
+  S_('llift', 'polished', 'lash', 60, 150, ['mei'], 'Lash lift & tint', '睫毛翘睫与染色'),
 ];
 const svc = id => SERVICES.find(s => s.id === id);
 const PRODUCTS = [
@@ -323,7 +339,7 @@ const member = id => MEMBERS.find(m => m.id === id);
 const initials = n => n.split(' ').map(x => x[0]).slice(0, 2).join('');
 const masked = n => { const p = n.split(' '); return p[0] + (p[1] ? ' ' + p[1][0] + '.' : ''); };
 
-/* one sample day used by the admin diary, today list and therapist view */
+/* one sample day at Lumière used by the admin diary, today list and therapist view */
 const DAYPLAN = [
   { id: 'a1', t: '10:00', s: 'deep', c: 'nur', th: 'joanne', room: 'r1' },
   { id: 'a2', t: '10:30', s: 'lash', c: 'siti', th: 'weiling', room: 'r2' },
@@ -343,7 +359,7 @@ function seed() {
   const bought = addDays(t0, -39);
   const exp = new Date(bought); exp.setMonth(exp.getMonth() + 6);
   return {
-    v: 2, signedIn: false, role: null, phone: '12 345 6789', calAlways: null,
+    v: 3, signedIn: false, role: null, phone: '12 345 6789', calAlways: null, favs: ['lumiere'],
     notif: { rem: true, offers: true, after: true },
     skin: { type: ['combo', 'sensitive'], concerns: ['dull', 'pores'], allergy: 'Salicylic acid', photo: 'archive', consent: addDays(t0, -39).toISOString() },
     packages: [{ id: 'pk1', productId: 'p-hydra6', serviceId: 'hydra', total: 6, used: 2, price: 1800, purchased: bought.toISOString(), expires: exp.toISOString() }],
@@ -356,28 +372,35 @@ function seed() {
       { id: 'l5', wallet: 'pk1', date: addDays(t0, -11).toISOString(), kind: 'use', amount: -1, bal: 4, serviceId: 'hydra' },
     ],
     bookings: [
-      { id: 'b1', serviceId: 'hydra', therapistId: 'joanne', room: 'r2', start: at(addDays(t0, 3), '14:30').toISOString(), status: 'booked', pay: 'package', pkg: 'pk1' },
-      { id: 'b0', serviceId: 'hydra', therapistId: 'joanne', room: 'r2', start: at(addDays(t0, -11), '14:30').toISOString(), status: 'completed', pay: 'package', pkg: 'pk1' },
-      { id: 'bz', serviceId: 'hydra', therapistId: 'joanne', room: 'r2', start: at(addDays(t0, -25), '15:00').toISOString(), status: 'completed', pay: 'package', pkg: 'pk1' },
+      { id: 'b1', biz: 'lumiere', serviceId: 'hydra', extra: [], therapistId: 'joanne', room: 'r2', start: at(addDays(t0, 3), '14:30').toISOString(), status: 'booked', pay: 'package', pkg: 'pk1' },
+      { id: 'b2', biz: 'glow', serviceId: 'cutw', extra: ['wash'], therapistId: 'marcus', room: null, start: at(addDays(t0, -18), '11:00').toISOString(), status: 'completed', pay: 'store', pkg: null },
+      { id: 'b0', biz: 'lumiere', serviceId: 'hydra', extra: [], therapistId: 'joanne', room: 'r2', start: at(addDays(t0, -11), '14:30').toISOString(), status: 'completed', pay: 'package', pkg: 'pk1' },
+      { id: 'bz', biz: 'lumiere', serviceId: 'hydra', extra: [], therapistId: 'joanne', room: 'r2', start: at(addDays(t0, -25), '15:00').toISOString(), status: 'completed', pay: 'package', pkg: 'pk1' },
     ],
     vouchers: [], claimed: {}, sales: [], approvals: {}, arrived: {}, tSessions: {}, tExtra: 0, tCount: 0, installDismissed: false,
   };
 }
 let S = LS.get(KEY, null);
-if (!S || S.v !== 2) S = seed();
+if (!S || S.v !== 3) S = seed();
 const save = () => LS.set(KEY, S);
 
 const isBooked = b => b.status === 'booked';
+const bSvcs = b => [b.serviceId].concat(b.extra || []).map(svc).filter(Boolean);
+const bName = b => bSvcs(b).map(s => s.name[lang]).join(' + ');
+const bMins = b => bSvcs(b).reduce((a, s) => a + s.mins, 0);
+const bPrice = b => bSvcs(b).reduce((a, s) => a + s.price, 0);
+const bBiz = b => biz(b.biz || svc(b.serviceId).biz);
 const heldFor = pk => S.bookings.filter(b => isBooked(b) && b.pay === 'package' && b.pkg === pk.id).length;
 const avail = pk => pk.total - pk.used - heldFor(pk);
-const heldRM = () => S.bookings.filter(b => isBooked(b) && b.pay === 'stored').reduce((a, b) => a + svc(b.serviceId).price, 0);
+const heldRM = () => S.bookings.filter(b => isBooked(b) && b.pay === 'stored').reduce((a, b) => a + bPrice(b), 0);
 const storedAvail = () => S.stored - heldRM();
 const pkgFor = sid => S.packages.filter(p => p.serviceId === sid && avail(p) > 0 && new Date(p.expires) > new Date()).sort((a, b) => new Date(a.expires) - new Date(b.expires))[0];
-const pkgName = pk => (product(pk.productId) || {}).name ? product(pk.productId).name[lang] : '';
+const pkgName = pk => { const p = product(pk.productId); return p ? p.name[lang] : ''; };
 const nextBooking = () => S.bookings.filter(b => isBooked(b) && new Date(b.start) > new Date()).sort((a, b) => new Date(a.start) - new Date(b.start))[0];
-const roomName = r => t(r === 'r1' ? 'room1' : 'room2');
+const roomName = r => r ? t(r === 'r1' ? 'room1' : 'room2') : '';
 const calName = c => t(c === 'apple' ? 'appleCal' : c === 'google' ? 'googleCal' : 'otherCal');
 const meilingBalance = () => S.packages.reduce((a, p) => a + Math.max(0, avail(p) + heldFor(p)) * (p.price / p.total), 0) + S.stored;
+const firstName = n => { const p = n.split(' '); return p.length > 2 ? p.slice(0, -1).join(' ') : p[0]; };
 
 function ledgerAdd(wallet, kind, amount, extra) {
   const prev = S.ledger.filter(l => l.wallet === wallet).sort((a, b) => new Date(a.date) - new Date(b.date)).pop();
@@ -386,21 +409,22 @@ function ledgerAdd(wallet, kind, amount, extra) {
 
 /* ------------------------------------------------------------------ chrome */
 const TABS = {
-  m: [['home', '/m/home', 'tabHome'], ['calendar', '/m/book', 'tabBook'], ['wallet', '/m/wallet', 'tabWallet'], ['user', '/m/me', 'tabMe']],
+  m: [['home', '/m/home', 'tabHome'], ['calendar', '/m/bookings', 'tabBookings'], ['wallet', '/m/wallet', 'tabWallet'], ['user', '/m/me', 'tabProfile']],
   a: [['home', '/a/today', 'aToday'], ['grid', '/a/diary', 'aDiary'], ['users', '/a/members', 'aMembers'], ['chart', '/a/reports', 'aReports'], ['more', '/a/more', 'aMore']],
-  t: [['home', '/t/today', 'tToday'], ['coins', '/t/earnings', 'tEarnings'], ['user', '/t/me', 'tabMe']],
+  t: [['home', '/t/today', 'tToday'], ['coins', '/t/earnings', 'tEarnings'], ['user', '/t/me', 'tabProfile']],
   g: [['home', '/g/home', 'gHome'], ['share', '/g/share', 'gShare'], ['coins', '/g/payouts', 'gPayouts']],
 };
 const HOME = { member: '/m/home', admin: '/a/today', therapist: '/t/today', agent: '/g/home' };
 const ROLES = ['member', 'admin', 'therapist', 'agent'];
 
-function page({ tabs, active, body, back, title, cls }) {
+function page({ tabs, active, body, back, title, cls, right }) {
   const top = back
-    ? `<header class="topbar"><a class="icon-btn" href="#${back}" aria-label="${t('back')}">${icon('chevL')}</a><div class="tb-title">${title || ''}</div><span class="icon-btn" aria-hidden="true"></span></header>`
+    ? `<header class="topbar"><a class="icon-btn" href="#${back}" aria-label="${t('back')}">${icon('chevL')}</a><div class="tb-title">${title || ''}</div>${right || '<span class="icon-btn" aria-hidden="true"></span>'}</header>`
     : '<div class="safe-top"></div>';
   const bar = tabs ? `<nav class="tabbar">${TABS[tabs].map(([ic, href, k]) => `<a class="tab ${active === href ? 'active' : ''}" href="#${href}" ${active === href ? 'aria-current="page"' : ''}>${icon(ic)}<span>${t(k)}</span></a>`).join('')}</nav>` : '';
   return `${top}<main class="main ${cls || ''}" id="main">${body}</main>${bar}`;
 }
+const redirect = p => { setTimeout(() => go(p), 0); return '<main class="main" id="main"></main>'; };
 const mark = (l, dark) => `<span class="mark ${dark ? 'dark' : ''}">${l || 'L'}</span>`;
 const langBtn = () => `<button class="lang" data-act="lang">${lang === 'zh' ? 'EN' : '中文'}</button>`;
 const kpi = (l, v, d) => `<div class="kpi"><span class="kpi-l">${l}</span><span class="kpi-v">${v}</span>${d || ''}</div>`;
@@ -408,22 +432,20 @@ const delta = (txt, dir) => `<span class="delta ${dir}">${dir === 'up' ? '▲' :
 const statrow = (l, v) => `<div class="statrow"><span>${l}</span><b>${v}</b></div>`;
 const menuLink = (href, ic, label, val) => `<a class="menu-item" href="#${href}">${icon(ic, 20)}<span class="grow">${label}</span>${val ? `<span class="val">${val}</span>` : ''}${icon('chevR', 16)}</a>`;
 const menuBtn = (act, ic, label, val) => `<button class="menu-item" data-act="${act}">${icon(ic, 20)}<span class="grow">${label}</span>${val ? `<span class="val">${val}</span>` : ''}${icon('chevR', 16)}</button>`;
+const pic = (id, w, cls) => `<img class="${cls}" src="${photo(id, w)}" alt="" loading="lazy" decoding="async">`;
 
 /* ------------------------------------------------------------------ welcome & sign-in */
 function vWelcome() {
-  return `<div class="safe-top"></div><main class="main welcome" id="main">
-  <div class="row">${mark('a', true)}${langBtn()}</div>
-  <div class="hero">${HERO}</div>
-  <div class="stack center">
-    <p class="eyebrow">${t('welcomeTo')}</p>
-    <h1 class="display">${BIZ.name[lang]}</h1>
-    <p class="lead">${t('tagline')}</p>
-  </div>
-  <div class="stack">
+  return `<div class="welcome">
+  <div class="welcome-photo"><img src="${photo(IMG.salon, 900)}" alt="" decoding="async">
+    <div class="welcome-top"><span class="brand-chip">${mark('a', true)}<span class="wordmark">appt4u</span></span>${langBtn()}</div></div>
+  <div class="welcome-body">
+    <h1 class="display">${t('welcomeT')}</h1>
+    <p class="lead">${t('welcomeSub')}</p>
     <a class="btn btn-primary btn-block" href="#/login">${icon('phone', 18)} ${t('signInPhone')}</a>
     <button class="btn btn-outline btn-block" data-act="roles">${t('exploreDemo')}</button>
-    <p class="small muted center">${t('poweredBy')} <span class="wordmark">appt4u</span> · ${t('demoNote')}</p>
-  </div></main>`;
+    <p class="small muted center">${t('demoNote')}</p>
+  </div></div>`;
 }
 function vLogin() {
   return page({ back: '/welcome', body: `<div class="stack-lg pad-top">
@@ -442,7 +464,8 @@ function rolesSheet() {
   openSheet(`<h2 class="h2">${t('chooseRole')}</h2><div class="stack-xs">${ROLES.map(r => `<button class="opt" data-act="role" data-role="${r}">${icon({ member: 'user', admin: 'chart', therapist: 'sparkle', agent: 'share' }[r], 20)}<span class="grow"><b>${t('r_' + r)}</b><br><span class="small muted">${t('r_' + r + 'Sub')}</span></span>${icon('chevR', 16)}</button>`).join('')}</div>`);
 }
 
-/* ------------------------------------------------------------------ member */
+/* ------------------------------------------------------------------ member: home */
+let hCat = 'all', hQuery = '';
 function installBanner() {
   if (isStandalone() || S.installDismissed || window.matchMedia('(min-width: 900px)').matches) return '';
   let msg = '', btn = '';
@@ -451,97 +474,119 @@ function installBanner() {
   else return '';
   return `<div class="card banner"><div class="row-start">${mark('a', true)}<div><p class="strong">${t('installTitle')}</p><p class="small muted">${msg}</p></div></div><div class="row-start gap8">${btn}<button class="icon-btn" data-act="dismissInstall" aria-label="${t('notNow')}">${icon('x', 18)}</button></div></div>`;
 }
-function nextCard(b) {
-  const s = svc(b.serviceId), d = new Date(b.start);
-  return `<div class="card gold stack-sm">
-    <p class="eyebrow">${t('upNext')}</p>
-    <h2 class="h-serif">${s.name[lang]}</h2>
-    <p class="muted">${fDay(d)} · ${hm(d)}<br>${roomName(b.room)} · ${THER[b.therapistId].name}</p>
-    <div class="row-start gap8" style="padding-top:4px"><button class="btn btn-primary btn-sm" data-act="qr">${icon('qr', 16)} ${t('showQR')}</button><a class="btn btn-outline btn-sm" href="#/m/bookings">${t('change')}</a></div></div>`;
+function upcomingCard(b) {
+  const d = new Date(b.start), B = bBiz(b);
+  return `<div class="card upc"><span class="datebox"><span>${lang === 'zh' ? (d.getMonth() + 1) + '月' : EN_M[d.getMonth()]}</span><b>${d.getDate()}</b></span>
+  <a class="grow" href="#/m/bookings"><span class="eyebrow">${t('upNext')}</span><span class="strong block">${bName(b)}</span><span class="small muted">${B.name[lang]} · ${dayShort(d)} ${hm(d)}</span></a>
+  <button class="icon-btn qr-btn" data-act="qr" aria-label="${t('showQR')}">${icon('qr', 20)}</button></div>`;
 }
-function offerCard(id, title, sub, ic) {
-  return `<div class="card tint-rose offer"><div class="row-start">${icon(ic)}<div><p class="offer-t">${title}</p><p class="small muted">${sub}</p></div></div>${S.claimed[id] ? `<span class="pill sage">${t('claimed')}</span>` : `<button class="btn btn-sm btn-ink" data-act="claim" data-id="${id}">${t('claim')}</button>`}</div>`;
+function bizRows() {
+  const q = hQuery.trim().toLowerCase();
+  const list = BIZS.filter(b => (hCat === 'all' || b.cats.includes(hCat)) && (!q || b.name.en.toLowerCase().includes(q) || b.name.zh.includes(q) || b.area.en.toLowerCase().includes(q) ||
+    SERVICES.some(s => s.biz === b.id && (s.name.en.toLowerCase().includes(q) || s.name.zh.includes(q)))));
+  if (!list.length) return `<p class="muted center" style="padding:12px 0">${t('noResults')}</p>`;
+  return list.map(b => `<a class="card biz" href="#/m/biz/${b.id}">${pic(b.thumb, 240, 'biz-img')}<div class="biz-body">
+    <div class="row" style="align-items:flex-start"><span class="biz-name">${b.name[lang]}</span><span class="small muted nowrap">${t('km', { n: b.dist })}</span></div>
+    <span class="small muted row-start gap4">${icon('pin', 15)} ${b.area[lang]}</span>
+    <span class="rating">${star()} <b>${b.rating}</b> <span class="muted">${t('reviews', { n: b.reviews })}</span></span></div></a>`).join('');
 }
 function vHome() {
   const nb = nextBooking();
-  const pk = S.packages.find(p => avail(p) > 0) || S.packages[0];
-  const h = new Date().getHours();
+  const sessions = S.packages.reduce((a, p) => a + Math.max(0, avail(p)), 0);
   const body = `
-  <div class="row"><div class="brand-mini">${mark()}<span>${BIZ.name[lang]}</span></div><button class="icon-btn" data-act="toast" data-msg="noNotifs" aria-label="${t('notifications')}">${icon('bell')}</button></div>
-  ${installBanner()}
-  <div class="row"><div><p class="muted">${t(h < 12 ? 'gm' : h < 18 ? 'ga' : 'ge')}</p><h1 class="h1">Mei Ling</h1></div><a class="avatar" href="#/m/me" aria-label="${t('meTitle')}">ML</a></div>
-  ${nb ? nextCard(nb) : `<div class="card stack center"><p class="muted">${t('noBooking')}</p><a class="btn btn-primary" href="#/m/book">${t('bookNow')}</a></div>`}
-  <div class="tiles">
-    <a class="tile" href="#/m/wallet"><span class="tile-l">${t('packages')}</span><span class="tile-v">${pk ? t('sessionsLeft', { n: avail(pk) }) : '—'}</span></a>
-    <a class="tile" href="#/m/wallet/stored"><span class="tile-l">${t('storedValue')}</span><span class="tile-v">${rm(storedAvail())}</span></a>
+  <div class="loc-row">
+    <button class="loc" data-act="toast" data-msg="demoOnly"><span class="loc-l">${icon('pin', 15)} ${t('loc')}</span><span class="loc-v">${t('locVal')} ${icon('chevD', 16)}</span></button>
+    <button class="icon-btn" data-act="toast" data-msg="noNotifs" aria-label="${t('notifications')}">${icon('bell')}<span class="dot-red"></span></button>
   </div>
-  <a class="card tint-sage row link-card" href="#/m/aftercare"><span class="row-start">${icon('leaf')}<span>${t('aftercareCard')}</span></span>${icon('chevR', 18)}</a>
-  <h2 class="h2">${t('forYou')}</h2>
-  ${offerCard('o1', t('offer1'), t('offer1Sub', { d: fDate(addDays(today0(), 21)) }), 'gift')}
-  ${offerCard('o2', t('offer2'), t('offer2Sub'), 'sparkle')}
-  <a class="row more-link" href="#/m/bookings"><span>${t('myBookings')}</span>${icon('chevR', 18)}</a>`;
+  <label class="searchbar">${icon('search', 19)}<input id="q" type="search" value="${esc(hQuery)}" placeholder="${t('searchPh')}" aria-label="${t('searchPh')}" autocomplete="off"></label>
+  ${installBanner()}
+  ${nb ? upcomingCard(nb) : ''}
+  <a class="promo" href="#/m/biz/lumiere/facial">${pic(IMG.mask, 640, 'promo-img')}<div class="promo-body"><p class="promo-eb">${t('promoEyebrow')}</p><p class="promo-t">${t('promoTitle')}</p><p class="promo-s">${t('promoSub')}</p><span class="promo-btn">${t('bookNowBtn')}</span></div></a>
+  <h2 class="sec-t" style="margin-bottom:-6px">${t('services')}</h2>
+  <div class="hscroll">${HOME_CATS.map(([c, ic]) => `<button class="chip ${hCat === c ? 'on' : ''}" data-act="hcat" data-c="${c}">${icon(ic, 17)} ${t('cat_' + c)}</button>`).join('')}</div>
+  <div class="sec-head"><h2 class="sec-t">${t('nearby')}</h2><button class="link-btn" data-act="toast" data-msg="demoOnly">${icon('map', 16)} ${t('viewMap')}</button></div>
+  <div class="stack" id="bizlist">${bizRows()}</div>
+  <a class="card row" href="#/m/wallet"><span class="row-start">${pic(BIZS[0].thumb, 120, 'biz-img sm')}<span><span class="small muted block">${t('yourWallet', { b: 'Lumière' })}</span><span class="strong">${t('walletLine', { s: sessions, v: rm(storedAvail()) })}</span></span></span>${icon('chevR', 18)}</a>
+  <a class="card tint-sage row" href="#/m/aftercare"><span class="row-start">${icon('leaf')}<span class="strong">${t('aftercareCard')}</span></span>${icon('chevR', 18)}</a>`;
   return page({ tabs: 'm', active: '/m/home', body });
 }
-function vBook(cat) {
-  cat = CATS.some(c => c.id === cat) ? cat : 'facial';
-  const body = `<h1 class="h1">${t('bookTitle')}</h1>
-  <div class="hscroll">${CATS.map(c => `<a class="chip ${c.id === cat ? 'on' : ''}" href="#/m/book/${c.id}">${c[lang]}</a>`).join('')}</div>
-  <div class="stack">${SERVICES.filter(s => s.cat === cat).map(s => {
-    const pk = pkgFor(s.id);
-    return `<a class="card svc" href="#/m/service/${s.id}"><span class="thumb">${thumb(s.icon)}</span><span class="svc-body"><span class="svc-name">${s.name[lang]}</span><span class="small muted">${t('mins', { n: s.mins })} · ${rm(s.price)}</span>${pk ? `<span class="pill gold">${t('inPackage', { n: avail(pk) })}</span>` : ''}</span>${icon('chevR', 18)}</a>`;
-  }).join('')}</div>`;
-  return page({ tabs: 'm', active: '/m/book', body });
+
+/* ------------------------------------------------------------------ member: business & booking */
+let sel = null, draft = null;
+function vBiz(id, tab) {
+  const B = biz(id); if (!B) return vNotFound();
+  tab = B.tabs.some(x => x[0] === tab) ? tab : B.tabs[0][0];
+  if (!sel || sel.biz !== id) sel = { biz: id, ids: [] };
+  const fav = S.favs.includes(id);
+  const n = sel.ids.length;
+  const rows = SERVICES.filter(s => s.biz === id && s.cat === tab).map(s => {
+    const on = sel.ids.includes(s.id), pk = pkgFor(s.id);
+    return `<button class="srow ${on ? 'on' : ''}" data-act="pick" data-id="${s.id}" aria-pressed="${on}"><span class="grow"><span class="srow-n">${s.name[lang]}</span><span class="small muted">${rm(s.price)} · ${t('mins', { n: s.mins })}</span>${pk ? `<br><span class="pill gold" style="margin-top:6px">${t('inPackage', { n: avail(pk) })}</span>` : ''}</span><span class="check">${on ? icon('check', 15) : ''}</span></button>`;
+  }).join('');
+  const body = `${pic(B.img, 800, 'hero-img')}
+  <div class="stack-sm"><h1 class="h1">${B.name[lang]}</h1>
+    <div class="meta"><span>${icon('pin', 17)} ${B.area[lang]}</span><span>${icon('clock', 17)} ${B.hours[lang]}</span><span class="rating" style="color:var(--ink)">${star()} <b>${B.rating}</b> <span class="muted">${t('reviews', { n: B.reviews })}</span></span></div></div>
+  <p class="muted">${B.desc[lang]}</p>
+  <nav class="tabs-u">${B.tabs.map(([k, en, zh]) => `<a class="${k === tab ? 'on' : ''}" href="#/m/biz/${id}/${k}">${lang === 'zh' ? zh : en}</a>`).join('')}</nav>
+  <div class="stack-xs">${rows}</div>
+  <div class="sticky-cta"><button class="btn btn-primary btn-block" data-act="continue" ${n ? '' : 'disabled'}>${n ? t('continueN', { n }) : t('selectSvc')}</button></div>`;
+  return page({ back: '/m/home', right: `<button class="icon-btn ${fav ? 'fav-on' : ''}" data-act="fav" data-id="${id}" aria-label="${t('favourites')}" aria-pressed="${fav}">${icon('heart')}</button>`, body });
 }
 
 const SLOTS = ['10:00', '11:30', '13:00', '14:30', '16:00', '17:30'];
-let draft = null;
-function slotState(s, dayISO, tm, ther) {
+function staffFor(ss, B) {
+  const inter = ss.reduce((acc, s) => acc.filter(x => s.by.includes(x)), ss.length ? ss[0].by.slice() : []);
+  return inter.length ? inter : B.staff;
+}
+function slotState(by, key, dayISO, tm, ther) {
   const d = at(new Date(dayISO), tm);
   if (d.getTime() < Date.now() + 30 * 60000) return 'past';
   if (S.bookings.some(b => isBooked(b) && Math.abs(new Date(b.start) - d) < 90 * 60000)) return 'mine';
-  const list = ther === 'any' ? s.by : [ther];
-  const key = new Date(dayISO).toDateString();
-  return list.some(th => hash(key + tm + th + s.id) % 4 !== 0) ? 'open' : 'full';
+  const list = ther === 'any' ? by : [ther];
+  const k = new Date(dayISO).toDateString();
+  return list.some(th => hash(k + tm + th + key) % 4 !== 0) ? 'open' : 'full';
 }
-function payOptions(s) {
-  const pk = pkgFor(s.id), out = [];
+function payOptions(ss, B, total) {
+  const out = [];
+  const pk = ss.length === 1 ? pkgFor(ss[0].id) : null;
   if (pk) out.push(['package', t('payPackage', { n: avail(pk) })]);
-  if (storedAvail() >= s.price) out.push(['stored', t('payStored', { b: rm(storedAvail()) })]);
+  if (B.id === 'lumiere' && storedAvail() >= total) out.push(['stored', t('payStored', { b: rm(storedAvail()) })]);
   out.push(['store', t('payStore')]);
   return out;
 }
-function vService(id) {
-  const s = svc(id); if (!s) return vNotFound();
-  if (!draft || draft.serviceId !== id) draft = { serviceId: id, therapist: 'any', day: today0().toISOString(), time: null, pay: null };
-  const pays = payOptions(s);
+function vTime() {
+  if (!draft) return redirect('/m/home');
+  const B = biz(draft.biz), ss = draft.ids.map(svc), by = staffFor(ss, B), key = draft.ids.join('+');
+  const total = ss.reduce((a, s) => a + s.price, 0), mins = ss.reduce((a, s) => a + s.mins, 0);
+  if (draft.therapist !== 'any' && !by.includes(draft.therapist)) draft.therapist = 'any';
+  const pays = payOptions(ss, B, total);
   if (!pays.some(p => p[0] === draft.pay)) draft.pay = pays[0][0];
-  if (draft.time && slotState(s, draft.day, draft.time, draft.therapist) !== 'open') draft.time = null;
+  if (draft.time && slotState(by, key, draft.day, draft.time, draft.therapist) !== 'open') draft.time = null;
   const days = [...Array(10)].map((_, i) => addDays(today0(), i));
   const body = `
-  <div class="svc-hero"><span class="thumb lg">${thumb(s.icon)}</span><div><h1 class="h-serif">${s.name[lang]}</h1><p class="muted">${t('mins', { n: s.mins })} · ${rm(s.price)}</p></div></div>
-  <p class="muted">${s.desc[lang]}</p>
-  <section class="stack-sm"><h2 class="label">${t('therapist')}</h2><div class="chips">${['any'].concat(s.by).map(x => `<button class="chip ${draft.therapist === x ? 'on' : ''}" data-act="ther" data-id="${x}">${x === 'any' ? t('any') : THER[x].name}</button>`).join('')}</div></section>
+  <div class="card sumcard">${pic(B.thumb, 160, 'biz-img sm')}<div class="grow"><p class="strong">${B.name[lang]}</p><p class="small muted">${ss.map(s => s.name[lang]).join(' + ')}</p><p class="small" style="color:var(--primary);font-weight:700">${t('totalLine', { p: rm(total), m: mins })}</p></div></div>
+  <section class="stack-sm"><h2 class="label">${t('staff')}</h2><div class="chips">${['any'].concat(by).map(x => `<button class="chip ${draft.therapist === x ? 'on' : ''}" data-act="ther" data-id="${x}">${x === 'any' ? t('any') : THER[x].name}</button>`).join('')}</div></section>
   <section class="stack-sm"><h2 class="label">${t('pickDate')}</h2><div class="hscroll">${days.map((d, i) => `<button class="date ${sameDay(d, draft.day) ? 'on' : ''}" data-act="day" data-d="${d.toISOString()}"><span>${i === 0 ? t('today') : dayShort(d)}</span><b>${d.getDate()}</b></button>`).join('')}</div></section>
   <section class="stack-sm"><h2 class="label">${t('pickTime')}</h2><div class="slots">${SLOTS.map(tm => {
-    const st = slotState(s, draft.day, tm, draft.therapist);
+    const st = slotState(by, key, draft.day, tm, draft.therapist);
     return `<button class="slot ${st} ${draft.time === tm ? 'on' : ''}" ${st === 'open' ? `data-act="slot" data-t="${tm}"` : 'disabled'}>${tm}${st === 'full' ? ` <span class="small">${t('full')}</span>` : ''}</button>`;
   }).join('')}</div></section>
   <section class="stack-sm"><h2 class="label">${t('payWith')}</h2><div class="stack-xs">${pays.map(([k, l]) => `<button class="opt ${draft.pay === k ? 'on' : ''}" data-act="pay" data-k="${k}"><span class="radio"></span><span>${l}</span></button>`).join('')}</div></section>
-  ${s.device || s.cat === 'facial' ? `<p class="note sage">${icon('check', 16)} ${t('roomAuto')}</p>` : ''}
+  ${B.id === 'lumiere' && ss.some(s => s.cat === 'facial') ? `<p class="note sage">${icon('check', 16)} ${t('roomAuto')}</p>` : ''}
   <p class="small muted">${t('policy', { h: 12 })}</p>
-  <div class="sticky-cta"><button class="btn btn-primary btn-block" data-act="confirmBooking" ${draft.time ? '' : 'disabled'}>${draft.time ? t('confirmAt', { d: fDay(draft.day), t: draft.time }) : t('chooseTime')}</button></div>`;
-  return page({ back: '/m/book/' + s.cat, title: t('bookTitle'), body });
+  <div class="sticky-cta"><button class="btn btn-primary btn-block" data-act="confirmBooking" ${draft.time ? '' : 'disabled'}>${draft.time ? t('bookNowAt', { p: rm(total) }) : t('chooseTime')}</button></div>`;
+  return page({ back: '/m/biz/' + B.id, title: t('bookTitle'), body });
 }
 function vDone(id) {
   const b = S.bookings.find(x => x.id === id); if (!b) return vNotFound();
-  const s = svc(b.serviceId), d = new Date(b.start);
-  const held = b.pay === 'package' ? t('heldPkg') : b.pay === 'stored' ? t('heldStored', { a: rm(s.price) }) : t('payAtStore');
+  const d = new Date(b.start), B = bBiz(b);
+  const held = b.pay === 'package' ? t('heldPkg') : b.pay === 'stored' ? t('heldStored', { a: rm(bPrice(b)) }) : t('payAtStore');
   const calBtn = S.calAlways
     ? `<button class="btn btn-outline btn-block" data-act="calDo" data-id="${b.id}" data-c="${S.calAlways}">${icon('calendar', 18)} ${t('addTo', { c: calName(S.calAlways) })}</button>`
     : `<button class="btn btn-outline btn-block" data-act="calSheet" data-id="${b.id}">${icon('calendar', 18)} ${t('addToCalendar')}</button>`;
   return page({ cls: 'center-main', body: `<div class="done stack-lg center">
     <div class="done-icon">${icon('checkCircle', 68)}</div>
-    <div class="stack-sm"><h1 class="h1">${t('booked')}</h1><p class="muted lines">${s.name[lang]}<br>${fDay(d)} · ${hm(d)}<br>${roomName(b.room)} · ${THER[b.therapistId].name}</p></div>
+    <div class="stack-sm"><h1 class="h1">${t('booked')}</h1><p class="muted lines">${bName(b)}<br>${B.name[lang]}<br>${fDay(d)} · ${hm(d)} · ${THER[b.therapistId].name}${b.room ? ' · ' + roomName(b.room) : ''}</p></div>
     <span class="pill sage" style="align-self:center">${held}</span>
     <div class="stack w100">${calBtn}<a class="btn btn-primary btn-block" href="#/m/home">${t('done')}</a></div></div>` });
 }
@@ -555,20 +600,27 @@ function calSheet(id) {
   <label class="row toggle-row"><span>${t('alwaysDo')}</span><input type="checkbox" class="switch" id="calAlways"></label>
   <button class="btn btn-ghost btn-block" data-act="closeSheet">${t('notNow')}</button>`);
 }
-function bookingCard(b, upcoming) {
-  const s = svc(b.serviceId), d = new Date(b.start);
+
+/* ------------------------------------------------------------------ member: bookings, wallet, profile */
+function bkCard(b, up) {
+  const d = new Date(b.start), B = bBiz(b);
   const pill = { booked: 'gold', completed: 'sage', cancelled: 'grey', late: 'rose' }[b.status];
-  return `<div class="card stack-sm"><div class="row"><span class="strong">${s.name[lang]}</span><span class="pill ${pill}">${t('st_' + b.status)}</span></div>
-  <p class="small muted">${fDay(d)} · ${hm(d)} · ${THER[b.therapistId].name}</p>
-  ${upcoming ? `<div class="row-start gap8"><button class="btn btn-outline btn-sm" data-act="${S.calAlways ? 'calDo' : 'calSheet'}" data-id="${b.id}" data-c="${S.calAlways || ''}">${icon('calendar', 16)} ${t('addToCalendar')}</button><button class="btn btn-sm btn-ghost" data-act="cancelBk" data-id="${b.id}">${t('cancel')}</button></div>` : ''}</div>`;
+  return `<div class="card stack-sm"><div class="row-start" style="align-items:flex-start">${pic(B.thumb, 120, 'biz-img sm')}<div class="grow">
+    <div class="row" style="align-items:flex-start"><span class="strong">${bName(b)}</span><span class="pill ${pill}">${t('st_' + b.status)}</span></div>
+    <span class="small muted block">${B.name[lang]}</span><span class="small muted">${fDay(d)} · ${hm(d)} · ${THER[b.therapistId].name}</span></div></div>
+  ${up ? `<div class="row-start gap8"><button class="btn btn-soft btn-sm" data-act="${S.calAlways ? 'calDo' : 'calSheet'}" data-id="${b.id}" data-c="${S.calAlways || ''}">${icon('calendar', 16)} ${t('calendarSet')}</button><button class="btn btn-sm btn-outline" data-act="qr">${icon('qr', 16)} QR</button><button class="btn btn-sm btn-ghost" data-act="cancelBk" data-id="${b.id}">${t('cancel')}</button></div>` : ''}</div>`;
 }
-function vBookings() {
+function vBookings(tab) {
+  tab = tab === 'past' ? 'past' : 'up';
   const now = new Date();
   const up = S.bookings.filter(b => isBooked(b) && new Date(b.start) > now).sort((a, b) => new Date(a.start) - new Date(b.start));
   const past = S.bookings.filter(b => !(isBooked(b) && new Date(b.start) > now)).sort((a, b) => new Date(b.start) - new Date(a.start));
-  return page({ back: '/m/home', title: t('myBookings'), body: `
-  <h2 class="label">${t('upcoming')}</h2>${up.length ? up.map(b => bookingCard(b, true)).join('') : `<div class="card center stack"><p class="muted">${t('noBooking')}</p><a class="btn btn-primary btn-sm" href="#/m/book">${t('bookNow')}</a></div>`}
-  <h2 class="label">${t('past')}</h2>${past.length ? past.map(b => bookingCard(b, false)).join('') : `<p class="muted">${t('noPast')}</p>`}` });
+  const list = tab === 'up' ? up : past;
+  const empty = tab === 'up' ? `<div class="card center stack"><p class="muted">${t('noBooking')}</p><a class="btn btn-primary btn-sm" href="#/m/home">${t('findSalon')}</a></div>` : `<p class="muted center">${t('noPast')}</p>`;
+  const body = `<h1 class="h1">${t('tabBookings')}</h1>
+  <div class="seg"><a class="${tab === 'up' ? 'on' : ''}" href="#/m/bookings/up">${t('upcoming')} (${up.length})</a><a class="${tab === 'past' ? 'on' : ''}" href="#/m/bookings/past">${t('past')}</a></div>
+  ${list.length ? list.map(b => bkCard(b, tab === 'up')).join('') : empty}`;
+  return page({ tabs: 'm', active: '/m/bookings', body });
 }
 function ledgerRows(wallet, unit) {
   const rows = S.ledger.map((l, i) => Object.assign({ i }, l)).filter(l => l.wallet === wallet).sort((a, b) => (new Date(b.date) - new Date(a.date)) || (b.i - a.i));
@@ -577,9 +629,11 @@ function ledgerRows(wallet, unit) {
     const amt = unit === 'rm' ? sign + rm(Math.abs(l.amount)) : sign + Math.abs(l.amount);
     const bal = unit === 'rm' ? rm(l.bal) : l.bal;
     const title = (l.kind === 'use' && l.serviceId) ? svc(l.serviceId).name[lang] : t('k_' + l.kind);
-    const sub = (l.kind === 'use' ? t('k_use') : '') ;
-    return `<div class="li"><div><p class="strong">${title}</p><p class="small muted">${fDate(l.date)}${sub ? ' · ' + sub : ''}</p></div><div class="r"><p class="${l.amount > 0 ? 'plus' : 'minus'}">${amt}</p><p class="small muted">${t('balShort', { b: bal })}</p></div></div>`;
+    return `<div class="li"><div><p class="strong">${title}</p><p class="small muted">${fDate(l.date)}${l.kind === 'use' ? ' · ' + t('k_use') : ''}</p></div><div class="r"><p class="${l.amount > 0 ? 'plus' : 'minus'}">${amt}</p><p class="small muted">${t('balShort', { b: bal })}</p></div></div>`;
   }).join('');
+}
+function offerCard(id, title, sub, ic) {
+  return `<div class="card tint-rose offer"><div class="row-start">${icon(ic)}<div><p class="offer-t">${title}</p><p class="small muted">${sub}</p></div></div>${S.claimed[id] ? `<span class="pill sage">${t('claimed')}</span>` : `<button class="btn btn-sm btn-primary" data-act="claim" data-id="${id}">${t('claim')}</button>`}</div>`;
 }
 function vWallet(tab) {
   tab = ['pk', 'stored', 'vouchers'].includes(tab) ? tab : 'pk';
@@ -598,37 +652,40 @@ function vWallet(tab) {
       <div class="row"><h2 class="h2">${t('statement')}</h2><button class="btn btn-sm btn-ghost" data-act="toast" data-msg="pdfToast">PDF</button></div>
       <div class="card flat">${ledgerRows('stored', 'rm')}</div>`;
   } else {
-    content = S.vouchers.length ? S.vouchers.map(v => `<div class="card tint-rose stack-sm"><p class="offer-t">${t(v.key)}</p><p class="small muted">${t('voucherUse')}</p></div>`).join('') : `<div class="card center"><p class="muted">${t('noVouchers')}</p></div>`;
+    content = `<h2 class="h2">${t('offersT')}</h2>${offerCard('o1', t('offer1'), t('offer1Sub', { d: fDate(addDays(today0(), 21)) }), 'gift')}${offerCard('o2', t('offer2'), t('offer2Sub'), 'sparkle')}
+    ${S.vouchers.length ? `<h2 class="h2">${t('myVouchers')}</h2>${S.vouchers.map(v => `<div class="card gold stack-xs"><p class="offer-t">${t(v.key)}</p><p class="small muted">${t('voucherUse')}</p></div>`).join('')}` : ''}`;
   }
-  const body = `<h1 class="h1">${t('walletTitle')}</h1>
+  const body = `<div class="row"><h1 class="h1">${t('walletTitle')}</h1><span class="pill grey">Lumière</span></div>
   <div class="seg"><a class="${tab === 'pk' ? 'on' : ''}" href="#/m/wallet/pk">${t('tabPackages')}</a><a class="${tab === 'stored' ? 'on' : ''}" href="#/m/wallet/stored">${t('tabStored')}</a><a class="${tab === 'vouchers' ? 'on' : ''}" href="#/m/wallet/vouchers">${t('tabVouchers')}</a></div>
   ${content}`;
   return page({ tabs: 'm', active: '/m/wallet', body });
 }
 function vMe() {
-  const body = `<h1 class="h1">${t('meTitle')}</h1>
+  const favNames = S.favs.map(id => biz(id)).filter(Boolean).map(b => b.name[lang].split(' ')[0]).join(', ');
+  const body = `<h1 class="h1">${t('tabProfile')}</h1>
   <div class="card row-start"><span class="avatar lg">ML</span><div><p class="strong">Mei Ling Tan</p><p class="small muted">${t('goldMember')} · +60 ${esc(S.phone)}</p></div></div>
   <button class="card row" data-act="qr"><span class="row-start">${icon('qr')}<span><span class="strong">${t('myQR')}</span><br><span class="small muted">${t('qrHint')}</span></span></span>${icon('chevR', 18)}</button>
   <div class="card menu">
     ${menuLink('/m/skin', 'leaf', t('skinProfile'))}
     ${menuLink('/m/bookings', 'calendar', t('myBookings'))}
+    ${menuLink('/m/home', 'heart', t('favourites'), favNames)}
     ${menuBtn('calSettings', 'clock', t('calendarSet'), S.calAlways ? calName(S.calAlways) : t('calAsk'))}
     ${menuBtn('notifSettings', 'bell', t('notifications'))}
     ${menuBtn('lang', 'globe', t('language'), lang === 'zh' ? '中文' : 'English')}
-    ${menuBtn('refer', 'heart', t('refer'))}
+    ${menuBtn('refer', 'gift', t('refer'))}
   </div>
   <div class="card menu">${menuBtn('roles', 'users', t('switchRole'))}${menuBtn('reset', 'refresh', t('resetDemo'))}${menuBtn('signout', 'logout', t('signOut'))}</div>`;
   return page({ tabs: 'm', active: '/m/me', body });
 }
 function vSkin() {
   const chip = (g, v, label) => `<button class="chip ${S.skin[g].includes(v) ? 'on' : ''}" data-act="skinChip" data-g="${g}" data-v="${v}">${label}</button>`;
-  const photo = k => `<button class="opt ${S.skin.photo === k ? 'on' : ''}" data-act="photo" data-k="${k}"><span class="radio"></span><span>${t('ph_' + k)}</span></button>`;
+  const ph = k => `<button class="opt ${S.skin.photo === k ? 'on' : ''}" data-act="photo" data-k="${k}"><span class="radio"></span><span>${t('ph_' + k)}</span></button>`;
   return page({ back: '/m/me', title: t('skinTitle'), body: `
   <section class="stack-sm"><h2 class="label">${t('skinType')}</h2><div class="chips">${['dry', 'oily', 'combo', 'sensitive', 'normal'].map(v => chip('type', v, t('ty_' + v))).join('')}</div></section>
   <section class="stack-sm"><h2 class="label">${t('concerns')}</h2><div class="chips">${['dull', 'pores', 'acne', 'pig', 'lines'].map(v => chip('concerns', v, t('co_' + v))).join('')}</div></section>
   <section class="stack-sm"><h2 class="label">${t('allergies')}</h2><input class="field" id="allergy" value="${esc(S.skin.allergy)}"></section>
   <div class="card stack-sm"><div class="row"><span class="strong">${t('consent')}</span><span class="pill sage">${t('signed')}</span></div><p class="small muted">${t('signedOn', { d: fFull(S.skin.consent) })}</p></div>
-  <section class="stack-sm"><h2 class="label">${t('photos')}</h2><div class="stack-xs">${photo('archive')}${photo('marketing')}${photo('no')}</div></section>
+  <section class="stack-sm"><h2 class="label">${t('photos')}</h2><div class="stack-xs">${ph('archive')}${ph('marketing')}${ph('no')}</div></section>
   <p class="small muted">${t('reviewNote')}</p>
   <button class="btn btn-primary btn-block" data-act="saveSkin">${t('save')}</button>` });
 }
@@ -636,24 +693,26 @@ function vAftercare() {
   const pk = S.packages[0], n = pk ? pk.used + heldFor(pk) + 1 : 3;
   const next = at(addDays(today0(), 17), '14:30');
   return page({ back: '/m/home', title: t('aftercareTitle'), body: `
-  <div class="stack-sm"><p class="muted">${fDate(addDays(today0(), -11))} · ${svc('hydra').name[lang]}</p><h1 class="h1">${t('aftercareTitle')}</h1></div>
+  ${pic(IMG.mask, 800, 'hero-img')}
+  <div class="stack-xs"><p class="muted">${fDate(addDays(today0(), -11))} · ${svc('hydra').name[lang]} · Lumière</p><h1 class="h1">${t('aftercareTitle')}</h1></div>
   <div class="card tint-sage stack-sm"><p class="strong">${t('within24')}</p><p>· ${t('tip1')}<br>· ${t('tip2')}<br>· ${t('tip3')}</p></div>
   <div class="card gold stack-sm"><p class="eyebrow">${t('nextSuggested')}</p><h2 class="h-serif">${fDay(next)}</h2><p class="small muted">${t('interval', { n: Math.min(n, 6), t: 6 })}</p>
     <button class="btn btn-primary btn-block" data-act="quickBook" data-d="${next.toISOString()}">${t('bookOneTap', { t: '14:30', p: 'Joanne' })}</button></div>
-  <div class="card row-start"><span class="thumb">${thumb('serum')}</span><div><p class="small" style="color:var(--rose)">${t('recommended')}</p><p class="strong">${t('serum')}</p><p class="small muted">RM168 · ${t('inStore')}</p></div></div>` });
+  <div class="card row-start"><span class="thumb">${SERUM}</span><div><p class="small" style="color:var(--rose)">${t('recommended')}</p><p class="strong">${t('serum')}</p><p class="small muted">RM168 · ${t('inStore')}</p></div></div>` });
 }
 
-/* ------------------------------------------------------------------ admin */
+/* ------------------------------------------------------------------ admin (Lumière) */
+const isLumiere = b => bBiz(b).id === 'lumiere';
 function todayList() {
   const now = new Date();
   const items = DAYPLAN.map(a => {
     const s = svc(a.s), start = at(today0(), a.t), end = new Date(start.getTime() + s.mins * 60000);
     const status = end < now ? 'done' : S.arrived[a.id] ? 'arrived' : 'todo';
-    return { id: a.id, time: a.t, start, s, client: member(a.c).name, th: a.th, room: a.room, status, mine: false };
+    return { id: a.id, time: a.t, start, label: s.name[lang], client: member(a.c).name, th: a.th, room: a.room, status, mine: false };
   });
-  S.bookings.filter(b => isBooked(b) && sameDay(b.start, now)).forEach(b => {
-    const s = svc(b.serviceId), start = new Date(b.start);
-    items.push({ id: b.id, time: hm(start), start, s, client: 'Mei Ling Tan', th: b.therapistId, room: b.room, status: S.arrived[b.id] ? 'arrived' : 'todo', mine: true });
+  S.bookings.filter(b => isBooked(b) && isLumiere(b) && sameDay(b.start, now)).forEach(b => {
+    const start = new Date(b.start);
+    items.push({ id: b.id, time: hm(start), start, label: bName(b), client: 'Mei Ling Tan', th: b.therapistId, room: b.room, status: S.arrived[b.id] ? 'arrived' : 'todo', mine: true });
   });
   return items.sort((a, b) => a.start - b.start);
 }
@@ -663,7 +722,7 @@ function vAToday() {
   const arrived = items.filter(i => i.status !== 'todo').length;
   const att = [['att1', '/a/members/away'], ['att2', '/a/reports'], ['att3', '/a/diary'], ['att4', '/a/commission']];
   const body = `
-  <div class="row page-top"><div><p class="muted">${t('aToday')} · ${t('mainBranch')}</p><h1 class="h1">${fDay(new Date())}</h1></div><a class="btn btn-primary btn-sm" href="#/a/counter">${icon('plus', 16)} ${t('recordSale')}</a></div>
+  <div class="row page-top"><div><p class="muted">Lumière · ${t('mainBranch')}</p><h1 class="h1">${fDay(new Date())}</h1></div><a class="btn btn-primary btn-sm" href="#/a/counter">${icon('plus', 16)} ${t('recordSale')}</a></div>
   <div class="kpis">
     ${kpi(t('kBookings'), 29 + items.length, delta('+4', 'up'))}
     ${kpi(t('kArrived'), 15 + arrived, '')}
@@ -673,7 +732,7 @@ function vAToday() {
   <p class="small muted">${t('vsLastWeek')} ${t('sample')}.</p>
   <section class="card stack-xs"><h2 class="h2">${t('needs')}</h2>${att.map(([k, href]) => `<a class="att" href="#${href}"><span>${t(k)}</span>${icon('chevR', 16)}</a>`).join('')}</section>
   <h2 class="h2">${t('appts')}</h2>
-  ${items.map(i => `<div class="card appt ${i.mine ? 'gold' : ''}"><span class="appt-time">${i.time}</span><div class="grow"><p class="strong">${esc(i.client)}</p><p class="small muted">${i.s.name[lang]} · ${THER[i.th].name}${i.room ? ' · ' + roomName(i.room) : ''}</p></div>${i.status === 'done' ? `<span class="pill sage">${t('doneSt')}</span>` : i.status === 'arrived' ? `<span class="pill gold">${t('arrivedSt')}</span>` : `<button class="btn btn-sm btn-outline" data-act="checkin" data-id="${i.id}">${t('checkIn')}</button>`}</div>`).join('')}`;
+  ${items.map(i => `<div class="card appt ${i.mine ? 'gold' : ''}"><span class="appt-time">${i.time}</span><div class="grow"><p class="strong">${esc(i.client)}</p><p class="small muted">${i.label} · ${THER[i.th].name}${i.room ? ' · ' + roomName(i.room) : ''}</p></div>${i.status === 'done' ? `<span class="pill sage">${t('doneSt')}</span>` : i.status === 'arrived' ? `<span class="pill gold">${t('arrivedSt')}</span>` : `<button class="btn btn-sm btn-outline" data-act="checkin" data-id="${i.id}">${t('checkIn')}</button>`}</div>`).join('')}`;
   return page({ tabs: 'a', active: '/a/today', body });
 }
 function vADiary(dayStr) {
@@ -689,12 +748,12 @@ function vADiary(dayStr) {
     if (a.dev) { rows.dev.push(blk(st, s.mins, who, 'room')); rows.dev.push(blk(st + s.mins, 15, t('clean'), 'clean')); }
   });
   BREAKS.forEach(b => rows[b.th].push(blk(minOf(b.t), b.m, t('lunch'), 'clean')));
-  S.bookings.filter(b => isBooked(b) && sameDay(b.start, day)).forEach(b => {
-    const s = svc(b.serviceId), d = new Date(b.start), st = d.getHours() * 60 + d.getMinutes();
-    if (st < START || st > END) return;
-    rows[b.therapistId].push(blk(st, s.mins, `${s.short[lang]} · Mei L.`, 'mine'));
-    rows[b.room].push(blk(st, s.mins, THER[b.therapistId].name, 'mine'));
-    if (s.device) rows.dev.push(blk(st, s.mins, 'Mei L.', 'mine'));
+  S.bookings.filter(b => isBooked(b) && isLumiere(b) && sameDay(b.start, day)).forEach(b => {
+    const d = new Date(b.start), st = d.getHours() * 60 + d.getMinutes(), mins = bMins(b), s = svc(b.serviceId);
+    if (st < START || st > END || !rows[b.therapistId]) return;
+    rows[b.therapistId].push(blk(st, mins, `${s.short ? s.short[lang] : s.name[lang]} · Mei L.`, 'mine'));
+    if (b.room) rows[b.room].push(blk(st, mins, THER[b.therapistId].name, 'mine'));
+    if (bSvcs(b).some(x => x.device)) rows.dev.push(blk(st, mins, 'Mei L.', 'mine'));
   });
   const hours = []; for (let m = START; m < END; m += 60) hours.push(`<span class="g-hour" style="left:${(m - START) * PX}px">${m / 60}:00</span>`);
   const row = (label, key, sep) => `<div class="g-row ${sep ? 'sep' : ''}"><div class="g-label">${label}</div><div class="g-track" style="width:${W}px">${rows[key].join('')}</div></div>`;
@@ -706,7 +765,7 @@ function vADiary(dayStr) {
     <div class="g-row g-head"><div class="g-label">${fDate(day)}</div><div class="g-track" style="width:${W}px">${hours.join('')}</div></div>
     ${row('Joanne', 'joanne')}${row('Wei Ling', 'weiling')}${row('Aida', 'aida', true)}${row(t('room1'), 'r1')}${row(t('room2'), 'r2')}${row(t('hydraDevice'), 'dev')}
   </div></div>
-  <div class="legend"><span><i style="background:var(--rose-tint)"></i>${t('lg_treat')}</span><span><i style="background:var(--sage-tint)"></i>${t('lg_room')}</span><span><i style="background:var(--gold-tint);box-shadow:inset 0 0 0 1px var(--gold)"></i>${t('lg_mine')}</span><span><i style="background:var(--sand-2)"></i>${t('lg_clean')}</span></div>
+  <div class="legend"><span><i style="background:var(--primary-50)"></i>${t('lg_treat')}</span><span><i style="background:var(--sage-tint)"></i>${t('lg_room')}</span><span><i style="background:var(--amber-tint);box-shadow:inset 0 0 0 1px #F5B301"></i>${t('lg_mine')}</span><span><i style="background:var(--sand)"></i>${t('lg_clean')}</span></div>
   <p class="note sage">${icon('check', 16)} ${t('diaryNote')}</p>`;
   return page({ tabs: 'a', active: '/a/diary', body });
 }
@@ -717,13 +776,13 @@ function memberRows() {
   if (!list.length) return `<p class="muted center" style="padding:16px 0">${t('noMembers')}</p>`;
   return list.map(m => {
     const bal = m.id === 'meiling' ? meilingBalance() : m.bal;
-    return `<a class="mrow" href="#/a/member/${m.id}"><span class="avatar sm">${initials(m.name)}</span><span class="grow"><span class="strong">${esc(m.name)}</span><br><span class="small muted">${t('lastVisit', { n: m.last })} · ${t('balLeft', { b: rm(bal) })}</span></span>${m.tier === 'gold' ? '<span class="pill gold">Gold</span>' : ''}${icon('chevR', 16)}</a>`;
+    return `<a class="mrow" href="#/a/member/${m.id}"><span class="avatar sm">${initials(m.name)}</span><span class="grow"><span class="strong">${esc(m.name)}</span><br><span class="small muted">${t('lastVisit', { n: m.last })} · ${t('balLeft', { b: rm(bal) })}</span></span>${m.tier === 'gold' ? '<span class="pill amber">Gold</span>' : ''}${icon('chevR', 16)}</a>`;
   }).join('');
 }
 function vAMembers(seg) {
   mSeg = ['all', 'vip', 'loyal', 'new', 'atrisk', 'away', 'lost'].includes(seg) ? seg : 'all';
   const body = `<h1 class="h1">${t('aMembers')}</h1>
-  <label class="field-wrap"><span class="prefix">${icon('search', 18)}</span><input class="field" id="mq" value="${esc(mQuery)}" placeholder="${t('search')}" aria-label="${t('search')}"></label>
+  <label class="searchbar">${icon('search', 19)}<input id="mq" type="search" value="${esc(mQuery)}" placeholder="${t('search')}" aria-label="${t('search')}" autocomplete="off"></label>
   <div class="hscroll">${['all', 'vip', 'loyal', 'new', 'atrisk', 'away', 'lost'].map(s => `<a class="chip ${mSeg === s ? 'on' : ''}" href="#/a/members/${s}">${t('seg_' + s)}</a>`).join('')}</div>
   ${mSeg !== 'all' ? `<p class="note gold">${icon('sparkle', 16)} ${t('act_' + mSeg)}</p>` : ''}
   <div class="card flat" style="padding:4px 16px" id="mlist">${memberRows()}</div>`;
@@ -741,14 +800,14 @@ function vAMember(id) {
   <div class="card flat" style="padding:4px 16px">
     ${statrow(t('ltv'), rm(m.ltv))}
     ${statrow(t('balanceLeft'), rm(bal))}
-    ${pk.map(p => statrow(pkgName(p), t('sessionsLeft', { n: avail(p) + heldFor(p) }))).join('')}
+    ${pk.map(p => statrow(pkgName(p), (avail(p) + heldFor(p)) + ' / ' + p.total)).join('')}
     ${statrow(t('visits12'), m.visits)}
     ${statrow(t('pkgsBought'), m.pk)}
     ${m.rebuy ? statrow(t('rebuy'), t('weeks', { n: m.rebuy })) : ''}
     ${statrow(t('lastVisitL'), t('daysAgo', { n: m.last }))}
   </div>
   <div class="card tint-rose stack-xs"><p class="strong" style="color:var(--rose)">${t('notes')}</p><p>${isMe ? t('note1') : t('noteGen')}</p><p class="small muted">Joanne · ${fDate(addDays(today0(), -m.last))}</p></div>
-  <div class="row-start gap8"><a class="btn btn-primary grow" href="#/a/counter/${m.id}">${t('recordSale')}</a><button class="btn btn-outline" data-act="toast" data-msg="demoOnly">${t('tabBook')}</button></div>`;
+  <div class="row-start gap8"><a class="btn btn-primary grow" href="#/a/counter/${m.id}">${t('recordSale')}</a><button class="btn btn-outline" data-act="toast" data-msg="demoOnly">${t('tabBookings')}</button></div>`;
   return page({ back: '/a/members', title: t('aMembers'), body });
 }
 let cdraft = { member: 'meiling', item: 'p-hydra6', method: 'card', receipt: '' };
@@ -767,15 +826,15 @@ function vACounter(mid) {
 function vASaleDone() {
   const x = S.lastSale; if (!x) return vNotFound();
   const m = member(x.member), p = product(x.item);
-  const what = p.type === 'package' ? `${p.name[lang]}` : p.type === 'topup' ? t('plusBonus', { a: rm(p.price), b: rm(p.bonus) }) : '';
+  const what = p.type === 'package' ? p.name[lang] : p.type === 'topup' ? t('plusBonus', { a: rm(p.price), b: rm(p.bonus) }) : '';
   const lines = [`Sara · ${t('salesComm')} · ${rm(p.price * 0.05, 2)}`];
   if (m.intro) lines.push(`${m.intro} · ${t('introComm')} · ${rm(p.price * 0.1, 2)}`);
   return page({ cls: 'center-main', body: `<div class="done stack-lg center">
     <div class="done-icon">${icon('checkCircle', 68)}</div>
     <div class="stack-sm"><h1 class="h1">${t('saleDone')}</h1><p class="muted">${esc(m.name)} · ${rm(p.price)} · ${t('m_' + x.method)} · ${esc(x.receipt)}</p></div>
     <div class="card w100 stack-sm" style="text-align:left">
-      <p class="strong">${p.type === 'product' ? t('productOnly') : t('addedTo', { n: esc(m.name.split(' ').length > 2 ? m.name.split(' ').slice(0, -1).join(' ') : m.name.split(' ')[0]) })}</p>${what ? `<p class="muted">${what}</p>` : ''}
-      <p class="small muted">${icon('check', 14).replace('class="ic"', 'class="ic" style="display:inline;vertical-align:-2px"')} ${t('pushSent')}</p>
+      <p class="strong">${p.type === 'product' ? t('productOnly') : t('addedTo', { n: esc(firstName(m.name)) })}</p>${what ? `<p class="muted">${what}</p>` : ''}
+      <p class="small muted">✓ ${t('pushSent')}</p>
       <p class="strong" style="padding-top:6px">${t('commLines')}</p><p class="small muted">${lines.join('<br>')}</p>
     </div>
     <div class="stack w100">${x.member === 'meiling' ? `<button class="btn btn-outline btn-block" data-act="role" data-role="member" data-to="/m/wallet">${t('seeMember')}</button>` : ''}<a class="btn btn-primary btn-block" href="#/a/counter">${t('newSale')}</a></div></div>` });
@@ -804,7 +863,6 @@ const SERIES = (() => {
     m.visitsPer = 1.45 + j * 0.008 + m.nz('v') * 0.04;
     m.returning = 58 + j * 0.55 + m.nz('r') * 3;
     m.renewal = 42 + j * 0.65 + m.nz('n') * 3;
-    m.room = 60 + j * 0.75 + m.nz('o') * 3;
     m.newC = Math.round(32 + j * 0.6 + m.nz('w') * 8);
   });
   return out;
@@ -828,7 +886,7 @@ function agg(ix) {
   const ms = ix.map(i => SERIES[i]), n = ms.length;
   const sum = k => ms.reduce((a, m) => a + m[k], 0), avg = k => sum(k) / n;
   const active = avg('active'), earned = sum('earned'), visits = avg('visitsPer');
-  return { n, first: ms[0].d, last: ms[n - 1].d, cash: sum('cash'), earned, sold: sum('sold'), used: sum('used'), expired: sum('expired'), adj: sum('adj'), open: ms[0].open, close: ms[n - 1].close, active, visits, spendVisit: earned / n / active / visits, avgSpend: earned / n / active, returning: avg('returning'), renewal: avg('renewal'), room: avg('room'), newC: sum('newC') };
+  return { n, first: ms[0].d, last: ms[n - 1].d, cash: sum('cash'), earned, sold: sum('sold'), used: sum('used'), expired: sum('expired'), adj: sum('adj'), open: ms[0].open, close: ms[n - 1].close, active, visits, spendVisit: earned / n / active / visits, avgSpend: earned / n / active, returning: avg('returning'), renewal: avg('renewal'), newC: sum('newC') };
 }
 function periodLabel(a) {
   if (a.n === 1) return fMonth(a.last);
@@ -847,12 +905,12 @@ function trendSVG() {
   const max = Math.ceil(Math.max(...ms.map(m => Math.max(m.cash, m.earned))) / 20000) * 20000;
   const gw = (x1 - x0) / ms.length, bw = Math.min(8, gw / 2 - 2), y = v => y1 - v / max * (y1 - y0);
   let g = '';
-  [0, max / 2, max].forEach(v => { g += `<line x1="${x0}" x2="${x1}" y1="${y(v)}" y2="${y(v)}" stroke="#ECE5DE"/><text x="${x0 - 5}" y="${y(v) + 3}" text-anchor="end" font-size="9" fill="#7A706A">${v ? v / 1000 + 'k' : '0'}</text>`; });
+  [0, max / 2, max].forEach(v => { g += `<line x1="${x0}" x2="${x1}" y1="${y(v)}" y2="${y(v)}" stroke="#EEF0F4"/><text x="${x0 - 5}" y="${y(v) + 3}" text-anchor="end" font-size="9" fill="#6B7280">${v ? v / 1000 + 'k' : '0'}</text>`; });
   ms.forEach((m, i) => {
     const cx = x0 + gw * i + gw / 2;
-    g += `<rect x="${(cx - bw - 1).toFixed(1)}" y="${y(m.cash).toFixed(1)}" width="${bw.toFixed(1)}" height="${(y1 - y(m.cash)).toFixed(1)}" rx="2" fill="#CDB48C"><title>${fMonth(m.d)} · ${t('cashL')} ${rm(m.cash)}</title></rect>`;
-    g += `<rect x="${(cx + 1).toFixed(1)}" y="${y(m.earned).toFixed(1)}" width="${bw.toFixed(1)}" height="${(y1 - y(m.earned)).toFixed(1)}" rx="2" fill="#2B2622"><title>${fMonth(m.d)} · ${t('earnedL')} ${rm(m.earned)}</title></rect>`;
-    if (i % 2 === 0) g += `<text x="${cx.toFixed(1)}" y="${y1 + 14}" text-anchor="middle" font-size="9" fill="#7A706A">${fMon(m.d)}</text>`;
+    g += `<rect x="${(cx - bw - 1).toFixed(1)}" y="${y(m.cash).toFixed(1)}" width="${bw.toFixed(1)}" height="${(y1 - y(m.cash)).toFixed(1)}" rx="2" fill="#A9BCFF"><title>${fMonth(m.d)} · ${t('cashL')} ${rm(m.cash)}</title></rect>`;
+    g += `<rect x="${(cx + 1).toFixed(1)}" y="${y(m.earned).toFixed(1)}" width="${bw.toFixed(1)}" height="${(y1 - y(m.earned)).toFixed(1)}" rx="2" fill="#2F5DED"><title>${fMonth(m.d)} · ${t('earnedL')} ${rm(m.earned)}</title></rect>`;
+    if (i % 2 === 0) g += `<text x="${cx.toFixed(1)}" y="${y1 + 14}" text-anchor="middle" font-size="9" fill="#6B7280">${fMon(m.d)}</text>`;
   });
   return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${t('trend')}">${g}</svg>`;
 }
@@ -860,16 +918,16 @@ function quadSVG() {
   const W = 340, H = 250, x0 = 26, x1 = 334, y0 = 12, y1 = 222, XM = 80, YM = 140;
   const X = v => x0 + Math.min(v, XM) / XM * (x1 - x0), Y = v => y1 - v / YM * (y1 - y0);
   const tx = X(40), ty = Y(70);
-  let g = `<rect x="${tx}" y="${y0}" width="${x1 - tx}" height="${ty - y0}" fill="#F6EFE4"/>`;
-  g += `<line x1="${tx}" x2="${tx}" y1="${y0}" y2="${y1}" stroke="#DDD5CD" stroke-dasharray="4 4"/><line x1="${x0}" x2="${x1}" y1="${ty}" y2="${ty}" stroke="#DDD5CD" stroke-dasharray="4 4"/>`;
-  g += `<line x1="${x0}" x2="${x1}" y1="${y1}" y2="${y1}" stroke="#B89466"/><line x1="${x0}" x2="${x0}" y1="${y0}" y2="${y1}" stroke="#B89466"/>`;
-  const lab = (x, y, s, anchor) => `<text x="${x}" y="${y}" font-size="10" fill="#876A40" font-weight="600" text-anchor="${anchor}">${s}</text>`;
+  let g = `<rect x="${tx}" y="${y0}" width="${x1 - tx}" height="${ty - y0}" fill="#EEF2FF"/>`;
+  g += `<line x1="${tx}" x2="${tx}" y1="${y0}" y2="${y1}" stroke="#E2E5EB" stroke-dasharray="4 4"/><line x1="${x0}" x2="${x1}" y1="${ty}" y2="${ty}" stroke="#E2E5EB" stroke-dasharray="4 4"/>`;
+  g += `<line x1="${x0}" x2="${x1}" y1="${y1}" y2="${y1}" stroke="#C7D2FE"/><line x1="${x0}" x2="${x0}" y1="${y0}" y2="${y1}" stroke="#C7D2FE"/>`;
+  const lab = (x, y, s, anchor) => `<text x="${x}" y="${y}" font-size="10" fill="#2F5DED" font-weight="700" text-anchor="${anchor}">${s}</text>`;
   g += lab(x1 - 4, y0 + 13, t('q_star'), 'end') + lab(x0 + 6, y0 + 13, t('q_gem'), 'start') + lab(x1 - 4, y1 - 6, t('q_work'), 'end') + lab(x0 + 6, y1 - 6, t('q_weak'), 'start');
   RANK.forEach(r => {
     const s = svc(r.id), px = X(r.sessions), py = Y(r.profit), right = px > 240;
-    g += `<circle cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="5" fill="#2B2622"/><text x="${(right ? px - 8 : px + 8).toFixed(1)}" y="${(py + 4).toFixed(1)}" font-size="10.5" fill="#2B2622" text-anchor="${right ? 'end' : 'start'}">${s.short[lang]}</text>`;
+    g += `<circle cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="5" fill="#111827"/><text x="${(right ? px - 8 : px + 8).toFixed(1)}" y="${(py + 4).toFixed(1)}" font-size="10.5" fill="#111827" text-anchor="${right ? 'end' : 'start'}">${s.short[lang]}</text>`;
   });
-  g += `<text x="${x1}" y="${H - 6}" font-size="9.5" fill="#7A706A" text-anchor="end">${t('axSessions')}</text><text x="${x0 + 2}" y="${y0 - 2}" font-size="9.5" fill="#7A706A">${t('axProfit')}</text>`;
+  g += `<text x="${x1}" y="${H - 6}" font-size="9.5" fill="#6B7280" text-anchor="end">${t('axSessions')}</text><text x="${x0 + 2}" y="${y0 - 2}" font-size="9.5" fill="#6B7280">${t('axProfit')}</text>`;
   return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${t('quad')}">${g}</svg>`;
 }
 function vAReports() {
@@ -882,7 +940,7 @@ function vAReports() {
   rows.sort((a, b) => val(b) - val(a));
   const maxV = Math.max(...rows.map(r => Math.abs(val(r))));
   const fmtV = r => RP.metric === 'rev' ? rm(r.rev) : RP.metric === 'sessions' ? r.sessions : RP.metric === 'profit' ? rm(r.profit) + '/h' : (r.growth > 0 ? '+' : '') + r.growth + '%';
-  const bucketsP = [0.125, 0.234, 0.384, 0.257], bucketsN = [14, 27, 41, 33], bucketsC = ['#9C5562', '#CDB48C', '#B89466', '#4F6B5C'];
+  const bucketsP = [0.125, 0.234, 0.384, 0.257], bucketsN = [14, 27, 41, 33], bucketsC = ['#B42318', '#F5B301', '#2F5DED', '#027A48'];
   const top = MEMBERS.slice().sort((a, b) => b.ltv - a.ltv).slice(0, 5);
   const body = `<div class="row"><h1 class="h1">${t('rTitle')}</h1><span class="pill grey">${t('sample')}</span></div>
   ${ctrl}
@@ -898,7 +956,7 @@ function vAReports() {
     ${kpi(t('r_ren'), cur.renewal.toFixed(0) + '%', dPts(cur.renewal, base.renewal))}
   </div>
   <section class="card stack-sm"><h2 class="h2">${t('trend')}</h2><div class="chart">${trendSVG()}</div>
-    <div class="legend"><span><i style="background:#CDB48C"></i>${t('cashL')}</span><span><i style="background:#2B2622"></i>${t('earnedL')}</span></div></section>
+    <div class="legend"><span><i style="background:#A9BCFF"></i>${t('cashL')}</span><span><i style="background:#2F5DED"></i>${t('earnedL')}</span></div></section>
   <section class="card stack-sm"><h2 class="h2">${t('why')}</h2><p class="small muted">${t('whySub')}</p>
     <div class="drivers">
       <div class="driver"><span class="small muted">${t('w_cust')}</span><b>${Math.round(cur.active)}</b>${dPct(cur.active, base.active)}</div>
@@ -952,9 +1010,9 @@ function vACommission() {
 }
 function vAPromos() {
   const body = `<h1 class="h1">${t('promotions')}</h1>
+  <div class="card stack-xs"><p class="strong">${t('pr3')}</p><p class="small muted">${t('promoStats', { a: 1260, b: 88, c: 61 })}</p></div>
   <div class="card stack-xs"><p class="strong">${t('pr1')}</p><p class="small muted">${t('promoStats', { a: 412, b: 63, c: 38 })}</p></div>
   <div class="card stack-xs"><p class="strong">${t('pr2')}</p><p class="small muted">${t('promoStats', { a: 54, b: 21, c: 14 })}</p></div>
-  <div class="card stack-xs"><p class="strong">${t('pr3')}</p><p class="small muted">${t('promoStats', { a: 57, b: 15, c: 9 })}</p></div>
   <div class="card stack-xs"><p class="strong">${t('pr4')}</p><p class="small muted">${t('promoConv', { a: 46, b: 16 })}</p></div>
   <p class="small muted">${t('sample')}</p>`;
   return page({ back: '/a/more', title: t('promotions'), body });
@@ -962,7 +1020,7 @@ function vAPromos() {
 function vASettings() {
   const body = `<h1 class="h1">${t('settings')}</h1>
   <div class="card flat" style="padding:4px 16px">${statrow(t('set_window'), t('v_7d'))}${statrow(t('set_cut'), t('v_12h'))}${statrow(t('set_grace'), t('v_15m'))}${statrow(t('set_buffer'), t('v_buf'))}${statrow(t('set_expiry'), t('v_6m'))}${statrow(t('set_rem'), t('v_rem'))}</div>
-  <div class="card stack-sm"><p class="strong">${t('set_brand')}</p><div class="row-start gap8">${['#FDFCFA', '#2B2622', '#B89466', '#9C5562', '#4F6B5C'].map(c => `<span style="width:36px;height:36px;border-radius:18px;background:${c};border:1px solid var(--line-2)"></span>`).join('')}</div></div>
+  <div class="card stack-sm"><p class="strong">${t('set_brand')}</p><div class="row-start gap8">${['#FFFFFF', '#111827', '#2F5DED', '#B42318', '#027A48'].map(c => `<span style="width:36px;height:36px;border-radius:18px;background:${c};border:1px solid var(--line-2)"></span>`).join('')}</div></div>
   <p class="small muted">${t('editFull')}</p>`;
   return page({ back: '/a/more', title: t('settings'), body });
 }
@@ -970,10 +1028,10 @@ function vASettings() {
 /* ------------------------------------------------------------------ therapist */
 function tSessions() {
   const now = new Date();
-  const items = DAYPLAN.filter(a => a.th === 'joanne').map(a => ({ id: a.id, s: svc(a.s), start: at(today0(), a.t), client: masked(member(a.c).name), room: a.room, note: a.c === 'priya' ? 'Prefers firm pressure' : '' }));
-  S.bookings.filter(b => isBooked(b) && b.therapistId === 'joanne' && sameDay(b.start, now)).forEach(b => items.push({ id: b.id, s: svc(b.serviceId), start: new Date(b.start), client: 'Mei L.', room: b.room, note: t('note1') }));
+  const items = DAYPLAN.filter(a => a.th === 'joanne').map(a => { const s = svc(a.s); return { id: a.id, name: s.name[lang], price: s.price, mins: s.mins, start: at(today0(), a.t), client: masked(member(a.c).name), room: a.room, note: a.c === 'priya' ? 'Prefers firm pressure' : '' }; });
+  S.bookings.filter(b => isBooked(b) && isLumiere(b) && b.therapistId === 'joanne' && sameDay(b.start, now)).forEach(b => items.push({ id: b.id, name: bName(b), price: bPrice(b), mins: bMins(b), start: new Date(b.start), client: 'Mei L.', room: b.room, note: t('note1') }));
   return items.sort((a, b) => a.start - b.start).map(i => {
-    const end = new Date(i.start.getTime() + i.s.mins * 60000);
+    const end = new Date(i.start.getTime() + i.mins * 60000);
     i.state = S.tSessions[i.id] || (end < now ? 'done' : 'todo');
     return i;
   });
@@ -981,10 +1039,10 @@ function tSessions() {
 function vTToday() {
   const items = tSessions();
   const body = `<div class="row"><div><p class="muted">${t('hi', { n: 'Joanne' })}</p><h1 class="h1">${fDay(new Date())}</h1></div>${mark('J')}</div>
-  <a class="card tint-sage row" href="#/t/earnings"><span><span class="small">${t('earnedMonth')}</span><br><span class="h-serif" style="color:var(--ink)">${rm(2340 + S.tExtra)}</span></span><span class="small">${t('sessionsN', { n: 26 + S.tCount })}</span></a>
+  <a class="card tint-gold row" href="#/t/earnings"><span><span class="small muted">${t('earnedMonth')}</span><br><span class="h-serif">${rm(2340 + S.tExtra)}</span></span><span class="small muted">${t('sessionsN', { n: 26 + S.tCount })}</span></a>
   ${items.map(i => `<div class="card stack-xs ${i.state === 'in' ? 'gold' : ''}"><div class="row"><span class="small muted">${hm(i.start)}${i.room ? ' · ' + roomName(i.room) : ''}</span>${i.state === 'done' ? `<span class="pill sage">${t('doneSt')}</span>` : i.state === 'in' ? `<span class="pill gold">${t('inProg')}</span>` : ''}</div>
-    <p class="strong">${i.s.name[lang]}</p><p class="small muted">${esc(i.client)}</p>${i.note ? `<p class="note rose">${icon('heart', 16)} ${esc(i.note)}</p>` : ''}
-    ${i.state === 'todo' ? `<button class="btn btn-outline btn-block" data-act="tAct" data-id="${i.id}">${t('startS')}</button>` : i.state === 'in' ? `<button class="btn btn-primary btn-block" data-act="tAct" data-id="${i.id}" data-p="${i.s.price}">${t('completeS')}</button>` : ''}</div>`).join('')}`;
+    <p class="strong">${i.name}</p><p class="small muted">${esc(i.client)}</p>${i.note ? `<p class="note rose">${icon('heart', 16)} ${esc(i.note)}</p>` : ''}
+    ${i.state === 'todo' ? `<button class="btn btn-outline btn-block" data-act="tAct" data-id="${i.id}">${t('startS')}</button>` : i.state === 'in' ? `<button class="btn btn-primary btn-block" data-act="tAct" data-id="${i.id}" data-p="${i.price}">${t('completeS')}</button>` : ''}</div>`).join('')}`;
   return page({ tabs: 't', active: '/t/today', body });
 }
 function vTEarnings() {
@@ -1000,8 +1058,8 @@ function vTEarnings() {
 }
 function vTMe() {
   const link = 'webcal://appt4u.com/feed/joanne-demo.ics';
-  const body = `<h1 class="h1">${t('tabMe')}</h1>
-  <div class="card row-start">${mark('J')}<div><p class="strong">Joanne</p><p class="small muted">${THER.joanne.title[lang]} · ${BIZ.name[lang]}</p></div></div>
+  const body = `<h1 class="h1">${t('tabProfile')}</h1>
+  <div class="card row-start">${mark('J')}<div><p class="strong">Joanne</p><p class="small muted">${THER.joanne.title[lang]} · Lumière</p></div></div>
   <div class="card stack-sm"><p class="strong">${t('calFeed')}</p><p class="small muted">${t('calFeedSub')}</p><div class="copybox">${icon('link', 18)}<span class="grow">${link}</span><button class="btn btn-sm btn-soft" data-act="copy" data-v="${link}">${t('copy')}</button></div></div>
   <div class="card menu">${menuBtn('lang', 'globe', t('language'), lang === 'zh' ? '中文' : 'English')}${menuBtn('roles', 'users', t('switchRole'))}${menuBtn('signout', 'logout', t('signOut'))}</div>`;
   return page({ tabs: 't', active: '/t/me', body });
@@ -1012,14 +1070,14 @@ const REFS = [{ n: 'Mei L.', d: -38, a: 180, st: 'purchased' }, { n: 'Nur A.', d
 function vGHome() {
   const lm = new Date(); lm.setDate(1); lm.setMonth(lm.getMonth() - 1);
   const body = `<div class="row"><div><p class="muted">Kelvin · ${t('r_agent')}</p><h1 class="h1">${t('myRef')}</h1></div>${mark('K')}</div>
-  <div class="card tint-gold stack-sm"><p class="eyebrow">${t('thisMonth')}</p><div class="row-start"><span class="h-serif">RM270</span><span class="pill rose">${t('pendingApp')}</span></div><p class="small muted">${t('lastPaid', { m: fMon(lm), a: 'RM360' })}</p></div>
+  <div class="card tint-gold stack-sm"><p class="eyebrow">${t('thisMonth')}</p><div class="row-start"><span class="h-serif">RM270</span><span class="pill amber">${t('pendingApp')}</span></div><p class="small muted">${t('lastPaid', { m: fMon(lm), a: 'RM360' })}</p></div>
   <a class="card row" href="#/g/share"><span class="row-start">${icon('share')}<span class="strong">${t('shareWA')}</span></span>${icon('chevR', 18)}</a>
   <div class="card flat" style="padding:4px 16px">${REFS.map(r => `<div class="li"><div><p class="strong">${r.n}</p><p class="small muted">${t('joined', { d: fDate(addDays(today0(), r.d)) })}</p></div><div class="r"><p class="${r.a ? 'plus' : 'muted'}">${r.a ? '+' + rm(r.a) : 'RM0'}</p><p class="small muted">${t(r.st)}</p></div></div>`).join('')}</div>
   <p class="small muted">${t('agentRule')}</p>`;
   return page({ tabs: 'g', active: '/g/home', body });
 }
 function shareBlock(code) {
-  const link = `https://appt4u.com/r/${code}`, msg = t('waMsg', { b: BIZ.name[lang], l: link });
+  const link = `https://appt4u.com/r/${code}`, msg = t('waMsg', { b: BIZS[0].name[lang], l: link });
   return `<div class="center stack"><div class="qr">${fakeQR(code, 168)}</div><p class="small muted">${t('qrDemo')}</p></div>
   <section class="stack-sm"><h2 class="label">${t('yourLink')}</h2><div class="copybox">${icon('link', 18)}<span class="grow">${link}</span><button class="btn btn-sm btn-soft" data-act="copy" data-v="${link}">${t('copy')}</button></div></section>
   <section class="stack-sm"><h2 class="label">${t('msgPreview')}</h2><div class="msg">${esc(msg)}</div></section>
@@ -1044,8 +1102,10 @@ function vNotFound() { return page({ cls: 'center-main', body: `<div class="stac
 /* ------------------------------------------------------------------ router */
 const ROUTES = [
   [/^\/welcome$/, vWelcome], [/^\/login$/, vLogin], [/^\/otp$/, vOtp],
-  [/^\/m\/home$/, vHome], [/^\/m\/book(?:\/(\w+))?$/, vBook], [/^\/m\/service\/(\w+)$/, vService], [/^\/m\/done\/(\w+)$/, vDone],
-  [/^\/m\/bookings$/, vBookings], [/^\/m\/wallet(?:\/(\w+))?$/, vWallet], [/^\/m\/me$/, vMe], [/^\/m\/skin$/, vSkin], [/^\/m\/aftercare$/, vAftercare],
+  [/^\/m\/home$/, vHome], [/^\/m\/biz\/(\w+)(?:\/(\w+))?$/, vBiz], [/^\/m\/time$/, vTime], [/^\/m\/done\/(\w+)$/, vDone],
+  [/^\/m\/book(?:\/\w+)?$/, () => redirect('/m/home')],
+  [/^\/m\/service\/(\w+)$/, id => { const s = svc(id); if (!s) return vNotFound(); draft = { biz: s.biz, ids: [id], therapist: 'any', day: today0().toISOString(), time: null, pay: null }; return redirect('/m/time'); }],
+  [/^\/m\/bookings(?:\/(\w+))?$/, vBookings], [/^\/m\/wallet(?:\/(\w+))?$/, vWallet], [/^\/m\/me$/, vMe], [/^\/m\/skin$/, vSkin], [/^\/m\/aftercare$/, vAftercare],
   [/^\/a\/today$/, vAToday], [/^\/a\/diary(?:\/([\d-]+))?$/, vADiary], [/^\/a\/members(?:\/(\w+))?$/, vAMembers], [/^\/a\/member\/(\w+)$/, vAMember],
   [/^\/a\/counter(?:\/(\w+))?$/, vACounter], [/^\/a\/sale$/, vASaleDone], [/^\/a\/reports$/, vAReports], [/^\/a\/more$/, vAMore],
   [/^\/a\/commission$/, vACommission], [/^\/a\/promos$/, vAPromos], [/^\/a\/settings$/, vASettings],
@@ -1069,7 +1129,6 @@ function render() {
   const main = $('#main'); if (main) main.scrollTop = keep;
   if (lastPath !== path) closeSheet(true);
   lastPath = path;
-  document.title = 'appt4u';
   renderSide();
   const dm = path.match(/^\/m\/done\/(\w+)$/);
   if (dm && !S.calAlways && !shownCal.has(dm[1])) { shownCal.add(dm[1]); setTimeout(() => { if (route() === path) calSheet(dm[1]); }, 450); }
@@ -1080,7 +1139,7 @@ window.addEventListener('hashchange', render);
 function renderSide() {
   const el = $('#side'); if (!el) return;
   el.innerHTML = `<div class="side-inner">
-    <div class="side-brand">${mark('a', true).replace('class="mark dark"', 'class="mark dark lg"')}<span class="wordmark">appt4u</span></div>
+    <div class="side-brand"><span class="mark dark lg">a</span><span class="wordmark">appt4u</span></div>
     <h1 class="side-title">${t('sideTitle')}</h1>
     <p class="muted">${t('sideText')}</p>
     <div class="stack-sm"><p class="eyebrow">${t('sideRoles')}</p><div class="side-roles">${ROLES.map(r => `<button class="chip ${S.signedIn && S.role === r ? 'on' : ''}" data-act="role" data-role="${r}">${t('r_' + r)}</button>`).join('')}</div></div>
@@ -1109,18 +1168,18 @@ function toast(msg) {
 const icsStamp = d => new Date(d).toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
 const icsEsc = s => String(s).replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\n/g, '\\n');
 function icsFor(b) {
-  const s = svc(b.serviceId), st = new Date(b.start), en = new Date(st.getTime() + s.mins * 60000);
+  const B = bBiz(b), st = new Date(b.start), en = new Date(st.getTime() + bMins(b) * 60000);
   return ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//appt4u//Booking//EN', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH', 'BEGIN:VEVENT',
     `UID:${b.id}@appt4u.com`, `DTSTAMP:${icsStamp(new Date())}`, `DTSTART:${icsStamp(st)}`, `DTEND:${icsStamp(en)}`,
-    `SUMMARY:${icsEsc(s.name[lang] + ' · ' + BIZ.name[lang])}`, `LOCATION:${icsEsc(BIZ.place[lang])}`,
-    `DESCRIPTION:${icsEsc(THER[b.therapistId].name + ' · ' + roomName(b.room) + ' · appt4u demo')}`,
+    `SUMMARY:${icsEsc(bName(b) + ' · ' + B.name[lang])}`, `LOCATION:${icsEsc(B.area[lang])}`,
+    `DESCRIPTION:${icsEsc(THER[b.therapistId].name + (b.room ? ' · ' + roomName(b.room) : '') + ' · appt4u demo')}`,
     'BEGIN:VALARM', 'TRIGGER:-PT2H', 'ACTION:DISPLAY', 'DESCRIPTION:Reminder', 'END:VALARM', 'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
 }
 function addToCalendar(b, kind) {
-  const s = svc(b.serviceId), st = new Date(b.start), en = new Date(st.getTime() + s.mins * 60000);
+  const B = bBiz(b), st = new Date(b.start), en = new Date(st.getTime() + bMins(b) * 60000);
   if (kind === 'google') {
-    const url = 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + encodeURIComponent(s.name[lang] + ' · ' + BIZ.name[lang]) +
-      '&dates=' + icsStamp(st) + '/' + icsStamp(en) + '&details=' + encodeURIComponent(THER[b.therapistId].name + ' · ' + roomName(b.room)) + '&location=' + encodeURIComponent(BIZ.place[lang]);
+    const url = 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + encodeURIComponent(bName(b) + ' · ' + B.name[lang]) +
+      '&dates=' + icsStamp(st) + '/' + icsStamp(en) + '&details=' + encodeURIComponent(THER[b.therapistId].name) + '&location=' + encodeURIComponent(B.area[lang]);
     window.open(url, '_blank', 'noopener');
     return;
   }
@@ -1153,18 +1212,24 @@ const ACT = {
   claim: el => { const id = el.dataset.id; S.claimed[id] = true; S.vouchers.push({ id, key: id === 'o1' ? 'offer1' : 'offer2' }); save(); render(); toast(t('claimedToast')); },
   dismissInstall: () => { S.installDismissed = true; save(); render(); },
   install: async () => { if (!deferredPrompt) return; deferredPrompt.prompt(); try { await deferredPrompt.userChoice; } catch (e) { /* ignore */ } deferredPrompt = null; render(); },
+  hcat: el => { hCat = el.dataset.c; render(); },
+  fav: el => { const id = el.dataset.id, i = S.favs.indexOf(id); if (i >= 0) { S.favs.splice(i, 1); toast(t('favRemoved')); } else { S.favs.push(id); toast(t('favAdded')); } save(); render(); },
+  pick: el => { const id = el.dataset.id, i = sel.ids.indexOf(id); if (i >= 0) sel.ids.splice(i, 1); else sel.ids.push(id); render(); },
+  continue: () => { if (!sel || !sel.ids.length) return; draft = { biz: sel.biz, ids: sel.ids.slice(), therapist: 'any', day: today0().toISOString(), time: null, pay: null }; go('/m/time'); },
   ther: el => { draft.therapist = el.dataset.id; render(); },
   day: el => { draft.day = el.dataset.d; draft.time = null; render(); },
   slot: el => { draft.time = el.dataset.t; render(); },
   pay: el => { draft.pay = el.dataset.k; render(); },
   confirmBooking: () => {
-    const s = svc(draft.serviceId); if (!draft.time) return;
-    const th = draft.therapist === 'any' ? s.by.find(x => slotState(s, draft.day, draft.time, x) === 'open') || s.by[0] : draft.therapist;
-    const pk = draft.pay === 'package' ? pkgFor(s.id) : null;
-    const b = { id: 'b' + Date.now().toString(36), serviceId: s.id, therapistId: th, room: s.cat === 'facial' ? 'r2' : 'r1', start: at(new Date(draft.day), draft.time).toISOString(), status: 'booked', pay: pk ? 'package' : draft.pay === 'package' ? 'store' : draft.pay, pkg: pk ? pk.id : null };
-    S.bookings.push(b); save(); draft = null; go('/m/done/' + b.id);
+    if (!draft || !draft.time) return;
+    const B = biz(draft.biz), ss = draft.ids.map(svc), by = staffFor(ss, B), key = draft.ids.join('+');
+    const th = draft.therapist === 'any' ? by.find(x => slotState(by, key, draft.day, draft.time, x) === 'open') || by[0] : draft.therapist;
+    const pk = draft.pay === 'package' && ss.length === 1 ? pkgFor(ss[0].id) : null;
+    const room = B.id === 'lumiere' ? (ss.some(s => s.cat === 'facial') ? 'r2' : 'r1') : null;
+    const b = { id: 'b' + Date.now().toString(36), biz: B.id, serviceId: ss[0].id, extra: draft.ids.slice(1), therapistId: th, room, start: at(new Date(draft.day), draft.time).toISOString(), status: 'booked', pay: pk ? 'package' : draft.pay === 'package' ? 'store' : draft.pay, pkg: pk ? pk.id : null };
+    S.bookings.push(b); save(); draft = null; sel = null; go('/m/done/' + b.id);
   },
-  quickBook: el => { draft = { serviceId: 'hydra', therapist: 'joanne', day: (() => { const d = new Date(el.dataset.d); d.setHours(0, 0, 0, 0); return d.toISOString(); })(), time: '14:30', pay: null }; go('/m/service/hydra'); },
+  quickBook: el => { const d = new Date(el.dataset.d); d.setHours(0, 0, 0, 0); draft = { biz: 'lumiere', ids: ['hydra'], therapist: 'joanne', day: d.toISOString(), time: '14:30', pay: null }; go('/m/time'); },
   calSheet: el => calSheet(el.dataset.id),
   calPick: el => {
     const b = S.bookings.find(x => x.id === el.dataset.id); if (!b) return;
@@ -1186,7 +1251,7 @@ const ACT = {
     if (late) {
       b.status = 'late';
       if (b.pay === 'package') { const pk = S.packages.find(p => p.id === b.pkg); if (pk) { pk.used++; ledgerAdd(pk.id, 'late', -1, { serviceId: b.serviceId }); } }
-      else if (b.pay === 'stored') { const p = svc(b.serviceId).price; S.stored -= p; ledgerAdd('stored', 'late', -p); }
+      else if (b.pay === 'stored') { const p = bPrice(b); S.stored -= p; ledgerAdd('stored', 'late', -p); }
     } else b.status = 'cancelled';
     save(); closeSheet(); render(); toast(t(late ? 'lateToast' : 'cancelledToast'));
   },
@@ -1199,7 +1264,7 @@ const ACT = {
   refer: () => openSheet(`<h2 class="h2">${t('refer')}</h2>${shareBlock('meiling')}`),
   copy: el => copyText(el.dataset.v),
   reset: () => openSheet(`<h2 class="h2">${t('resetQ')}</h2><p class="muted">${t('resetInfo')}</p><button class="btn btn-primary btn-block" data-act="doReset">${t('resetDemo')}</button><button class="btn btn-ghost btn-block" data-act="closeSheet">${t('notNow')}</button>`),
-  doReset: () => { LS.del(KEY); S = seed(); draft = null; cdraft = { member: 'meiling', item: 'p-hydra6', method: 'card', receipt: '' }; shownCal.clear(); closeSheet(true); go('/welcome'); },
+  doReset: () => { LS.del(KEY); S = seed(); draft = null; sel = null; hCat = 'all'; hQuery = ''; cdraft = { member: 'meiling', item: 'p-hydra6', method: 'card', receipt: '' }; shownCal.clear(); closeSheet(true); go('/welcome'); },
   signout: () => { S.signedIn = false; S.role = null; save(); go('/welcome'); },
   checkin: el => { S.arrived[el.dataset.id] = true; save(); render(); toast(t('arrivedSt')); },
   citem: el => { cdraft.item = el.dataset.id; render(); },
@@ -1236,7 +1301,8 @@ document.addEventListener('click', e => {
 });
 document.addEventListener('input', e => {
   const el = e.target;
-  if (el.id === 'mq') { mQuery = el.value; const l = $('#mlist'); if (l) l.innerHTML = memberRows(); }
+  if (el.id === 'q') { hQuery = el.value; const l = $('#bizlist'); if (l) l.innerHTML = bizRows(); }
+  else if (el.id === 'mq') { mQuery = el.value; const l = $('#mlist'); if (l) l.innerHTML = memberRows(); }
   else if (el.id === 'receipt') cdraft.receipt = el.value;
   else if (el.id === 'allergy') { S.skin.allergy = el.value; save(); }
   else if (el.id === 'otp' && /^\d{6}$/.test(el.value)) ACT.verify();
