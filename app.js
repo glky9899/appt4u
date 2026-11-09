@@ -509,6 +509,15 @@ const STR = {
   bd_age: ['Turning', '岁数'],
   bd_todo: ['To do', '待处理'],
   bd_sentYear: ['Offers sent this year', '今年已送优惠'],
+  calAppleIos: ['Opens the event. Tap “Add to Calendar”.', '打开活动后点「添加到日历」。'],
+  calAppleMac: ['Downloads a calendar file. Open it to add the event to Calendar.', '会下载日历文件，打开即可加入「日历」。'],
+  calGoogleSub: ['Opens Google Calendar. Tap Save.', '打开 Google 日历，点「保存」。'],
+  calFileSub: ['Downloads a calendar file. Open it in Outlook or your calendar app.', '会下载日历文件，用 Outlook 或日历 App 打开即可。'],
+  otherCalApp: ['Other calendar app (.ics file)', '其他日历 App（.ics 文件）'],
+  calDoneGoogle: ['Google Calendar opened. Tap Save to add it.', '已打开 Google 日历，点「保存」即可加入。'],
+  calDoneFile: ['Calendar file downloaded. Open it to add the event.', '日历文件已下载，打开即可加入。'],
+  calDoneIos: ['Tap “Add to Calendar” to finish.', '点「添加到日历」即可完成。'],
+  calSafari: ['To add to Apple Calendar, open this page in Safari, or use Google Calendar.', '要加入 Apple 日历，请用 Safari 打开此页面，或改用 Google 日历。'],
   notFound: ['Page not found', '找不到页面'], goHome: ['Go home', '返回首页'], demoOnly: ['Available in the full version', '完整版提供此功能'],
 };
 /* Bahasa Melayu. Any key missing here falls back to English. */
@@ -1003,6 +1012,15 @@ const STR_MS = {
   bd_age: 'Umur',
   bd_todo: 'Belum',
   bd_sentYear: 'Tawaran dihantar tahun ini',
+  calAppleIos: 'Buka acara. Ketik “Tambah ke Kalendar”.',
+  calAppleMac: 'Memuat turun fail kalendar. Buka fail itu untuk menambah acara ke Kalendar.',
+  calGoogleSub: 'Buka Kalendar Google. Ketik Simpan.',
+  calFileSub: 'Memuat turun fail kalendar. Buka dalam Outlook atau aplikasi kalendar anda.',
+  otherCalApp: 'Aplikasi kalendar lain (fail .ics)',
+  calDoneGoogle: 'Kalendar Google dibuka. Ketik Simpan untuk menambahnya.',
+  calDoneFile: 'Fail kalendar dimuat turun. Buka untuk menambah acara.',
+  calDoneIos: 'Ketik “Tambah ke Kalendar” untuk selesai.',
+  calSafari: 'Untuk menambah ke Kalendar Apple, buka halaman ini dalam Safari, atau gunakan Kalendar Google.',
   notFound: 'Halaman tidak ditemui', goHome: 'Ke halaman utama', demoOnly: 'Tersedia dalam versi penuh',
 };
 function t(k, v) {
@@ -1425,7 +1443,7 @@ const pkgFor = sid => S.packages.filter(p => p.serviceId === sid && avail(p) > 0
 const pkgName = pk => { const p = product(pk.productId); return p ? p.name[lang] : ''; };
 const nextBooking = () => S.bookings.filter(b => isBooked(b) && new Date(b.start) > new Date()).sort((a, b) => new Date(a.start) - new Date(b.start))[0];
 const roomName = r => r ? t(r === 'r1' ? 'room1' : 'room2') : '';
-const calName = c => t(c === 'apple' ? 'appleCal' : c === 'google' ? 'googleCal' : 'otherCal');
+const calName = c => { const k = effCal(c); return t(k === 'apple' ? 'appleCal' : k === 'google' ? 'googleCal' : 'otherCal'); };
 /* the admin demo is Lumière, so it only ever sees Mei Ling's Lumière balance */
 const meilingBalance = () => activePk('lumiere').reduce((a, p) => a + pkgLeft(p) * (p.price / p.total), 0) + storedOf('lumiere');
 const firstName = n => { const p = n.split(' '); return p.length > 2 ? p.slice(0, -1).join(' ') : p[0]; };
@@ -1622,7 +1640,7 @@ function vDone(id) {
   const d = new Date(b.start), B = bBiz(b);
   const held = b.pay === 'package' ? t('heldPkg') : b.pay === 'stored' ? t('heldStored', { a: rm(bPrice(b)) }) : t('payAtStore');
   const calBtn = S.calAlways
-    ? `<button class="btn btn-outline btn-block" data-act="calDo" data-ev="b:${b.id}" data-c="${S.calAlways}">${icon('calendar', 18)} ${t('addTo', { c: calName(S.calAlways) })}</button>`
+    ? `<button class="btn btn-outline btn-block" data-act="calDo" data-ev="b:${b.id}" data-c="${effCal(S.calAlways)}">${icon('calendar', 18)} ${t('addTo', { c: calName(S.calAlways) })}</button>`
     : `<button class="btn btn-outline btn-block" data-act="calSheet" data-ev="b:${b.id}">${icon('calendar', 18)} ${t('addToCalendar')}</button>`;
   return page({ cls: 'center-main', body: `<div class="done stack-lg center">
     <div class="done-icon">${icon('checkCircle', 68)}</div>
@@ -1630,14 +1648,22 @@ function vDone(id) {
     <span class="pill sage" style="align-self:center">${held}</span>
     <div class="stack w100">${calBtn}<a class="btn btn-primary btn-block" href="#/m/home">${t('done')}</a></div></div>` });
 }
+/* Apple Calendar only exists on iPhone, iPad and Mac. Android and Windows get Google Calendar and a calendar file instead */
+const calPlat = () => isIOS ? 'ios' : /android/i.test(navigator.userAgent) ? 'android' : /Macintosh|Mac OS X/.test(navigator.userAgent) ? 'mac' : 'other';
+const iosInApp = () => isIOS && /CriOS|FxiOS|EdgiOS|FBAN|FBAV|Instagram|Line\/|MicroMessenger|WhatsApp/i.test(navigator.userAgent);
+function calOpts() {
+  const p = calPlat(), g = ['google', t('googleCal'), t('calGoogleSub'), 'globe'];
+  if (p === 'ios') return [['apple', t('appleCal'), t('calAppleIos'), 'calendar'], g, ['ics', t('otherCal'), t('calFileSub'), 'download']];
+  if (p === 'mac') return [['apple', t('appleCal'), t('calAppleMac'), 'calendar'], g, ['ics', t('otherCal'), t('calFileSub'), 'download']];
+  return [g, ['ics', p === 'android' ? t('otherCalApp') : t('otherCal'), t('calFileSub'), 'download']];
+}
+/* a saved choice that this device can't do (e.g. Apple on Android) falls back to Google Calendar */
+const effCal = k => !k ? null : calOpts().some(o => o[0] === k) ? k : 'google';
 function calSheet(key) {
   const staff = key.startsWith('t:');
   openSheet(`<h2 class="h2">${t('addCal')}</h2><p class="small muted">${t(staff ? 'calWhyT' : 'calWhy')}</p>
-  <div class="stack-xs">
-    <button class="opt" data-act="calPick" data-ev="${key}" data-c="apple">${icon('calendar', 20)}<span>${t('appleCal')}</span></button>
-    <button class="opt" data-act="calPick" data-ev="${key}" data-c="google">${icon('globe', 20)}<span>${t('googleCal')}</span></button>
-    <button class="opt" data-act="calPick" data-ev="${key}" data-c="ics">${icon('download', 20)}<span>${t('otherCal')}</span></button>
-  </div>
+  <div class="stack-xs">${calOpts().map(([k, l, sub, ic]) => `<button class="opt" data-act="calPick" data-ev="${key}" data-c="${k}">${icon(ic, 20)}<span class="grow"><b>${l}</b><br><span class="small muted">${sub}</span></span></button>`).join('')}</div>
+  ${iosInApp() ? `<p class="note rose"><span>${t('calSafari')}</span></p>` : ''}
   <label class="row toggle-row"><span>${t('alwaysDo')}</span><input type="checkbox" class="switch" id="calAlways"></label>
   ${staff ? `<p class="small muted">${t('calPrivacy')}</p>` : ''}
   <button class="btn btn-ghost btn-block" data-act="closeSheet">${t('notNow')}</button>`);
@@ -2851,19 +2877,25 @@ const vevent = e => ['BEGIN:VEVENT', `UID:${e.uid}@appt4u.com`, `DTSTAMP:${icsSt
   `SUMMARY:${icsEsc(e.title)}`, `LOCATION:${icsEsc(e.location)}`, `DESCRIPTION:${icsEsc(e.desc)}`,
   'BEGIN:VALARM', `TRIGGER:-PT${e.alarm}M`, 'ACTION:DISPLAY', 'DESCRIPTION:Reminder', 'END:VALARM', 'END:VEVENT'];
 const icsDoc = evs => ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//appt4u//Booking//EN', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH'].concat(...evs.map(vevent), ['END:VCALENDAR']).join('\r\n');
+/* returns the message key to show afterwards */
 function openIcs(ics, name) {
-  if (isIOS) { location.href = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(ics); return; }
+  if (isIOS) {
+    /* iPhone/iPad: iOS shows the event with an "Add to Calendar" button on top of the page, which stays as it was */
+    location.href = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(ics);
+    return 'calDoneIos';
+  }
   const url = URL.createObjectURL(new Blob([ics], { type: 'text/calendar;charset=utf-8' }));
   const a = document.createElement('a'); a.href = url; a.download = name; document.body.appendChild(a); a.click();
   setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 1500);
+  return 'calDoneFile';
 }
 function addToCalendar(e, kind) {
   if (kind === 'google') {
     window.open('https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + encodeURIComponent(e.title) + '&dates=' + icsStamp(e.start) + '/' + icsStamp(e.end) +
       '&details=' + encodeURIComponent(e.desc) + '&location=' + encodeURIComponent(e.location), '_blank', 'noopener');
-    return;
+    return 'calDoneGoogle';
   }
-  openIcs(icsDoc([e]), 'appt4u-booking.ics');
+  return openIcs(icsDoc([e]), 'appt4u-booking.ics');
 }
 
 /* ------------------------------------------------------------------ actions */
@@ -2949,21 +2981,21 @@ const ACT = {
     const staff = key.startsWith('t:');
     const sw = $('#calAlways'); if (sw && sw.checked) { if (staff) S.tCal = el.dataset.c; else S.calAlways = el.dataset.c; }
     if (staff) S.tAdded[key.slice(2)] = true;
-    save(); addToCalendar(e, el.dataset.c); closeSheet(); toast(t('addedCal'));
+    save(); const done = addToCalendar(e, effCal(el.dataset.c) || 'google'); closeSheet(); toast(t(done));
     setTimeout(render, 300);
   },
   calDo: el => {
     const key = el.dataset.ev, e = evByKey(key); if (!e) return;
     if (key.startsWith('t:')) { S.tAdded[key.slice(2)] = true; save(); setTimeout(render, 300); }
-    addToCalendar(e, el.dataset.c || 'ics'); toast(t('addedCal'));
+    toast(t(addToCalendar(e, effCal(el.dataset.c) || 'google')));
   },
   ackNew: el => { S.tAck[el.dataset.id] = true; save(); render(); },
   addWeek: () => {
     const now = new Date(), list = tAppointments(7).filter(a => a.start > now);
     if (!list.length) { toast(t('noAppts')); return; }
     list.forEach(a => { S.tAdded[a.id] = true; }); save();
-    openIcs(icsDoc(list.map(evFromAppt)), 'appt4u-next-7-days.ics');
-    toast(t('weekAdded', { n: list.length })); setTimeout(render, 300);
+    const done = openIcs(icsDoc(list.map(evFromAppt)), 'appt4u-next-7-days.ics');
+    toast(done === 'calDoneFile' ? t('calDoneFile') : t('weekAdded', { n: list.length })); setTimeout(render, 300);
   },
   subFeed: () => { const link = 'webcal://www.appt4u.com/feed/joanne-demo.ics'; openSheet(`<h2 class="h2">${t('subscribe')}</h2><p class="muted">${t('subInfo')}</p><div class="copybox">${icon('link', 18)}<span class="grow">${link}</span><button class="btn btn-sm btn-soft" data-act="copy" data-v="${link}">${t('copy')}</button></div><p class="note gold">${icon('sparkle', 16)} ${t('subDemo')}</p><p class="small muted">${t('calPrivacy')}</p>`); },
   closeSheet: () => closeSheet(),
@@ -2990,7 +3022,7 @@ const ACT = {
   saveSkin: () => { save(); toast(t('saved')); },
   calSettings: el => {
     const who = el.dataset.who === 't' ? 't' : 'm', cur = who === 't' ? S.tCal : S.calAlways;
-    openSheet(`<h2 class="h2">${t('calendarSet')}</h2><div class="stack-xs">${[[null, t('calAsk')], ['apple', t('appleCal')], ['google', t('googleCal')], ['ics', t('otherCal')]].map(([k, l]) => `<button class="opt ${cur === k ? 'on' : ''}" data-act="setCal" data-who="${who}" data-k="${k || ''}"><span class="radio"></span><span>${l}</span></button>`).join('')}</div>`);
+    openSheet(`<h2 class="h2">${t('calendarSet')}</h2><div class="stack-xs">${[[null, t('calAsk')]].concat(calOpts().map(o => [o[0], o[1]])).map(([k, l]) => `<button class="opt ${cur === k ? 'on' : ''}" data-act="setCal" data-who="${who}" data-k="${k || ''}"><span class="radio"></span><span>${l}</span></button>`).join('')}</div>`);
   },
   setCal: el => { const v = el.dataset.k || null; if (el.dataset.who === 't') S.tCal = v; else S.calAlways = v; save(); closeSheet(); render(); },
   notifSettings: () => openSheet(`<h2 class="h2">${t('notifications')}</h2>${['rem', 'exp', 'offers', 'after'].map(k => `<label class="row toggle-row"><span>${t('n_' + k)}</span><input type="checkbox" class="switch" data-notif="${k}" ${S.notif[k] !== false ? 'checked' : ''}></label>`).join('')}<p class="small muted">${t('n_note')}</p>`),
