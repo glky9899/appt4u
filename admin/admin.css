@@ -127,8 +127,11 @@ body.admin{background:#F6F4EF!important;font-size:14.5px}
   .ad-side,.ad-head,.inv-side,.toast,#modal{display:none!important}
 }
 .dt .wide{min-width:240px}
-.dt td .sub{white-space:nowrap}
 .dt th,.dt td{padding-left:12px;padding-right:12px}
 .dt .acts .icon-btn{width:34px;height:34px;color:var(--body)}
 .dt .acts .icon-btn:hover{background:var(--rose-tint);color:var(--rose)}
 .dt td .pill{white-space:nowrap}
+.ad-card .tbl .sub{display:block;font-size:12.5px;color:var(--body);font-weight:500}
+.dt .acts.wrap{flex-wrap:wrap;white-space:normal;max-width:150px}
+.dt .sub{overflow-wrap:anywhere}
+.md .two{display:grid;grid-template-columns:1fr 1fr;gap:12px}

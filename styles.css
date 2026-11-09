@@ -391,3 +391,14 @@ textarea.field{min-height:84px;resize:vertical;font-family:inherit;line-height:1
   .invdoc{position:fixed;left:0;top:0;width:100%;border:0;box-shadow:none;padding:0}
 }
 .inv-line label .field{color:var(--ink);font-size:16px}
+
+/* treatment records */
+.vcard .vrow{display:flex;flex-direction:column;gap:2px;padding:6px 0;border-top:1px solid var(--line)}
+.vcard .vrow span{font-size:12px;font-weight:700;color:var(--body);text-transform:uppercase;letter-spacing:.03em}
+.vcard .vrow p{font-size:14.5px;white-space:pre-wrap}
+.vcm{background:var(--sand-2);border-radius:12px 12px 12px 4px;padding:8px 12px;font-size:14px}
+.vcm small{display:block;color:var(--body);font-size:11.5px;margin-bottom:2px}
+.vhist summary{cursor:pointer;font-size:13px;color:var(--primary);font-weight:600}
+.vhist ul{margin:8px 0 0;padding-left:16px;font-size:13px;display:flex;flex-direction:column;gap:6px}
+.vdiff{font-size:12.5px}
+.vdiff s{color:var(--rose)}

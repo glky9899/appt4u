@@ -191,7 +191,15 @@ function pAppts() {
 function pMembers() {
   const bal = m => m.id === 'meiling' ? A.meilingBalance() : (m.bal || 0);
   const cols = [
-    { label: t('ad_name'), x: m => m.name, html: m => `<span class="who"><span class="avatar">${initials(m.name)}</span><b>${esc(m.name)}</b></span>`, w: 18 },
+    { label: t('ad_name'), x: m => m.name, html: m => `<a class="who" href="#/members/${m.id}"><span class="avatar">${initials(m.name)}</span><b>${esc(m.name)}</b></a>`, w: 18 },
+    { label: t('contactT'), text: m => { const c = A.mContact(m.id); return A.CONTACT_KEYS.map(k => c[k]).join(' '); }, html: m => {
+      const c = A.mContact(m.id), ln = A.contactLinks(c), soc = [c.wechat && `WeChat ${esc(c.wechat)}`, c.fb && `<a href="${esc(ln.fb)}" target="_blank" rel="noopener">FB</a>`, c.ig && `<a href="${esc(ln.ig)}" target="_blank" rel="noopener">IG ${esc(c.ig)}</a>`].filter(Boolean).join(' · ');
+      return `${c.phone ? `<a class="nowrap" href="${ln.phone}">${esc(c.phone)}</a>` : '<span class="muted">—</span>'}${c.email ? `<span class="sub"><a href="${ln.email}">${esc(c.email)}</a></span>` : ''}${soc ? `<span class="sub">${soc}</span>` : ''}`; } },
+    { label: t('f_phone'), x: m => A.mContact(m.id).phone || '', hidden: true, w: 16 },
+    { label: t('f_email'), x: m => A.mContact(m.id).email || '', hidden: true, w: 24 },
+    { label: t('f_wechat'), x: m => A.mContact(m.id).wechat || '', hidden: true },
+    { label: 'Facebook', x: m => A.mContact(m.id).fb || '', hidden: true, w: 24 },
+    { label: 'Instagram', x: m => A.mContact(m.id).ig || '', hidden: true, w: 16 },
     { label: t('ad_tier'), x: m => m.tier === 'gold' ? t('goldMember') : 'Silver', html: m => m.tier === 'gold' ? pill('gold', t('goldMember')) : pill('grey', 'Silver') },
     { label: t('ad_segment'), x: m => t('seg_' + m.seg) },
     { label: t('ad_lastDays'), num: true, x: m => m.last },
@@ -202,13 +210,27 @@ function pMembers() {
     { label: t('rebuy'), x: m => m.rebuy ? t('weeks', { n: m.rebuy }) : '', html: m => m.rebuy ? t('weeks', { n: m.rebuy }) : '—' },
     { label: t('introducer'), x: m => m.intro || '' },
     { label: t('consent'), x: m => m.consent ? t('signed') : t('consentMissing'), html: m => m.consent ? pill('sage', t('signed')) : pill('rose', t('consentMissing')) },
-    { label: t('ad_actions'), html: m => `<span class="acts"><button class="btn btn-sm btn-outline" data-x="invFor" data-id="${m.id}">${icon('doc', 15)} ${t('ad_newFor')}</button></span>` },
+    { label: t('ad_actions'), html: m => `<span class="acts"><button class="btn btn-sm btn-outline" data-x="memEdit" data-id="${m.id}">${t('editInv')}</button><button class="btn btn-sm btn-outline" data-x="invFor" data-id="${m.id}">${icon('doc', 15)} ${t('ad_newFor')}</button></span>` },
   ];
   const segs = ['vip', 'loyal', 'new', 'atrisk', 'away', 'lost'].map(k => [k, t('seg_' + k)]);
   return head(t('aMembers'), 'Lumière Skin Studio')
-    + dt('members', { cols, rows: A.MEMBERS, footer: true, file: `appt4u-members-${stamp()}.xlsx`, sheet: t('aMembers'), sort: 5, dir: -1,
+    + dt('members', { cols, rows: A.MEMBERS, footer: true, file: `appt4u-members-${stamp()}.xlsx`, sheet: t('aMembers'), sort: 6, dir: -1,
       filters: [{ k: 'seg', label: t('ad_segment'), opts: segs, test: (m, v) => m.seg === v }, { k: 'tier', label: t('ad_tier'), opts: [['gold', t('goldMember')], ['silver', 'Silver']], test: (m, v) => m.tier === v }] })
-    + `<p class="small muted">${t('ownOnly', { b: 'Lumière' })}</p>`;
+    + `<p class="note gold">${icon('users', 16)}<span>${t('contactPrivacy')}</span></p><p class="small muted">${t('ownOnly', { b: 'Lumière' })}</p>`;
+}
+
+const OWNER = { name: 'Michelle', role: 'owner' };
+function pMember(id) {
+  const m = A.member(id); if (!m) return null;
+  const c = A.mContact(id), ln = A.contactLinks(c), bal = id === 'meiling' ? A.meilingBalance() : (m.bal || 0);
+  const row = (label, val, href) => `<div class="statrow"><span>${label}</span><b>${val ? (href ? `<a href="${esc(href)}" ${href.startsWith('http') ? 'target="_blank" rel="noopener"' : ''}>${esc(val)}</a>` : esc(val)) : '—'}</b></div>`;
+  return `<div class="ad-head"><div><p class="ad-crumb"><a href="#/members">${t('aMembers')}</a> / ${esc(m.name)}</p><h1 class="ad-title">${esc(m.name)}</h1><p class="muted">${m.tier === 'gold' ? t('goldMember') : 'Silver'} · ${t('seg_' + m.seg)}${m.intro ? ' · ' + t('introBy', { n: m.intro }) : ''}</p></div>
+    <div class="ad-head-act"><button class="btn btn-outline btn-sm" data-x="memEdit" data-id="${id}">${t('editMember')}</button><button class="btn btn-primary btn-sm" data-x="invFor" data-id="${id}">${icon('doc', 16)} ${t('ad_newFor')}</button></div></div>
+  <div class="ad-kpis">${kcard(t('ltv'), rm(m.ltv))}${kcard(t('balanceLeft'), rm(bal))}${kcard(t('visits12'), m.visits)}${kcard(t('lastVisitL'), t('daysAgo', { n: m.last }))}</div>
+  <div class="inv-layout"><section class="ad-card">${A.recordsSection(id, 'x', true)}</section>
+    <aside class="inv-side"><section class="ad-card"><h2>${t('contactT')}</h2><div>${row(t('f_phone'), c.phone, ln.phone)}${row(t('f_email'), c.email, ln.email)}${row(t('f_wechat'), c.wechat)}${row('Facebook', c.fb, ln.fb)}${row('Instagram', c.ig, ln.ig)}</div>
+      ${ln.wa ? `<a class="btn btn-soft btn-block" href="${ln.wa}" target="_blank" rel="noopener">${icon('phone', 16)} WhatsApp</a>` : ''}<p class="small muted">${t('contactPrivacy')}</p></section>
+      <section class="ad-card"><h2>${t('consent')}</h2><p>${m.consent ? pill('sage', t('consentOk')) : pill('rose', t('consentMissing'))}</p></section></aside></div>`;
 }
 
 /* ------------------------------------------------------------------ invoices: list, Excel listing, import template, import */
@@ -571,21 +593,29 @@ function pSettings() {
 }
 
 /* ------------------------------------------------------------------ shell & router */
-const NAV = [['/', 'home', 'ad_dash'], ['/appointments', 'calendar', 'ad_appts'], ['/members', 'users', 'aMembers'], ['/invoices', 'doc', 'invoices'], ['/claims', 'receipt', 'claimsT'],
+let NAV = [['/', 'home', 'ad_dash'], ['/appointments', 'calendar', 'ad_appts'], ['/members', 'users', 'aMembers'], ['/invoices', 'doc', 'invoices'], ['/claims', 'receipt', 'claimsT'],
   ['/team', 'user', 'team'], ['/commission', 'coins', 'commission'], ['/reports', 'chart', 'aReports'], ['/timing', 'clock', 'tmTitle'], ['/settings', 'settings', 'settings']];
-const PAGES = [[/^\/$/, pDash], [/^\/appointments$/, pAppts], [/^\/members$/, pMembers], [/^\/invoices$/, pInvoices], [/^\/invoices\/new$/, () => pInvEdit(null)],
+let PAGES = [[/^\/$/, pDash], [/^\/appointments$/, pAppts], [/^\/members$/, pMembers], [/^\/members\/(\w+)$/, pMember], [/^\/invoices$/, pInvoices], [/^\/invoices\/new$/, () => pInvEdit(null)],
   [/^\/invoices\/(\w+)\/edit$/, pInvEdit], [/^\/invoices\/(\w+)$/, pInvoice], [/^\/claims$/, pClaims], [/^\/team$/, pTeam], [/^\/commission$/, pComm],
   [/^\/reports$/, pReports], [/^\/timing$/, pTiming], [/^\/settings$/, pSettings]];
 const route = () => (location.hash.replace(/^#/, '') || '/').split('?')[0];
 let lastPath = null;
+const navLabel = k => typeof k === 'function' ? k() : t(k);
+const SIDE = {
+  title: 'appt4u Admin',
+  tag: () => t('ad_full'),
+  card: () => `<div class="ad-biz">Lumière Skin Studio<br><span>Bangsar · Subang Jaya</span></div>`,
+  badges: () => { const s = S(); return { '/claims': s.claims.filter(c => c.status === 'pending').length, '/invoices': s.invoices.filter(x => A.invStatus(x) === 'overdue').length }; },
+  foot: () => `<a class="btn btn-sm btn-outline" href="../#/a/today">${icon('phone', 16)} ${t('ad_phone')}</a><p class="small muted">${t('ad_sample')}</p>`,
+};
 function sideHtml(path) {
-  const s = S(), badge = { '/claims': s.claims.filter(c => c.status === 'pending').length, '/invoices': s.invoices.filter(x => A.invStatus(x) === 'overdue').length };
+  const badge = SIDE.badges();
   const active = path === '/' ? '/' : (NAV.find(n => n[0] !== '/' && (path === n[0] || path.startsWith(n[0] + '/'))) || [''])[0];
-  return `<aside class="ad-side"><a class="ad-logo" href="#/"><img src="../icons/logo.png" alt="appt4u" width="139" height="38" style="height:38px;width:auto;align-self:flex-start;object-fit:contain"><span class="ad-tag">${t('ad_full')}</span></a>
-    <div class="ad-biz">Lumière Skin Studio<br><span>Bangsar · Subang Jaya</span></div>
-    <nav class="ad-nav">${NAV.map(([h, ic, k]) => `<a class="${active === h ? 'on' : ''}" href="#${h}">${icon(ic, 19)}<span>${t(k)}</span>${badge[h] ? `<span class="badge">${badge[h]}</span>` : ''}</a>`).join('')}</nav>
+  return `<aside class="ad-side"><a class="ad-logo" href="#/"><img src="../icons/logo.png" alt="appt4u" width="139" height="38" style="height:38px;width:auto;align-self:flex-start;object-fit:contain"><span class="ad-tag">${SIDE.tag()}</span></a>
+    ${SIDE.card()}
+    <nav class="ad-nav">${NAV.map(([h, ic, k]) => `<a class="${active === h ? 'on' : ''}" href="#${h}">${icon(ic, 19)}<span>${navLabel(k)}</span>${badge[h] ? `<span class="badge">${badge[h]}</span>` : ''}</a>`).join('')}</nav>
     <div class="ad-side-foot"><div class="langseg">${A.LANGS.map(([k, , sh]) => `<button class="${k === L() ? 'on' : ''}" data-x="lang" data-l="${k}">${sh}</button>`).join('')}</div>
-      <a class="btn btn-sm btn-outline" href="../#/a/today">${icon('phone', 16)} ${t('ad_phone')}</a><p class="small muted">${t('ad_sample')}</p></div></aside>`;
+      ${SIDE.foot()}</div></aside>`;
 }
 function render() {
   const path = route();
@@ -595,7 +625,7 @@ function render() {
   const ae = document.activeElement, focusSel = ae && ae.dataset && ae.dataset.dq != null ? `[data-dq][data-dt="${ae.dataset.dt}"]` : null, caret = focusSel ? ae.selectionStart : 0;
   const y = window.scrollY, same = lastPath === path;
   ROOT.innerHTML = `<div class="ad">${sideHtml(path)}<main class="ad-main" id="adMain">${html}</main></div>`;
-  document.title = `${t(((NAV.find(n => n[0] === path) || NAV.find(n => n[0] !== '/' && path.startsWith(n[0]))) || NAV[0])[2])} · appt4u Admin`;
+  document.title = `${navLabel(((NAV.find(n => n[0] === path) || NAV.find(n => n[0] !== '/' && path.startsWith(n[0]))) || NAV[0])[2])} · ${SIDE.title}`;
   if (focusSel) { const el = $(focusSel); if (el) { el.focus(); try { el.setSelectionRange(caret, caret); } catch (e) { /* ignore */ } } }
   window.scrollTo(0, same ? y : 0);
   lastPath = path;
@@ -620,6 +650,25 @@ const X_ = {
   },
   cxDo: el => { if (A.cancelAppt(el.dataset.id, el.dataset.by)) { closeModal(); render(); toast(t('cxToast')); } },
   invFor: el => { ED = newDraft(el.dataset.id); location.hash = '#/invoices/new'; },
+  vAdd: el => modal(A.recordFormHtml(null, 'x', { mid: el.dataset.mid })),
+  vEdit: el => { const v = S().visits.find(x => x.id === el.dataset.id); if (v) modal(A.recordFormHtml(v, 'x')); },
+  vComment: el => { const v = S().visits.find(x => x.id === el.dataset.id); if (v) modal(A.commentFormHtml(v, 'x')); },
+  vSave: el => { const k = A.saveRecordFromForm(el.dataset.id, el.dataset.mid, el.dataset.th, OWNER); if (k === 'tr_need') { toast(t(k)); return; } closeModal(); render(); toast(t(k)); },
+  vCommentSave: el => { const k = A.saveCommentFromForm(el.dataset.id, OWNER); if (!k) return; closeModal(); render(); toast(t(k)); },
+  memEdit: el => {
+    const id = el.dataset.id, c = A.mContact(id);
+    const f = (k, label, ph, type) => `<label class="ed-col"><span class="label">${label}</span><input class="field" id="me-${k}" value="${esc(c[k] || '')}" placeholder="${ph || ''}" ${type ? `type="${type}"` : ''} autocomplete="off"></label>`;
+    modal(`<h2>${t('editMember')}</h2>${f('name', t('f_name'))}<div class="ed-grid">${f('phone', t('f_phone'), '+60 12-000 0000', 'tel')}${f('email', t('f_email'), 'name@example.com', 'email')}</div>
+      ${f('wechat', t('f_wechat'))}<div class="ed-grid">${f('fb', 'Facebook', 'facebook.com/…')}${f('ig', 'Instagram', '@…')}</div>
+      <p class="note gold">${icon('users', 16)}<span>${t('contactPrivacy')}</span></p>
+      <div class="row-start gap8"><button class="btn btn-primary" data-x="memSave" data-id="${id}">${t('save')}</button><button class="btn btn-ghost" data-x="closeModal">${t('notNow')}</button></div>`);
+  },
+  memSave: el => {
+    const v = k => ((document.getElementById('me-' + k) || {}).value || ''), c = { name: v('name') };
+    A.CONTACT_KEYS.forEach(k => { c[k] = v(k); });
+    if (!c.name.trim()) { toast(t('needName')); return; }
+    if (A.setMemberContact(el.dataset.id, c)) { closeModal(); render(); toast(t('memberSaved')); }
+  },
   invTemplate: () => downloadTemplate(),
   invIssue: el => { const x = S().invoices.find(v => v.id === el.dataset.id); if (!x) return; x.status = 'issued'; A.save(); render(); toast(t('invIssued', { n: x.no })); },
   invPaySheet: el => modal(`<h2>${t('payHow')}</h2><div class="stack-xs">${['cash', 'card', 'duitnow', 'ewallet'].map(k => `<button class="opt" data-x="invPay" data-id="${el.dataset.id}" data-m="${k}">${icon('cash', 20)}<span>${t('m_' + k)}</span></button>`).join('')}</div><button class="btn btn-ghost" data-x="closeModal">${t('notNow')}</button>`),
@@ -683,5 +732,11 @@ window.addEventListener('storage', e => {
   if (e.key === KEY) { A.reload(); render(); }
   else if (e.key === 'appt4u-lang') { try { A.setLang(JSON.parse(e.newValue)); } catch (err) { /* ignore */ } render(); }
 });
-render();
+/* the same shell runs the platform console (platform/index.html), which plugs in its own pages */
+const CONSOLE = document.documentElement.dataset.console === 'platform' ? 'platform' : 'business';
+window.A4UC = {
+  dt, head, kcard, pill, toast, modal, closeModal, downloadBook, sheetOf, sheetAOA, money, MONEY, DATEF, serial, sum, stamp, plain, dayOf, TB, render,
+  use(cfg) { NAV = cfg.nav; PAGES = cfg.pages; Object.assign(X_, cfg.actions || {}); Object.assign(SIDE, cfg.side || {}); },
+};
+if (CONSOLE === 'business') render();
 })();

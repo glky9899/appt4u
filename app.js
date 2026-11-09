@@ -413,6 +413,45 @@ const STR = {
   ad_value: ['Value', '数值'],
   ad_compare: ['Compared with', '对比'],
   ad_change: ['Change', '变化'],
+  r_platform: ['Platform manager (appt4u)', '平台管理员（appt4u）'],
+  r_platformSub: ['All businesses, plans, approvals and support', '所有商家、方案、审批与客服'],
+  contactT: ['Contact details', '联系方式'],
+  f_name: ['Full name', '姓名'],
+  f_phone: ['Phone', '电话'],
+  f_email: ['Email', '电邮'],
+  f_wechat: ['WeChat ID', '微信号'],
+  contactPrivacy: ['Only the owner and admins can see contact details. Staff and freelancers can’t.', '只有老板与管理员能看到联系方式，员工与自由职业者看不到。'],
+  editMember: ['Edit member', '编辑会员'],
+  memberSaved: ['Member details saved', '会员资料已保存'],
+  needName: ['Enter a name', '请输入姓名'],
+  noContactStaff: ['Client phone numbers, emails and social accounts are only visible to the owner and admins.', '顾客的电话、电邮与社交账号只有老板与管理员可见。'],
+  tr_title: ['Treatment records', '护理记录'],
+  tr_open: ['Treatment history', '护理记录'],
+  tr_last: ['Last visit', '上次到访'],
+  tr_notes: ['Treatment done', '护理内容'],
+  tr_skin: ['Skin & condition', '肤况与身体状况'],
+  tr_products: ['Products used', '使用产品'],
+  tr_advice: ['Advice for next visit', '下次护理建议'],
+  tr_add: ['Add record', '新增记录'],
+  tr_comment: ['Comment', '留言'],
+  tr_commentPh: ['Add a comment for the team…', '给团队留言…'],
+  tr_history: ['Edit history ({n})', '修改记录（{n}）'],
+  tr_created: ['created the record', '建立了记录'],
+  tr_edited: ['edited {f}', '修改了「{f}」'],
+  tr_commented: ['commented', '留言'],
+  tr_saved: ['Record saved', '记录已保存'],
+  tr_cmSaved: ['Comment added', '留言已添加'],
+  tr_noChange: ['Nothing changed', '没有更改'],
+  tr_none: ['No treatment records yet', '暂无护理记录'],
+  tr_need: ['Write what was done', '请填写护理内容'],
+  tr_who: ['Owner, admins, staff and freelancers can all read and add to these records. Every edit and comment is logged with who made it.', '老板、管理员、员工与自由职业者都能查看并补充这些记录，每次修改与留言都会记录操作人。'],
+  tr_visits: ['{n} visits recorded', '已记录 {n} 次到访'],
+  tr_before: ['Before', '修改前'],
+  tr_after: ['After', '修改后'],
+  tr_health: ['Health notes', '健康备注'],
+  tr_by: ['Therapist', '美容师'],
+  roleOwner: ['Owner', '老板'],
+  tr_new: ['New', '新'],
   notFound: ['Page not found', '找不到页面'], goHome: ['Go home', '返回首页'], demoOnly: ['Available in the full version', '完整版提供此功能'],
 };
 /* Bahasa Melayu. Any key missing here falls back to English. */
@@ -811,6 +850,45 @@ const STR_MS = {
   ad_value: 'Nilai',
   ad_compare: 'Berbanding',
   ad_change: 'Perubahan',
+  r_platform: 'Pengurus platform (appt4u)',
+  r_platformSub: 'Semua perniagaan, pelan, kelulusan dan sokongan',
+  contactT: 'Butiran hubungan',
+  f_name: 'Nama penuh',
+  f_phone: 'Telefon',
+  f_email: 'E-mel',
+  f_wechat: 'ID WeChat',
+  contactPrivacy: 'Hanya pemilik dan admin boleh melihat butiran hubungan. Staf dan pekerja bebas tidak boleh.',
+  editMember: 'Ubah ahli',
+  memberSaved: 'Butiran ahli disimpan',
+  needName: 'Masukkan nama',
+  noContactStaff: 'Nombor telefon, e-mel dan akaun media sosial pelanggan hanya boleh dilihat oleh pemilik dan admin.',
+  tr_title: 'Rekod rawatan',
+  tr_open: 'Sejarah rawatan',
+  tr_last: 'Lawatan terakhir',
+  tr_notes: 'Rawatan dibuat',
+  tr_skin: 'Kulit & keadaan',
+  tr_products: 'Produk digunakan',
+  tr_advice: 'Nasihat untuk lawatan seterusnya',
+  tr_add: 'Tambah rekod',
+  tr_comment: 'Komen',
+  tr_commentPh: 'Tambah komen untuk pasukan…',
+  tr_history: 'Sejarah pengubahan ({n})',
+  tr_created: 'mencipta rekod',
+  tr_edited: 'mengubah {f}',
+  tr_commented: 'mengulas',
+  tr_saved: 'Rekod disimpan',
+  tr_cmSaved: 'Komen ditambah',
+  tr_noChange: 'Tiada perubahan',
+  tr_none: 'Belum ada rekod rawatan',
+  tr_need: 'Tulis rawatan yang dibuat',
+  tr_who: 'Pemilik, admin, staf dan pekerja bebas semua boleh membaca dan menambah rekod ini. Setiap pengubahan dan komen direkodkan bersama nama pembuatnya.',
+  tr_visits: '{n} lawatan direkodkan',
+  tr_before: 'Sebelum',
+  tr_after: 'Selepas',
+  tr_health: 'Nota kesihatan',
+  tr_by: 'Terapis',
+  roleOwner: 'Pemilik',
+  tr_new: 'Baharu',
   notFound: 'Halaman tidak ditemui', goHome: 'Ke halaman utama', demoOnly: 'Tersedia dalam versi penuh',
 };
 function t(k, v) {
@@ -1019,6 +1097,38 @@ const MEMBERS = [
   { id: 'emily', name: 'Emily Tan', tier: 'silver', seg: 'lost', last: 210, ltv: 880, visits: 0, bal: 0, pk: 1, rebuy: 0, consent: true },
 ];
 const member = id => MEMBERS.find(m => m.id === id);
+MEMBERS.forEach(m => { m.name0 = m.name; });
+/* sample contact details. Only the owner/admin screens show them; the staff and freelancer screens never do */
+const MEMBER_CONTACT = {
+  meiling: { phone: '+60 12-000 0101', email: 'meiling.tan@example.com', wechat: 'meiling_tan', fb: '', ig: '@meiling.glow' },
+  grace: { phone: '+60 12-000 0102', email: 'grace.lim@example.com', wechat: 'gracelim88', fb: 'facebook.com/grace.lim', ig: '' },
+  jessica: { phone: '+60 16-000 0103', email: 'jessica.wong@example.com', wechat: 'jesswong', fb: '', ig: '@jess.w' },
+  priya: { phone: '+60 17-000 0104', email: 'priya.nair@example.com', wechat: '', fb: 'facebook.com/priya.nair', ig: '@priyanair' },
+  lina: { phone: '+60 12-000 0105', email: 'lina.ong@example.com', wechat: 'lina_ong', fb: '', ig: '' },
+  rachel: { phone: '+60 11-0000 0106', email: 'rachel.chew@example.com', wechat: 'rachelchew', fb: '', ig: '@rachel.chew' },
+  kavitha: { phone: '+60 19-000 0107', email: '', wechat: '', fb: 'facebook.com/kavitha.raj', ig: '' },
+  siti: { phone: '+60 13-000 0108', email: 'siti.rahmah@example.com', wechat: '', fb: '', ig: '@sitirahmah' },
+  farah: { phone: '+60 12-000 0109', email: 'farah.idris@example.com', wechat: '', fb: 'facebook.com/farah.idris', ig: '@farah.i' },
+  nur: { phone: '+60 14-000 0110', email: 'nur.aisyah@example.com', wechat: '', fb: '', ig: '@nuraisyah' },
+  joyce: { phone: '+60 16-000 0111', email: 'joyce.lee@example.com', wechat: 'joycelee_', fb: '', ig: '' },
+  emily: { phone: '+60 12-000 0112', email: '', wechat: 'emilytan', fb: '', ig: '' },
+};
+const CONTACT_KEYS = ['phone', 'email', 'wechat', 'fb', 'ig'];
+function mContact(id) { const m = member(id); return Object.assign({ name: m ? m.name0 : '' }, MEMBER_CONTACT[id] || {}, (S && S.mEdit && S.mEdit[id]) || {}); }
+function applyMemberEdits() { MEMBERS.forEach(m => { const e = S && S.mEdit && S.mEdit[m.id]; m.name = e && e.name ? e.name : m.name0; }); }
+function setMemberContact(id, c) {
+  if (!member(id)) return false;
+  const clean = {}; ['name'].concat(CONTACT_KEYS).forEach(k => { clean[k] = String(c[k] == null ? '' : c[k]).trim().slice(0, 120); });
+  if (!clean.name) return false;
+  S.mEdit = S.mEdit || {}; S.mEdit[id] = clean; applyMemberEdits(); save(); return true;
+}
+const contactLinks = c => {
+  const digits = (c.phone || '').replace(/\D/g, '');
+  return {
+    phone: digits ? 'tel:+' + digits : '', wa: digits ? 'https://wa.me/' + digits : '', email: c.email ? 'mailto:' + c.email : '',
+    fb: c.fb ? 'https://' + c.fb.replace(/^https?:\/\//, '') : '', ig: c.ig ? 'https://instagram.com/' + c.ig.replace(/^@/, '').replace(/^https?:\/\/(www\.)?instagram\.com\//, '') : '',
+  };
+};
 const initials = n => n.split(' ').map(x => x[0]).slice(0, 2).join('');
 const masked = n => { const p = n.split(' '); return p[0] + (p[1] ? ' ' + p[1][0] + '.' : ''); };
 
@@ -1082,6 +1192,27 @@ function seedClaims() {
     { id: 'c6', who: 'aida', type: 'exp', cat: 'meals', amount: 25, date: d(-3), desc: 'Lunch during nail art training', receipt: null, status: 'pending' },
   ];
 }
+/* treatment records: one per visit. Everyone on the team can read, add, edit and comment; every change is logged */
+const VF = ['notes', 'skin', 'products', 'advice'];
+function seedVisits() {
+  const d = (n, h) => { const x = addDays(today0(), n); x.setHours(h || 15, 20, 0, 0); return x.toISOString(); };
+  const J = { name: 'Joanne', role: 'free' }, W = { name: 'Wei Ling', role: 'staff' }, O = { name: 'Michelle', role: 'owner' };
+  const V = (id, mid, ago, sid, th, f, extra) => Object.assign({ id, mid, date: d(-ago), sid, th, notes: f[0], skin: f[1], products: f[2], advice: f[3], comments: [], log: [{ at: d(-ago), who: th === 'weiling' ? W : J, act: 'created' }] }, extra || {});
+  const v1 = V('v1', 'meiling', 11, 'hydra', 'joanne', ['Hydrating Glow, 3-step serum infusion. Extraction on T-zone only.', 'Cheeks dehydrated. Small redness on left cheek after extraction, settled in 10 minutes.', 'Hyaluronic booster 15%, Repair Serum', 'Avoid salicylic acid (allergy). Use lighter extraction pressure next time.']);
+  v1.log.push({ at: d(-11, 16), who: J, act: 'edited', changes: [{ f: 'advice', from: 'Avoid salicylic acid (allergy).', to: 'Avoid salicylic acid (allergy). Use lighter extraction pressure next time.' }] });
+  v1.comments.push({ at: d(-10, 11), who: O, text: 'She asked about the Repair Serum for home use. Sold 1 bottle.' });
+  v1.log.push({ at: d(-10, 11), who: O, act: 'comment', text: 'She asked about the Repair Serum for home use. Sold 1 bottle.' });
+  return [
+    v1,
+    V('v2', 'meiling', 25, 'hydra', 'joanne', ['Hydrating Glow, standard programme.', 'Combination skin, mild congestion on the nose.', 'Hyaluronic booster 10%', 'Increase the booster to 15% next visit.']),
+    V('v3', 'meiling', 39, 'deep', 'weiling', ['Deep cleansing facial, first visit.', 'Sensitive skin; reacted to salicylic acid in the patch test.', 'Calming mask', 'Recommend the Hydrating Glow package.']),
+    V('v4', 'nur', 20, 'deep', 'joanne', ['Deep cleansing with steam and extraction.', 'Oily T-zone, a few closed comedones on the chin.', 'Clay mask, toner', 'Book again in 3–4 weeks.']),
+    V('v5', 'lina', 14, 'hydra', 'joanne', ['Hydrating Glow.', 'Good hydration, slight pigmentation on cheeks.', 'Vitamin C serum', 'Add brightening ampoule next time.']),
+    V('v6', 'priya', 13, 'calm', 'joanne', ['Sensitive skin calming treatment.', 'Redness around the nose has reduced since last month.', 'Centella mask', 'Prefers firm pressure for the massage.']),
+    V('v7', 'grace', 4, 'hydra', 'weiling', ['Hydrating Glow with LED.', 'Skin in good condition.', 'Hyaluronic booster 10%, LED 10 min', 'Continue the package; next visit in 2 weeks.']),
+    V('v8', 'rachel', 52, 'deep', 'joanne', ['Deep cleansing, gentle programme.', 'Pregnant (2nd trimester). No essential oils, no strong peels.', 'Fragrance-free cleanser', 'Keep to gentle treatments until after delivery.']),
+  ];
+}
 function seedInvoices() {
   const d = n => addDays(today0(), n).toISOString();
   return [
@@ -1138,6 +1269,9 @@ function loadState() {
   S.tNotif = S.tNotif || { rem: true, run: true, change: true };
   S.tAck = S.tAck || {}; S.tAdded = S.tAdded || {}; if (S.tCal === undefined) S.tCal = null;
   if (!S.mig4) { const b1 = S.bookings.find(b => b.id === 'b1'); if (b1) b1.staffNew = true; S.mig4 = true; }
+  S.mEdit = S.mEdit || {};
+  if (!S.visits) S.visits = seedVisits();
+  applyMemberEdits();
 }
 loadState();
 const save = () => LS.set(KEY, S);
@@ -1231,7 +1365,8 @@ function vOtp() {
     <button class="btn btn-primary btn-block" data-act="verify">${t('verify')}</button></div>` });
 }
 function rolesSheet() {
-  openSheet(`<h2 class="h2">${t('chooseRole')}</h2><div class="stack-xs">${ROLES.map(r => `<button class="opt" data-act="role" data-role="${r}">${icon({ member: 'user', admin: 'chart', therapist: 'sparkle', agent: 'share' }[r], 20)}<span class="grow"><b>${t('r_' + r)}</b><br><span class="small muted">${t('r_' + r + 'Sub')}</span></span>${icon('chevR', 16)}</button>`).join('')}</div>`);
+  openSheet(`<h2 class="h2">${t('chooseRole')}</h2><div class="stack-xs">${ROLES.map(r => `<button class="opt" data-act="role" data-role="${r}">${icon({ member: 'user', admin: 'chart', therapist: 'sparkle', agent: 'share' }[r], 20)}<span class="grow"><b>${t('r_' + r)}</b><br><span class="small muted">${t('r_' + r + 'Sub')}</span></span>${icon('chevR', 16)}</button>`).join('')}
+    <a class="opt" href="platform/">${icon('apps', 20)}<span class="grow"><b>${t('r_platform')}</b><br><span class="small muted">${t('r_platformSub')}</span></span>${icon('chevR', 16)}</a></div>`);
 }
 
 /* ------------------------------------------------------------------ member: home */
@@ -1632,9 +1767,108 @@ function vAMember(id) {
     ${statrow(t('lastVisitL'), t('daysAgo', { n: m.last }))}
   </div>
   <p class="small muted">${t('ownOnly', { b: 'Lumière' })}</p>
+  ${contactCard(id)}
+  ${recordsSection(id, 'act', false)}
+  ${visitsOf(id).length > 1 ? `<a class="btn btn-outline btn-block" href="#/a/member/${id}/records">${t('tr_open')} · ${t('tr_visits', { n: visitsOf(id).length })}</a>` : ''}
   <div class="card tint-rose stack-xs"><p class="strong" style="color:var(--rose)">${t('notes')}</p><p>${isMe ? t('note1') : t('noteGen')}</p><p class="small muted">Joanne · ${fDate(addDays(today0(), -m.last))}</p></div>
   <div class="row-start gap8"><a class="btn btn-primary grow" href="#/a/counter/${m.id}">${t('recordSale')}</a><button class="btn btn-outline" data-act="toast" data-msg="demoOnly">${t('tabBookings')}</button></div>`;
   return page({ back: '/a/members', title: t('aMembers'), body });
+}
+const visitsOf = mid => S.visits.filter(v => v.mid === mid).sort((a, b) => new Date(b.date) - new Date(a.date));
+const whoLabel = w => w ? `${esc(w.name)} · ${w.role === 'owner' ? t('roleOwner') : w.role === 'admin' ? 'Admin' : t('kind_' + (w.role === 'staff' ? 'staff' : 'free'))}` : '';
+/* who is using the phone app right now: staff/freelancer view = Joanne, owner/admin view = the owner */
+const actorNow = () => S.role === 'therapist' ? { name: 'Joanne', role: staffKind('joanne') } : { name: 'Michelle', role: 'owner' };
+function addVisit(rec, who) {
+  const v = { id: 'v' + Date.now().toString(36), mid: rec.mid, date: rec.date || new Date().toISOString(), sid: rec.sid, th: rec.th, comments: [], log: [{ at: new Date().toISOString(), who, act: 'created' }] };
+  VF.forEach(f => { v[f] = String(rec[f] || '').trim(); });
+  S.visits.push(v); save(); return v;
+}
+function editVisit(id, patch, who) {
+  const v = S.visits.find(x => x.id === id); if (!v) return false;
+  const changes = VF.filter(f => patch[f] != null && String(patch[f]).trim() !== (v[f] || '')).map(f => ({ f, from: v[f] || '', to: String(patch[f]).trim() }));
+  if (!changes.length) return false;
+  changes.forEach(c => { v[c.f] = c.to; });
+  v.log.push({ at: new Date().toISOString(), who, act: 'edited', changes }); save(); return true;
+}
+function commentVisit(id, text, who) {
+  const v = S.visits.find(x => x.id === id), txt = String(text || '').trim(); if (!v || !txt) return false;
+  const at = new Date().toISOString();
+  v.comments.push({ at, who, text: txt }); v.log.push({ at, who, act: 'comment', text: txt }); save(); return true;
+}
+const fieldName = f => t('tr_' + f);
+/* a = 'act' in the phone app, 'x' in the desktop admin */
+function visitCard(v, a, latest) {
+  const s = svc(v.sid), th = THER[v.th] ? THER[v.th].name : v.th;
+  const row = f => v[f] ? `<div class="vrow"><span>${fieldName(f)}</span><p>${esc(v[f])}</p></div>` : '';
+  const hist = v.log.slice().reverse().map(l => `<li><span class="muted">${fDate(l.at)} ${hm(l.at)} · ${whoLabel(l.who)}</span> — ${l.act === 'created' ? t('tr_created') : l.act === 'comment' ? `${t('tr_commented')}: “${esc(l.text)}”` : l.changes.map(c => `${t('tr_edited', { f: fieldName(c.f) })}<br><span class="vdiff"><s>${esc(c.from) || '—'}</s> → ${esc(c.to) || '—'}</span>`).join('<br>')}</li>`).join('');
+  return `<div class="card stack-sm vcard ${latest ? 'gold' : ''}">
+    <div class="row" style="align-items:flex-start"><span><b>${fFull(v.date)}</b><span class="small muted block">${s ? esc(s.name[lang]) : ''} · ${t('tr_by')}: ${esc(th)}</span></span>${latest ? `<span class="pill gold">${t('tr_last')}</span>` : ''}</div>
+    ${VF.map(row).join('')}
+    ${v.comments.length ? `<div class="stack-xs">${v.comments.map(c => `<div class="vcm"><small>${whoLabel(c.who)} · ${fDate(c.at)} ${hm(c.at)}</small>${esc(c.text)}</div>`).join('')}</div>` : ''}
+    <div class="row-start gap8 wrap"><button class="btn btn-sm btn-outline" data-${a}="vEdit" data-id="${v.id}">${t('editInv')}</button><button class="btn btn-sm btn-soft" data-${a}="vComment" data-id="${v.id}">${t('tr_comment')}</button></div>
+    <details class="vhist"><summary>${t('tr_history', { n: v.log.length })}</summary><ul>${hist}</ul></details></div>`;
+}
+function recordFormHtml(v, a, pre) {
+  pre = pre || {};
+  const val = f => esc(v ? v[f] : pre[f] || '');
+  const lum = SERVICES.filter(s => s.biz === 'lumiere');
+  return `<h2 class="h2">${v ? t('editInv') + ' · ' + fFull(v.date) : t('tr_add')}</h2>
+    ${v ? '' : `<div class="two"><label class="stack-xs"><span class="label">${t('ad_treatment')}</span><select class="field" id="vr-sid">${lum.map(s => `<option value="${s.id}" ${pre.sid === s.id ? 'selected' : ''}>${s.name[lang]}</option>`).join('')}</select></label>
+      <label class="stack-xs"><span class="label">${t('pickDate')}</span><input class="field" type="date" id="vr-date" value="${isoDay(pre.date || new Date())}" max="${isoDay(new Date())}"></label></div>
+      <label class="stack-xs"><span class="label">${t('tr_by')}</span><select class="field" id="vr-th">${['joanne', 'weiling', 'aida'].map(k => `<option value="${k}" ${(pre.th || 'joanne') === k ? 'selected' : ''}>${THER[k].name}</option>`).join('')}</select></label>`}
+    ${VF.map(f => `<label class="stack-xs"><span class="label">${fieldName(f)}</span><textarea class="field" id="vr-${f}" rows="2">${val(f)}</textarea></label>`).join('')}
+    <button class="btn btn-primary btn-block" data-${a}="vSave" data-id="${v ? v.id : ''}" data-mid="${esc(pre.mid || (v && v.mid) || '')}" data-th="${esc(pre.th || '')}">${t('save')}</button>`;
+}
+const commentFormHtml = (v, a) => `<h2 class="h2">${t('tr_comment')} · ${fFull(v.date)}</h2><textarea class="field" id="vc-text" rows="3" placeholder="${t('tr_commentPh')}"></textarea><button class="btn btn-primary btn-block" data-${a}="vCommentSave" data-id="${v.id}">${t('save')}</button>`;
+/* read the open form; returns a message key */
+function saveRecordFromForm(id, mid, th, who) {
+  const g = k => ((document.getElementById(k) || {}).value || '');
+  const patch = {}; VF.forEach(f => { patch[f] = g('vr-' + f); });
+  if (id) return editVisit(id, patch, who) ? 'tr_saved' : 'tr_noChange';
+  if (!patch.notes.trim()) return 'tr_need';
+  const day = g('vr-date'), when = day ? fromIsoDay(day) : new Date();
+  addVisit(Object.assign({ mid, sid: g('vr-sid'), th: g('vr-th') || th || 'joanne', date: when.toISOString() }, patch), who);
+  return 'tr_saved';
+}
+const saveCommentFromForm = (id, who) => commentVisit(id, ((document.getElementById('vc-text') || {}).value || ''), who) ? 'tr_cmSaved' : '';
+function recordsSection(mid, a, full) {
+  const vs = visitsOf(mid);
+  return `<div class="row"><h2 class="h2">${t('tr_title')}</h2><button class="btn btn-sm btn-primary" data-${a}="vAdd" data-mid="${mid}">${icon('plus', 16)} ${t('tr_add')}</button></div>
+    ${vs.length ? (full ? vs : vs.slice(0, 1)).map((v, i) => visitCard(v, a, i === 0)).join('') : `<p class="muted">${t('tr_none')}</p>`}
+    <p class="small muted">${t('tr_who')}</p>`;
+}
+function contactCard(id) {
+  const c = mContact(id), ln = contactLinks(c);
+  const row = (label, val, href) => val
+    ? (href ? `<a class="statrow" href="${esc(href)}" ${href.startsWith('http') ? 'target="_blank" rel="noopener"' : ''}><span>${label}</span><b style="color:var(--primary-d)">${esc(val)}</b></a>` : `<div class="statrow"><span>${label}</span><b>${esc(val)}</b></div>`)
+    : `<div class="statrow"><span>${label}</span><b class="muted">—</b></div>`;
+  return `<div class="card stack-sm"><div class="row"><p class="strong">${t('contactT')}</p><a class="btn btn-sm btn-outline" href="#/a/member/${id}/edit">${t('editInv')}</a></div>
+    <div>${row(t('f_phone'), c.phone, ln.phone)}${row(t('f_email'), c.email, ln.email)}${row(t('f_wechat'), c.wechat)}${row('Facebook', c.fb, ln.fb)}${row('Instagram', c.ig, ln.ig)}</div>
+    ${ln.wa ? `<a class="btn btn-soft btn-block" href="${ln.wa}" target="_blank" rel="noopener">${icon('phone', 16)} WhatsApp</a>` : ''}
+    <p class="small muted">${t('contactPrivacy')}</p></div>`;
+}
+function vAMemberRecords(id) {
+  const m = member(id); if (!m) return vNotFound();
+  return page({ back: '/a/member/' + id, title: t('tr_title'), body: `<div class="row-start"><span class="avatar lg">${initials(m.name)}</span><div><p class="h-serif">${esc(m.name)}</p><p class="small muted">${t('tr_visits', { n: visitsOf(id).length })}</p></div></div>${recordsSection(id, 'act', true)}` });
+}
+/* staff / freelancer view of a client: treatment history only — short name, no contact details */
+function vTClient(cid) {
+  const m = member(cid); if (!m) return vNotFound();
+  const health = cid === 'meiling' ? t('note1') : cid === 'rachel' ? t('pregnantNote') : cid === 'priya' ? t('firmPressure') : '';
+  return page({ back: '/t/today', title: t('tr_title'), body: `<div class="row-start"><span class="avatar lg">${initials(m.name)}</span><div><p class="h-serif">${esc(masked(m.name))}</p><p class="small muted">${t('tr_visits', { n: visitsOf(cid).length })}</p></div></div>
+    ${health ? `<div class="card tint-rose stack-xs"><p class="strong" style="color:var(--rose)">${t('tr_health')}</p><p>${esc(health)}</p></div>` : ''}
+    ${recordsSection(cid, 'act', true)}
+    <p class="note gold">${icon('users', 16)}<span>${t('noContactStaff')}</span></p>` });
+}
+function vAMemberEdit(id) {
+  const m = member(id); if (!m) return vNotFound();
+  const c = mContact(id);
+  const f = (k, label, ph, type) => `<label class="stack-xs"><span class="label">${label}</span><input class="field" id="me-${k}" value="${esc(c[k] || '')}" placeholder="${ph || ''}" ${type ? `type="${type}"` : ''} autocomplete="off"></label>`;
+  return page({ back: '/a/member/' + id, title: t('editMember'), body: `<div class="stack">
+    ${f('name', t('f_name'))}${f('phone', t('f_phone'), '+60 12-000 0000', 'tel')}${f('email', t('f_email'), 'name@example.com', 'email')}
+    ${f('wechat', t('f_wechat'))}${f('fb', 'Facebook', 'facebook.com/…')}${f('ig', 'Instagram', '@…')}
+    <p class="note gold">${icon('users', 16)}<span>${t('contactPrivacy')}</span></p>
+    <button class="btn btn-primary btn-block" data-act="saveMember" data-id="${id}">${t('save')}</button></div>` });
 }
 let cdraft = { member: 'meiling', item: 'p-hydra6', method: 'card', receipt: '', by: 'sara' };
 function vACounter(mid) {
@@ -2189,6 +2423,7 @@ function apptCard(a, isToday) {
   else if (st === 'arr') actions = `<button class="btn btn-sm btn-primary" data-act="tStart" data-id="${a.id}">${t('startBtn')}</button>${cxBtn}`;
   else if (st === 'in') actions = `<button class="btn btn-sm btn-primary" data-act="tEnd" data-id="${a.id}" data-p="${a.price}">${t('endBtn')}</button>${editBtn(t('editTimes'))}`;
   else actions = editBtn(t('editTimes'));
+  if (st !== 'cx' && a.cid) actions += `<a class="btn btn-sm btn-soft" href="#/t/client/${a.cid}">${icon('doc', 16)} ${t('tr_open')}</a>`;
   return `<div class="card stack-xs ${st === 'in' || st === 'arr' || (a.isNew && st === 'todo') ? 'gold' : ''} ${st === 'cx' ? 'is-cx' : ''}"><div class="row"><span class="small muted">${hm(a.start)} – ${hm(end)}${a.room ? ' · ' + roomName(a.room) : ''}</span>${status}</div>
   <p class="strong">${a.name}</p><p class="small muted">${esc(a.client)}</p>${a.note && st !== 'cx' ? `<p class="note rose">${icon('heart', 16)} ${esc(a.note)}</p>` : ''}
   ${timingLine(a)}
@@ -2239,7 +2474,7 @@ function vTMe() {
   const link = 'webcal://www.appt4u.com/feed/joanne-demo.ics';
   const body = `<h1 class="h1">${t('tabProfile')}</h1>
   <div class="card stack-sm"><div class="row-start">${mark('J')}<div><p class="strong">Joanne</p><p class="small muted">${THER.joanne.title[lang]} · Lumière</p><p class="small"><span class="pill gold">${t('kind_' + staffKind('joanne'))}</span> <span class="muted">${t('staffId', { id: STAFF.joanne.id })}</span></p></div></div>
-    <p class="small muted">${t('staffAccess')}</p></div>
+    <p class="small muted">${t('staffAccess')}</p><p class="note gold">${icon('users', 16)}<span>${t('noContactStaff')}</span></p></div>
   <div class="card stack-xs"><p class="strong">${t('remSet')}</p>
     <label class="row toggle-row"><span>${t('rem2h')}</span><input type="checkbox" class="switch" data-tnotif="rem" ${S.tNotif.rem ? 'checked' : ''}></label>
     <label class="row toggle-row"><span>${t('runSheet')}</span><input type="checkbox" class="switch" data-tnotif="run" ${S.tNotif.run ? 'checked' : ''}></label>
@@ -2290,7 +2525,7 @@ const ROUTES = [
   [/^\/m\/book(?:\/\w+)?$/, () => redirect('/m/home')],
   [/^\/m\/service\/(\w+)$/, id => { const s = svc(id); if (!s) return vNotFound(); draft = { biz: s.biz, ids: [id], therapist: 'any', day: today0().toISOString(), time: null, pay: null }; return redirect('/m/time'); }],
   [/^\/m\/bookings(?:\/(\w+))?$/, vBookings], [/^\/m\/wallet(?:\/(\w+))?(?:\/(\w+))?$/, vWallet], [/^\/m\/me$/, vMe], [/^\/m\/skin$/, vSkin], [/^\/m\/aftercare$/, vAftercare],
-  [/^\/a\/today$/, vAToday], [/^\/a\/diary(?:\/([\d-]+))?$/, vADiary], [/^\/a\/members(?:\/(\w+))?$/, vAMembers], [/^\/a\/member\/(\w+)$/, vAMember],
+  [/^\/a\/today$/, vAToday], [/^\/a\/diary(?:\/([\d-]+))?$/, vADiary], [/^\/a\/members(?:\/(\w+))?$/, vAMembers], [/^\/a\/member\/(\w+)$/, vAMember], [/^\/a\/member\/(\w+)\/edit$/, vAMemberEdit], [/^\/a\/member\/(\w+)\/records$/, vAMemberRecords], [/^\/t\/client\/(\w+)$/, vTClient],
   [/^\/a\/counter(?:\/(\w+))?$/, vACounter], [/^\/a\/sale$/, vASaleDone], [/^\/a\/reports$/, vAReports], [/^\/a\/more$/, vAMore],
   [/^\/a\/commission$/, vACommission], [/^\/a\/timing$/, vATiming], [/^\/a\/claims$/, vAClaims], [/^\/a\/team$/, vATeam], [/^\/a\/team\/(\w+)$/, vATeamMember], [/^\/a\/invoices(?:\/(\w+))?$/, vAInvoices], [/^\/a\/invoice\/new$/, () => vAInvoiceEdit(null)], [/^\/a\/invoice\/(\w+)\/edit$/, vAInvoiceEdit], [/^\/a\/invoice\/(\w+)$/, vAInvoice], [/^\/a\/promos$/, vAPromos], [/^\/a\/settings$/, vASettings],
   [/^\/t\/today(?:\/(\d+))?$/, vTToday], [/^\/t\/earnings$/, vTEarnings], [/^\/t\/me$/, vTMe], [/^\/t\/claims$/, vTClaims], [/^\/t\/claim\/exp$/, vTClaimExp], [/^\/t\/claim\/ot$/, vTClaimOT],
@@ -2326,7 +2561,7 @@ function renderSide() {
     <div class="side-brand">${logo('logo-side')}</div>
     <h1 class="side-title">${t('sideTitle')}</h1>
     <p class="muted">${t('sideText')}</p>
-    <div class="stack-sm"><p class="eyebrow">${t('sideRoles')}</p><div class="side-roles">${ROLES.map(r => `<button class="chip ${S.signedIn && S.role === r ? 'on' : ''}" data-act="role" data-role="${r}">${t('r_' + r)}</button>`).join('')}</div></div>
+    <div class="stack-sm"><p class="eyebrow">${t('sideRoles')}</p><div class="side-roles">${ROLES.map(r => `<button class="chip ${S.signedIn && S.role === r ? 'on' : ''}" data-act="role" data-role="${r}">${t('r_' + r)}</button>`).join('')}<a class="chip" href="platform/">${t('r_platform')}</a></div></div>
     <a class="btn btn-primary" href="admin/">${icon('grid', 18)} ${t('ad_fullLink')}</a>
     <div class="row-start gap8 wrap">${langBtn()}<button class="chip" data-act="reset">${t('resetDemo')}</button></div>
     <p class="small muted">${t('sideData')}</p></div>`;
@@ -2516,7 +2751,7 @@ const ACT = {
   refer: () => openSheet(`<h2 class="h2">${t('refer')}</h2>${shareBlock('meiling')}`),
   copy: el => copyText(el.dataset.v),
   reset: () => openSheet(`<h2 class="h2">${t('resetQ')}</h2><p class="muted">${t('resetInfo')}</p><button class="btn btn-primary btn-block" data-act="doReset">${t('resetDemo')}</button><button class="btn btn-ghost btn-block" data-act="closeSheet">${t('notNow')}</button>`),
-  doReset: () => { LS.del(KEY); S = seed(); S.tLog = {}; S.team = {}; S.claims = seedClaims(); S.invoices = seedInvoices(); S.invSeq = 41; cl = null; ot = null; inv = null; draft = null; sel = null; hCat = 'all'; hQuery = ''; cdraft = { member: 'meiling', item: 'p-hydra6', method: 'card', receipt: '', by: 'sara' }; shownCal.clear(); closeSheet(true); go('/welcome'); },
+  doReset: () => { LS.del(KEY); S = seed(); S.mEdit = {}; S.visits = seedVisits(); applyMemberEdits(); S.tLog = {}; S.team = {}; S.claims = seedClaims(); S.invoices = seedInvoices(); S.invSeq = 41; cl = null; ot = null; inv = null; draft = null; sel = null; hCat = 'all'; hQuery = ''; cdraft = { member: 'meiling', item: 'p-hydra6', method: 'card', receipt: '', by: 'sara' }; shownCal.clear(); closeSheet(true); go('/welcome'); },
   signout: () => { S.signedIn = false; S.role = null; save(); go('/welcome'); },
   checkin: el => { recLog(el.dataset.id, { arr: new Date().toISOString() }); save(); render(); toast(t('arrivedSt')); },
   cby: el => { cdraft.by = el.dataset.k; render(); },
@@ -2540,6 +2775,12 @@ const ACT = {
   },
   rp: el => { RP[el.dataset.k] = el.dataset.v; render(); },
   approve: el => { const id = el.dataset.id; S.approvals[id] = S.approvals[id] ? 'paid' : 'approved'; save(); render(); },
+  saveMember: el => {
+    const id = el.dataset.id, v = k => (($('#me-' + k) || {}).value || '');
+    const c = { name: v('name') }; CONTACT_KEYS.forEach(k => { c[k] = v(k); });
+    if (!c.name.trim()) { toast(t('needName')); return; }
+    if (setMemberContact(id, c)) { go('/a/member/' + id); toast(t('memberSaved')); }
+  },
   clCat: el => { cl.cat = el.dataset.k; render(); },
   clSubmit: () => {
     const amt = Math.round(parseFloat(String(cl.amount).replace(/[^\d.]/g, '')) * 100) / 100;
@@ -2589,7 +2830,14 @@ const ACT = {
   tEnd: el => {
     recLog(el.dataset.id, { end: new Date().toISOString() });
     const c = Number(el.dataset.p) * 0.3; S.tExtra += c; S.tCount += 1; save(); render(); toast(t('commAdded', { a: rm(c, 2) }));
+    const a = findAppt(el.dataset.id);
+    if (a && a.cid) setTimeout(() => openSheet(recordFormHtml(null, 'act', { mid: a.cid, sid: a.sid, th: a.th })), 350);
   },
+  vAdd: el => { const mid = el.dataset.mid; openSheet(recordFormHtml(null, 'act', { mid, th: S.role === 'therapist' ? 'joanne' : '' })); },
+  vEdit: el => { const v = S.visits.find(x => x.id === el.dataset.id); if (v) openSheet(recordFormHtml(v, 'act')); },
+  vComment: el => { const v = S.visits.find(x => x.id === el.dataset.id); if (v) openSheet(commentFormHtml(v, 'act')); },
+  vSave: el => { const k = saveRecordFromForm(el.dataset.id, el.dataset.mid, el.dataset.th, actorNow()); if (k === 'tr_need') { toast(t(k)); return; } closeSheet(); render(); toast(t(k)); },
+  vCommentSave: el => { const k = saveCommentFromForm(el.dataset.id, actorNow()); if (!k) return; closeSheet(); render(); toast(t(k)); },
   tEdit: el => {
     const a = findAppt(el.dataset.id); if (!a) return;
     const L = logOf(a.id, a.start, a.mins), v = (iso, d) => iso ? hm(iso) : hm(d);
@@ -2678,13 +2926,14 @@ if (MODE === 'app') render();
 document.documentElement.lang = htmlLang(lang);
 window.A4U = {
   get S() { return S; }, save, reload: loadState,
-  reset() { LS.del(KEY); S = seed(); S.tLog = {}; S.team = {}; S.claims = seedClaims(); S.invoices = seedInvoices(); S.invSeq = 41; save(); },
+  reset() { LS.del(KEY); S = seed(); S.mEdit = {}; S.visits = seedVisits(); applyMemberEdits(); S.tLog = {}; S.team = {}; S.claims = seedClaims(); S.invoices = seedInvoices(); S.invSeq = 41; save(); },
   t, get lang() { return lang; }, LANGS, htmlLang,
   setLang(l) { if (!LANGS.some(x => x[0] === l)) return; lang = l; LS.set('appt4u-lang', l); document.documentElement.lang = htmlLang(l); },
   esc, icon, logo, rm, hm, pad, fDate, fFull, fDay, fMonth, fMon, today0, addDays, sameDay, isoDay, fromIsoDay, initials, masked, hash, DAY,
   BIZS, biz, SERVICES, svc, PRODUCTS, product, MEMBERS, member, THER, STAFF, staffName, staffKind, staffRole, staffSalary, hourlyRate, canOT,
   todayList, findAppt, recLog, cancelAppt, stOf, logOf, minsDiff, startLateOf, timingData, TM, roomName,
-  meilingBalance, activePk, pkgLeft, pkgName, storedOf,
+  visitsOf, visitCard, recordFormHtml, commentFormHtml, saveRecordFromForm, saveCommentFromForm, recordsSection,
+  meilingBalance, activePk, pkgLeft, pkgName, storedOf, mContact, setMemberContact, contactLinks, CONTACT_KEYS,
   invTotals, invStatus, invCust, invLineName, BIZ_INFO, INV_PILL, CL_PILL,
   SERIES, RANK, range, agg, periodLabel, dPct, dPts, trendSVG, quadSVG, get RP() { return RP; }, STATEMENTS,
 };
