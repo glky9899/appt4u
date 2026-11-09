@@ -358,3 +358,36 @@ html[lang^="zh"] .side-title{font-size:36px;letter-spacing:0;line-height:1.25}
 .ev{display:flex;gap:10px;padding:7px 0;border-bottom:1px solid var(--primary-100);font-size:13.5px}
 .ev:last-child{border-bottom:0}
 .ev-t{font-weight:800;width:42px;flex:none;font-variant-numeric:tabular-nums}
+
+/* claims and invoices */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.two>*{min-width:0}
+.tile{display:flex;flex-direction:column;align-items:flex-start;gap:10px;font-weight:700;font-size:15px}
+.tile .ic{color:var(--primary)}
+.tile.is-off{opacity:.45;box-shadow:none}
+.r-col{text-align:right;flex:none}
+.r-col .pill{margin-top:4px}
+.ic-box{width:40px;height:40px;border-radius:12px;background:var(--primary-50);color:var(--primary);display:inline-flex;align-items:center;justify-content:center;flex:none}
+.filebtn{position:relative;display:flex;align-items:center;gap:10px;border:1px dashed var(--gold-line);border-radius:12px;padding:14px 16px;background:var(--primary-50);color:var(--primary-d);font-weight:600;cursor:pointer;min-width:0}
+.filebtn span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.filebtn input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.inv-line{padding:12px 14px}
+.inv-line label{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--body);flex:1;min-width:0}
+.field.sm{padding:10px 12px}
+textarea.field{min-height:84px;resize:vertical;font-family:inherit;line-height:1.4}
+.statrow.total{font-weight:800;font-size:16px}
+.statrow.total span:first-child{color:var(--ink)}
+.invdoc{padding:20px}
+.inv-biz{font-weight:800;font-size:16px}
+.inv-title{font-weight:800;font-size:22px;letter-spacing:.06em;text-transform:uppercase;color:var(--primary)}
+.inv-meta{display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:12.5px;color:var(--body)}
+.inv-meta b{display:block;color:var(--ink);font-size:14px;margin-top:2px}
+.inv-meta span>span{display:block;font-size:12.5px}
+@media print{
+  @page{margin:14mm}
+  html,body{background:#fff!important}
+  body *{visibility:hidden}
+  .invdoc,.invdoc *{visibility:visible}
+  .invdoc{position:fixed;left:0;top:0;width:100%;border:0;box-shadow:none;padding:0}
+}
+.inv-line label .field{color:var(--ink);font-size:16px}

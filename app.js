@@ -225,6 +225,116 @@ const STR = {
   staffAccess: ['Staff, freelancers and beauty consultants each sign in with their own ID and see their own schedule, sales and commission.', '员工、自由职业者与美容顾问各自用自己的编号登录，查看自己的日程、销售与佣金。'],
   mySales: ['My sales', '我的销售'], earnSplit: ['Treatments {a} · Sales commission {b}', '护理 {a} · 销售佣金 {b}'],
   att5: ['{n} ({t}) is usually {m} min late', '{n}（{t}）通常迟到 {m} 分钟'],
+  tClaims: ['Claims', '申请'],
+  newExp: ['Expense claim', '费用报销'],
+  newOT: ['OT claim', '加班费申请'],
+  myClaims: ['My claims', '我的申请'],
+  noClaims: ['No claims yet', '暂无申请'],
+  clPendingSum: ['Waiting for approval', '待审批'],
+  clToPay: ['Paid with your next payout', '随下次发放支付'],
+  cl_pending: ['Pending', '待审批'],
+  cl_approved: ['Approved', '已批准'],
+  cl_rejected: ['Rejected', '已拒绝'],
+  cl_paid: ['Paid', '已付'],
+  ct_ot: ['Overtime', '加班'],
+  otOnlyStaff: ['OT claims are for staff. {n} is set up as a freelancer; the owner can change this in Team.', '加班费只限员工申请。{n} 目前设为自由职业，老板可在「团队」中更改。'],
+  openTeam: ['Open Team as owner', '以老板身份打开团队'],
+  expCat: ['Category', '类别'],
+  ec_supplies: ['Supplies', '耗材'],
+  ec_transport: ['Transport', '交通'],
+  ec_training: ['Training', '培训'],
+  ec_meals: ['Meals', '餐费'],
+  ec_other: ['Other', '其他'],
+  amountRM: ['Amount (RM)', '金额（RM）'],
+  descL: ['What was it for?', '用途说明'],
+  descPh: ['e.g. Cotton pads for Room 2', '例如：护理室 2 的化妆棉'],
+  receiptL: ['Receipt photo', '收据照片'],
+  addReceipt: ['Take or choose a photo', '拍照或选择照片'],
+  receiptOk: ['Receipt attached', '已附收据'],
+  noReceipt: ['No receipt', '无收据'],
+  submitClaim: ['Submit claim', '提交申请'],
+  claimSent: ['Sent to the owner for approval', '已提交，等待老板审批'],
+  needAmount: ['Enter an amount', '请输入金额'],
+  needDesc: ['Say what it was for', '请填写用途'],
+  otDay: ['Day type', '日子类型'],
+  od_normal: ['Normal day · 1.5×', '平日 · 1.5 倍'],
+  od_rest: ['Rest day · 2×', '休息日 · 2 倍'],
+  od_ph: ['Public holiday · 3×', '公共假期 · 3 倍'],
+  otFrom: ['From', '从'],
+  otTo: ['To', '至'],
+  otReason: ['Reason', '原因'],
+  otReasonPh: ['e.g. Last facial ran late', '例如：最后一位顾客护理超时'],
+  otRate: ['Hourly rate RM{r} = monthly salary {s} ÷ 26 days ÷ 8 hours', '时薪 RM{r} = 月薪 {s} ÷ 26 天 ÷ 8 小时'],
+  otSuggest: ['Your last treatment ended at {t}, after your shift ended at {s}.', '你最后一个护理在 {t} 结束，晚于下班时间 {s}。'],
+  hoursN: ['{n} h', '{n} 小时'],
+  team: ['Team', '团队'],
+  teamSub: ['Staff, freelancers and beauty consultants', '员工、自由职业者与美容顾问'],
+  empType: ['Employment type', '雇佣类型'],
+  roleL: ['Role', '职位'],
+  role_therapist: ['Therapist', '美容师'],
+  role_consult: ['Beauty consultant', '美容顾问'],
+  salaryL: ['Monthly salary (RM)', '月薪（RM）'],
+  canClaim: ['Can claim', '可申请'],
+  claimsStaff: ['Expenses and OT', '费用报销与加班费'],
+  claimsFree: ['Expenses only', '仅费用报销'],
+  typeNote: ['Staff can claim expenses and overtime. Freelancers can claim expenses only.', '员工可申请费用报销与加班费；自由职业者只能申请费用报销。'],
+  typeChanged: ['{n} is now: {k}', '{n} 已改为：{k}'],
+  claimsT: ['Staff claims', '员工报销与加班'],
+  toApprove: ['To approve', '待审批'],
+  toPay: ['Approved, to pay', '已批准，待付款'],
+  doneClaims: ['Paid & rejected', '已付与已拒绝'],
+  reject: ['Reject', '拒绝'],
+  nothingHere: ['Nothing here', '暂无'],
+  att6: ['{n} staff claims to approve', '{n} 项员工申请待审批'],
+  att7: ['{n} overdue invoices', '{n} 张发票逾期'],
+  invoices: ['Invoices', '发票'],
+  newInvoice: ['New invoice', '新建发票'],
+  invoiceWord: ['Invoice', '发票'],
+  invDate: ['Date', '日期'],
+  invNo: ['Invoice no.', '发票号码'],
+  billTo: ['Bill to', '收票人'],
+  otherCust: ['Someone else (company or walk-in)', '其他客户（公司或散客）'],
+  custName: ['Name or company', '姓名或公司'],
+  custContact: ['Phone or email', '电话或电邮'],
+  items: ['Items', '项目'],
+  addItem: ['+ Add item', '+ 添加项目'],
+  otherItem: ['Custom item', '自定义项目'],
+  itemDescPh: ['Describe the item', '项目说明'],
+  qty: ['Qty', '数量'],
+  unitPrice: ['Price', '单价'],
+  discount: ['Discount (RM)', '折扣（RM）'],
+  sst: ['Add SST 8%', '加收 8% SST'],
+  subtotal: ['Subtotal', '小计'],
+  discL: ['Discount', '折扣'],
+  dueL: ['Due date', '到期日'],
+  invNotes: ['Notes', '备注'],
+  invNotesPh: ['e.g. Thank you! Packages are valid for 6 months.', '例如：谢谢惠顾！疗程有效期 6 个月。'],
+  saveDraft: ['Save draft', '保存草稿'],
+  issueInv: ['Issue invoice', '开具发票'],
+  inv_draft: ['Draft', '草稿'],
+  inv_issued: ['Unpaid', '未付'],
+  inv_paid: ['Paid', '已付'],
+  inv_overdue: ['Overdue', '逾期'],
+  invAll: ['All', '全部'],
+  amountDue: ['Amount due', '应付金额'],
+  markPaidInv: ['Mark as paid', '标记已付'],
+  payHow: ['How was it paid?', '付款方式？'],
+  sendWA: ['WhatsApp', 'WhatsApp'],
+  printPdf: ['Print / PDF', '打印 / PDF'],
+  einvoice: ['Submit to MyInvois (e-Invoice)', '提交 MyInvois（电子发票）'],
+  einvNote: ['LHDN e-Invoice submission comes in the full version.', 'LHDN 电子发票提交将在完整版提供。'],
+  waDemo: ['In the full version this opens WhatsApp with a link to the invoice.', '完整版会打开 WhatsApp 并附上发票链接。'],
+  invIssued: ['Invoice {n} issued', '发票 {n} 已开具'],
+  invDraftSaved: ['Draft saved', '草稿已保存'],
+  needItems: ['Add at least one item', '请至少添加一个项目'],
+  needCust: ['Enter who to bill', '请填写收票人'],
+  invFromSale: ['Create invoice', '开具发票'],
+  viewInv: ['View invoice', '查看发票'],
+  outstanding: ['Unpaid', '未收'],
+  paidMonth: ['Paid this month', '本月已收'],
+  paidOn: ['Paid {d} · {m}', '{d} 已付 · {m}'],
+  editInv: ['Edit', '编辑'],
+  noInvoices: ['No invoices here', '这里没有发票'],
   notFound: ['Page not found', '找不到页面'], goHome: ['Go home', '返回首页'], demoOnly: ['Available in the full version', '完整版提供此功能'],
 };
 /* Bahasa Melayu. Any key missing here falls back to English. */
@@ -437,6 +547,116 @@ const STR_MS = {
   staffAccess: 'Staf, pekerja bebas dan perunding kecantikan log masuk dengan ID sendiri dan melihat jadual, jualan dan komisen masing-masing.',
   mySales: 'Jualan saya', earnSplit: 'Rawatan {a} · Komisen jualan {b}',
   att5: '{n} ({t}) biasanya lewat {m} min',
+  tClaims: 'Tuntutan',
+  newExp: 'Tuntutan perbelanjaan',
+  newOT: 'Tuntutan OT',
+  myClaims: 'Tuntutan saya',
+  noClaims: 'Belum ada tuntutan',
+  clPendingSum: 'Menunggu kelulusan',
+  clToPay: 'Dibayar bersama bayaran seterusnya',
+  cl_pending: 'Menunggu',
+  cl_approved: 'Diluluskan',
+  cl_rejected: 'Ditolak',
+  cl_paid: 'Dibayar',
+  ct_ot: 'Kerja lebih masa',
+  otOnlyStaff: 'Tuntutan OT hanya untuk staf. {n} ditetapkan sebagai pekerja bebas; pemilik boleh menukarnya di Pasukan.',
+  openTeam: 'Buka Pasukan sebagai pemilik',
+  expCat: 'Kategori',
+  ec_supplies: 'Bekalan',
+  ec_transport: 'Pengangkutan',
+  ec_training: 'Latihan',
+  ec_meals: 'Makan',
+  ec_other: 'Lain-lain',
+  amountRM: 'Jumlah (RM)',
+  descL: 'Untuk apa?',
+  descPh: 'cth. Kapas untuk Bilik 2',
+  receiptL: 'Foto resit',
+  addReceipt: 'Ambil atau pilih foto',
+  receiptOk: 'Resit dilampirkan',
+  noReceipt: 'Tiada resit',
+  submitClaim: 'Hantar tuntutan',
+  claimSent: 'Dihantar kepada pemilik untuk kelulusan',
+  needAmount: 'Masukkan jumlah',
+  needDesc: 'Nyatakan untuk apa',
+  otDay: 'Jenis hari',
+  od_normal: 'Hari biasa · 1.5×',
+  od_rest: 'Hari rehat · 2×',
+  od_ph: 'Cuti umum · 3×',
+  otFrom: 'Dari',
+  otTo: 'Hingga',
+  otReason: 'Sebab',
+  otReasonPh: 'cth. Rawatan muka terakhir lewat tamat',
+  otRate: 'Kadar sejam RM{r} = gaji bulanan {s} ÷ 26 hari ÷ 8 jam',
+  otSuggest: 'Rawatan terakhir anda tamat pada {t}, selepas syif tamat pada {s}.',
+  hoursN: '{n} jam',
+  team: 'Pasukan',
+  teamSub: 'Staf, pekerja bebas dan perunding kecantikan',
+  empType: 'Jenis pekerjaan',
+  roleL: 'Peranan',
+  role_therapist: 'Terapis',
+  role_consult: 'Perunding kecantikan',
+  salaryL: 'Gaji bulanan (RM)',
+  canClaim: 'Boleh menuntut',
+  claimsStaff: 'Perbelanjaan dan OT',
+  claimsFree: 'Perbelanjaan sahaja',
+  typeNote: 'Staf boleh menuntut perbelanjaan dan kerja lebih masa. Pekerja bebas hanya boleh menuntut perbelanjaan.',
+  typeChanged: '{n} kini: {k}',
+  claimsT: 'Tuntutan staf',
+  toApprove: 'Untuk diluluskan',
+  toPay: 'Diluluskan, untuk dibayar',
+  doneClaims: 'Dibayar & ditolak',
+  reject: 'Tolak',
+  nothingHere: 'Tiada apa-apa',
+  att6: '{n} tuntutan staf untuk diluluskan',
+  att7: '{n} invois lewat tempoh',
+  invoices: 'Invois',
+  newInvoice: 'Invois baharu',
+  invoiceWord: 'Invois',
+  invDate: 'Tarikh',
+  invNo: 'No. invois',
+  billTo: 'Bil kepada',
+  otherCust: 'Orang lain (syarikat atau pelanggan biasa)',
+  custName: 'Nama atau syarikat',
+  custContact: 'Telefon atau e-mel',
+  items: 'Item',
+  addItem: '+ Tambah item',
+  otherItem: 'Item lain',
+  itemDescPh: 'Huraikan item',
+  qty: 'Kuantiti',
+  unitPrice: 'Harga',
+  discount: 'Diskaun (RM)',
+  sst: 'Tambah SST 8%',
+  subtotal: 'Jumlah kecil',
+  discL: 'Diskaun',
+  dueL: 'Tarikh akhir',
+  invNotes: 'Nota',
+  invNotesPh: 'cth. Terima kasih! Pakej sah selama 6 bulan.',
+  saveDraft: 'Simpan draf',
+  issueInv: 'Keluarkan invois',
+  inv_draft: 'Draf',
+  inv_issued: 'Belum dibayar',
+  inv_paid: 'Dibayar',
+  inv_overdue: 'Lewat tempoh',
+  invAll: 'Semua',
+  amountDue: 'Jumlah perlu dibayar',
+  markPaidInv: 'Tanda dibayar',
+  payHow: 'Bagaimana dibayar?',
+  sendWA: 'WhatsApp',
+  printPdf: 'Cetak / PDF',
+  einvoice: 'Hantar ke MyInvois (e-Invois)',
+  einvNote: 'Penghantaran e-Invois LHDN tersedia dalam versi penuh.',
+  waDemo: 'Dalam versi penuh, ini membuka WhatsApp dengan pautan invois.',
+  invIssued: 'Invois {n} dikeluarkan',
+  invDraftSaved: 'Draf disimpan',
+  needItems: 'Tambah sekurang-kurangnya satu item',
+  needCust: 'Masukkan nama pelanggan',
+  invFromSale: 'Buat invois',
+  viewInv: 'Lihat invois',
+  outstanding: 'Belum dibayar',
+  paidMonth: 'Dibayar bulan ini',
+  paidOn: 'Dibayar {d} · {m}',
+  editInv: 'Ubah',
+  noInvoices: 'Tiada invois di sini',
   notFound: 'Halaman tidak ditemui', goHome: 'Ke halaman utama', demoOnly: 'Tersedia dalam versi penuh',
 };
 function t(k, v) {
@@ -510,6 +730,9 @@ const IC = {
   polish: '<rect x="9" y="3" width="6" height="7" rx="1"/><rect x="6.5" y="10" width="11" height="11" rx="3"/>',
   face: '<circle cx="12" cy="12" r="8.5"/><path d="M9 10.5h.01M15 10.5h.01M9.5 15c1.4 1 3.6 1 5 0"/>',
   activity: '<path d="M3 12h4l3-7 4 14 3-7h4"/>',
+  receipt: '<path d="M6 3.5h12v17l-2-1.3-2 1.3-2-1.3-2 1.3-2-1.3-2 1.3z"/><path d="M9 8h6M9 11.5h6M9 15h4"/>',
+  doc: '<path d="M6.5 3.5H14l4 4V20a.5.5 0 0 1-.5.5h-11A.5.5 0 0 1 6 20V4a.5.5 0 0 1 .5-.5z"/><path d="M14 3.5V8h4M9 12h6M9 15.5h6"/>',
+  camera: '<path d="M4 8h3l1.5-2.5h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/>',
   apps: '<rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/>',
 };
 const icon = (n, s = 22) => `<svg class="ic" viewBox="0 0 24 24" width="${s}" height="${s}" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IC[n] || ''}</svg>`;
@@ -660,7 +883,19 @@ const DAYPLAN = [
 ];
 const BREAKS = [{ th: 'joanne', t: '12:45', m: 60 }, { th: 'weiling', t: '12:15', m: 60 }, { th: 'aida', t: '13:00', m: 60 }];
 /* everyone who works at Lumière signs in with their own ID: employees, freelancers and beauty consultants */
-const STAFF = { joanne: { id: 'LUM-F012', kind: 'free' }, weiling: { id: 'LUM-S004', kind: 'staff' }, aida: { id: 'LUM-F019', kind: 'free' }, sara: { name: 'Sara', id: 'LUM-C007', kind: 'consult' } };
+const STAFF = {
+  joanne: { id: 'LUM-012', kind: 'free', role: 'therapist' }, weiling: { id: 'LUM-004', kind: 'staff', role: 'therapist', salary: 2800 },
+  aida: { id: 'LUM-019', kind: 'free', role: 'therapist' }, sara: { name: 'Sara', id: 'LUM-007', kind: 'staff', role: 'consult', salary: 2400 },
+};
+/* the owner's edits (S.team) win over the defaults above */
+const teamOf = k => Object.assign({}, STAFF[k], (S && S.team && S.team[k]) || {});
+const staffKind = k => teamOf(k).kind;
+const staffRole = k => teamOf(k).role;
+const staffSalary = k => Number(teamOf(k).salary) || 2600;
+const hourlyRate = k => Math.round(staffSalary(k) / 26 / 8 * 100) / 100;
+const canOT = k => staffKind(k) === 'staff';
+const OT_MULT = { normal: 1.5, rest: 2, ph: 3 };
+const SHIFT_END = '18:00';
 const staffName = k => (THER[k] || STAFF[k] || { name: k }).name;
 /* sample arrival / start offsets and treatment length (minutes) for today's appointments that are already over */
 const SAMPLE_T = { a1: [6, 9, 71], a2: [14, 15, 92], a3: [-3, 2, 68], a4: [0, 1, 58], a5: [-5, 0, 66], a6: [2, 4, 61], a7: [1, 12, 88], a8: [19, 20, 70], a9: [8, 10, 55] };
@@ -676,6 +911,30 @@ const stOf = L => L.cx ? 'cx' : L.end ? 'done' : L.start ? 'in' : L.arr ? 'arr' 
 const startLateOf = (L, sched) => L.start ? Math.round((new Date(L.start) - Math.max(new Date(sched).getTime(), L.arr ? new Date(L.arr).getTime() : 0)) / 60000) : 0;
 
 /* ------------------------------------------------------------------ state */
+function otAmount(k, from, to, day) {
+  const mm = s => { const [h, m] = s.split(':').map(Number); return h * 60 + m; };
+  const hours = Math.max(0, Math.round((mm(to) - mm(from)) / 60 * 100) / 100), rate = hourlyRate(k), mult = OT_MULT[day] || 1.5;
+  return { hours, rate, mult, amount: Math.round(hours * rate * mult * 100) / 100 };
+}
+function seedClaims() {
+  const d = n => addDays(today0(), n).toISOString();
+  return [
+    { id: 'c1', who: 'joanne', type: 'exp', cat: 'transport', amount: 18.5, date: d(-6), desc: 'Grab to Subang Jaya branch for a cover shift', receipt: 'grab.jpg', status: 'paid' },
+    { id: 'c2', who: 'joanne', type: 'exp', cat: 'supplies', amount: 42, date: d(-2), desc: 'Cotton pads and gauze for Room 1', receipt: 'receipt.jpg', status: 'pending' },
+    Object.assign({ id: 'c3', who: 'weiling', type: 'ot', date: d(-1), from: '18:00', to: '20:30', day: 'normal', desc: 'Covered a late lash appointment', status: 'pending' }, otAmount('weiling', '18:00', '20:30', 'normal')),
+    { id: 'c4', who: 'weiling', type: 'exp', cat: 'training', amount: 120, date: d(-12), desc: 'Brow lamination workshop', receipt: 'workshop.jpg', status: 'approved' },
+    Object.assign({ id: 'c5', who: 'sara', type: 'ot', date: d(-5), from: '18:00', to: '19:30', day: 'rest', desc: 'Weekend package promotion booth', status: 'approved' }, otAmount('sara', '18:00', '19:30', 'rest')),
+    { id: 'c6', who: 'aida', type: 'exp', cat: 'meals', amount: 25, date: d(-3), desc: 'Lunch during nail art training', receipt: null, status: 'pending' },
+  ];
+}
+function seedInvoices() {
+  const d = n => addDays(today0(), n).toISOString();
+  return [
+    { id: 'i1', no: 'INV-0038', date: d(-40), due: d(-10), mid: 'priya', items: [{ ref: 'p:p-deep5', qty: 1, price: 900 }], discount: 0, sst: false, notes: '', status: 'issued' },
+    { id: 'i2', no: 'INV-0039', date: d(-12), due: d(2), mid: null, name: 'Bangsar Wellness Sdn Bhd', contact: 'hr@bangsarwellness.example', items: [{ ref: null, label: 'Staff wellness day: express facial', qty: 8, price: 120 }, { ref: 's:gel', qty: 4, price: 98 }], discount: 92, sst: true, notes: '', status: 'issued' },
+    { id: 'i3', no: 'INV-0040', date: d(-3), due: d(-3), mid: 'grace', items: [{ ref: 'p:p-hydra6', qty: 1, price: 1800 }], discount: 0, sst: false, notes: '', status: 'paid', paidAt: d(-3), method: 'card' },
+  ];
+}
 function seed() {
   const t0 = today0();
   const bought = addDays(t0, -39);
@@ -716,6 +975,9 @@ function seed() {
 let S = LS.get(KEY, null);
 if (!S || S.v !== 4) S = seed();
 S.tLog = S.tLog || {};
+S.team = S.team || {};
+if (!S.claims) S.claims = seedClaims();
+if (!S.invoices) { S.invoices = seedInvoices(); S.invSeq = 41; }
 S.tNotif = S.tNotif || { rem: true, run: true, change: true };
 S.tAck = S.tAck || {}; S.tAdded = S.tAdded || {}; if (S.tCal === undefined) S.tCal = null;
 if (!S.mig4) { const b1 = S.bookings.find(b => b.id === 'b1'); if (b1) b1.staffNew = true; S.mig4 = true; }
@@ -757,7 +1019,7 @@ function ledgerAdd(wallet, kind, amount, extra) {
 const TABS = {
   m: [['home', '/m/home', 'tabHome'], ['calendar', '/m/bookings', 'tabBookings'], ['wallet', '/m/wallet', 'tabWallet'], ['user', '/m/me', 'tabProfile']],
   a: [['home', '/a/today', 'aToday'], ['grid', '/a/diary', 'aDiary'], ['users', '/a/members', 'aMembers'], ['chart', '/a/reports', 'aReports'], ['more', '/a/more', 'aMore']],
-  t: [['calendar', '/t/today', 'tSchedule'], ['coins', '/t/earnings', 'tEarnings'], ['user', '/t/me', 'tabProfile']],
+  t: [['calendar', '/t/today', 'tSchedule'], ['coins', '/t/earnings', 'tEarnings'], ['receipt', '/t/claims', 'tClaims'], ['user', '/t/me', 'tabProfile']],
   g: [['home', '/g/home', 'gHome'], ['share', '/g/share', 'gShare'], ['coins', '/g/payouts', 'gPayouts']],
 };
 const HOME = { member: '/m/home', admin: '/a/today', therapist: '/t/today', agent: '/g/home' };
@@ -1134,7 +1396,7 @@ function vAToday() {
     ${kpi(t('kRoom'), '78%', delta('5 pts', 'up'))}
   </div>
   <p class="small muted">${t('vsLastWeek')} ${t('sample')}.</p>
-  <section class="card stack-xs"><h2 class="h2">${t('needs')}</h2>${att.map(([k, href]) => `<a class="att" href="#${href}"><span>${t(k)}</span>${icon('chevR', 16)}</a>`).join('')}${(items.find(i => i.id === 'a8') || {}).status === 'todo' ? `<a class="att" href="#/a/timing"><span>${t('att5', { n: 'Farah', t: '16:00', m: 17 })}</span>${icon('chevR', 16)}</a>` : ''}</section>
+  <section class="card stack-xs"><h2 class="h2">${t('needs')}</h2>${att.map(([k, href]) => `<a class="att" href="#${href}"><span>${t(k)}</span>${icon('chevR', 16)}</a>`).join('')}${(items.find(i => i.id === 'a8') || {}).status === 'todo' ? `<a class="att" href="#/a/timing"><span>${t('att5', { n: 'Farah', t: '16:00', m: 17 })}</span>${icon('chevR', 16)}</a>` : ''}${(() => { const n = S.claims.filter(c => c.status === 'pending').length; return n ? `<a class="att" href="#/a/claims"><span>${t('att6', { n })}</span>${icon('chevR', 16)}</a>` : ''; })()}${(() => { const n = S.invoices.filter(x => invStatus(x) === 'overdue').length; return n ? `<a class="att" href="#/a/invoices/issued"><span>${t('att7', { n })}</span>${icon('chevR', 16)}</a>` : ''; })()}</section>
   <h2 class="h2">${t('appts')}</h2>
   ${items.map(adminRow).join('')}`;
   return page({ tabs: 'a', active: '/a/today', body });
@@ -1243,7 +1505,7 @@ function vASaleDone() {
       <p class="small muted">✓ ${t('pushSent')}</p>
       <p class="strong" style="padding-top:6px">${t('commLines')}</p><p class="small muted">${lines.join('<br>')}</p>
     </div>
-    <div class="stack w100">${x.member === 'meiling' ? `<button class="btn btn-outline btn-block" data-act="role" data-role="member" data-to="/m/wallet/lumiere">${t('seeMember')}</button>` : ''}<a class="btn btn-primary btn-block" href="#/a/counter">${t('newSale')}</a></div></div>` });
+    <div class="stack w100">${x.inv ? `<a class="btn btn-outline btn-block" href="#/a/invoice/${x.inv}">${icon('doc', 18)} ${t('viewInv')}</a>` : `<button class="btn btn-outline btn-block" data-act="invFromSale">${icon('doc', 18)} ${t('invFromSale')}</button>`}${x.member === 'meiling' ? `<button class="btn btn-outline btn-block" data-act="role" data-role="member" data-to="/m/wallet/lumiere">${t('seeMember')}</button>` : ''}<a class="btn btn-primary btn-block" href="#/a/counter">${t('newSale')}</a></div></div>` });
 }
 
 /* ---- reports data (sample) ---- */
@@ -1484,12 +1746,197 @@ function vATiming() {
     ${lastRows.map(r => `<tr><td><a class="strong" href="#/a/member/${r.cid}">${esc(member(r.cid).name)}</a></td><td class="num">${r.last}</td><td class="num">${r.noshow}</td></tr>`).join('')}</tbody></table></section>
   <section class="card stack-sm"><h2 class="h2">${t('tmStaff')}</h2>
     <table class="tbl"><thead><tr><th></th><th class="num">${t('th_lateStart')}</th><th class="num">${t('th_overrun')}</th><th class="num">${t('th_cx')}</th></tr></thead><tbody>
-    ${Object.keys(D.staff).map(k => `<tr><td><b>${staffName(k)}</b><br><span class="small muted">${t('kind_' + STAFF[k].kind)} · <span class="nowrap">${STAFF[k].id}</span></span></td><td class="num">${D.staff[k].late}</td><td class="num">+${D.staff[k].over} min</td><td class="num">${D.staff[k].cx}</td></tr>`).join('')}</tbody></table></section>`;
+    ${Object.keys(D.staff).map(k => `<tr><td><b>${staffName(k)}</b><br><span class="small muted">${t('kind_' + staffKind(k))} · <span class="nowrap">${STAFF[k].id}</span></span></td><td class="num">${D.staff[k].late}</td><td class="num">+${D.staff[k].over} min</td><td class="num">${D.staff[k].cx}</td></tr>`).join('')}</tbody></table></section>`;
   return page({ back: '/a/reports', title: t('aReports'), body });
+}
+
+/* ------------------------------------------------------------------ claims (staff side and owner side) */
+const ME = 'joanne';
+const isoDay = d => { d = new Date(d); return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`; };
+const fromIsoDay = s => { const [y, m, d] = String(s || '').split('-').map(Number); return y ? new Date(y, m - 1, d, 12) : new Date(); };
+const CL_PILL = { pending: 'amber', approved: 'gold', paid: 'sage', rejected: 'rose' };
+const byDate = (a, b) => (new Date(b.date) - new Date(a.date)) || (S.claims.indexOf(b) - S.claims.indexOf(a));
+function claimCard(c, admin) {
+  const head = `<div class="row" style="align-items:flex-start"><span class="row-start">${admin ? `<span class="avatar sm">${initials(staffName(c.who))}</span>` : `<span class="ic-box">${icon(c.type === 'ot' ? 'clock' : 'receipt', 20)}</span>`}
+    <span><span class="strong block">${admin ? staffName(c.who) + ' · ' : ''}${c.type === 'ot' ? t('ct_ot') : t('ec_' + c.cat)}</span><span class="small muted">${fDate(c.date)}${c.type === 'ot' ? ` · ${c.from}–${c.to} · ${t('hoursN', { n: c.hours })}` : ''}</span></span></span>
+    <span class="r-col"><b>${rm(c.amount, 2)}</b><br><span class="pill ${CL_PILL[c.status]}">${t('cl_' + c.status)}</span></span></div>`;
+  const extra = c.type === 'ot'
+    ? `<p class="small muted">${t('od_' + c.day)} · ${t('hoursN', { n: c.hours })} × RM${c.rate.toFixed(2)}</p>`
+    : `<span class="pill ${c.receipt ? 'sage' : 'rose'}">${icon(c.receipt ? 'check' : 'x', 13)} ${c.receipt ? t('receiptOk') : t('noReceipt')}</span>`;
+  const btns = !admin ? '' : c.status === 'pending'
+    ? `<div class="row-start gap8"><button class="btn btn-sm btn-primary" data-act="clSet" data-id="${c.id}" data-s="approved">${t('approve')}</button><button class="btn btn-sm btn-ghost" data-act="clSet" data-id="${c.id}" data-s="rejected">${t('reject')}</button></div>`
+    : c.status === 'approved' ? `<div class="row-start gap8"><button class="btn btn-sm btn-outline" data-act="clSet" data-id="${c.id}" data-s="paid">${t('markPaid')}</button></div>` : '';
+  return `<div class="card stack-xs">${head}${c.desc ? `<p class="small">${esc(c.desc)}</p>` : ''}${extra}${btns}</div>`;
+}
+function vTClaims() {
+  const mine = S.claims.filter(c => c.who === ME).sort(byDate);
+  const sum = st => mine.filter(c => c.status === st).reduce((a, c) => a + c.amount, 0);
+  const staff = canOT(ME);
+  const body = `<h1 class="h1">${t('tClaims')}</h1>
+  <div class="kpis">${kpi(t('clPendingSum'), rm(sum('pending'), 2), '')}${kpi(t('cl_approved'), rm(sum('approved'), 2), `<span class="small muted">${t('clToPay')}</span>`)}</div>
+  <div class="tiles">
+    <a class="card tile" href="#/t/claim/exp">${icon('receipt', 24)}<span>${t('newExp')}</span></a>
+    ${staff ? `<a class="card tile" href="#/t/claim/ot">${icon('clock', 24)}<span>${t('newOT')}</span></a>` : `<div class="card tile is-off" aria-disabled="true">${icon('clock', 24)}<span>${t('newOT')}</span></div>`}
+  </div>
+  ${staff ? '' : `<div class="card stack-sm"><p class="small muted">${t('otOnlyStaff', { n: 'Joanne' })}</p><button class="btn btn-sm btn-outline" data-act="role" data-role="admin" data-to="/a/team/${ME}">${icon('users', 16)} ${t('openTeam')}</button></div>`}
+  <h2 class="h2">${t('myClaims')}</h2>
+  ${mine.length ? mine.map(c => claimCard(c, false)).join('') : `<p class="muted center">${t('noClaims')}</p>`}`;
+  return page({ tabs: 't', active: '/t/claims', body });
+}
+let cl = null;
+const newCl = () => ({ cat: 'supplies', amount: '', date: isoDay(today0()), desc: '', receipt: null });
+function vTClaimExp() {
+  if (!cl) cl = newCl();
+  const body = `<section class="stack-sm"><h2 class="label">${t('expCat')}</h2><div class="chips">${['supplies', 'transport', 'training', 'meals', 'other'].map(k => `<button class="chip ${cl.cat === k ? 'on' : ''}" data-act="clCat" data-k="${k}">${t('ec_' + k)}</button>`).join('')}</div></section>
+  <div class="two">
+    <label class="stack-xs"><span class="label">${t('amountRM')}</span><input class="field" inputmode="decimal" data-bind="cl.amount" value="${esc(cl.amount)}" placeholder="0.00" autocomplete="off"></label>
+    <label class="stack-xs"><span class="label">${t('pickDate')}</span><input class="field" type="date" data-bind="cl.date" value="${esc(cl.date)}" max="${isoDay(today0())}"></label>
+  </div>
+  <label class="stack-xs"><span class="label">${t('descL')}</span><input class="field" data-bind="cl.desc" value="${esc(cl.desc)}" placeholder="${t('descPh')}" autocomplete="off"></label>
+  <section class="stack-sm"><h2 class="label">${t('receiptL')}</h2>
+    <label class="filebtn">${icon(cl.receipt ? 'check' : 'camera', 20)}<span class="grow">${cl.receipt ? `${t('receiptOk')} · ${esc(cl.receipt)}` : t('addReceipt')}</span><input type="file" id="clr" accept="image/*,application/pdf" capture="environment"></label></section>
+  <div class="sticky-cta"><button class="btn btn-primary btn-block" data-act="clSubmit">${t('submitClaim')}</button></div>`;
+  return page({ back: '/t/claims', title: t('newExp'), body });
+}
+let ot = null;
+function newOt() {
+  const ends = Object.values(S.tLog).filter(L => L.live && L.th === ME && L.end && sameDay(L.end, new Date())).map(L => hm(L.end)).sort();
+  const last = ends.pop(), sug = last && last > SHIFT_END ? last : null;
+  return { date: isoDay(today0()), from: SHIFT_END, to: sug || '19:00', day: 'normal', reason: '', sug };
+}
+function otCalcHtml() {
+  const c = otAmount(ME, ot.from, ot.to, ot.day);
+  return `<p class="eyebrow">${t('total')}</p><h2 class="h-serif">${rm(c.amount, 2)}</h2><p class="small muted">${t('hoursN', { n: c.hours })} × RM${c.rate.toFixed(2)} × ${c.mult}<br>${t('otRate', { r: c.rate.toFixed(2), s: rm(staffSalary(ME)) })}</p>`;
+}
+function vTClaimOT() {
+  if (!canOT(ME)) return redirect('/t/claims');
+  if (!ot) ot = newOt();
+  const body = `${ot.sug ? `<p class="note gold">${icon('clock', 16)}<span>${t('otSuggest', { t: ot.sug, s: SHIFT_END })}</span></p>` : ''}
+  <label class="stack-xs"><span class="label">${t('pickDate')}</span><input class="field" type="date" data-bind="ot.date" value="${esc(ot.date)}" max="${isoDay(today0())}"></label>
+  <div class="two">
+    <label class="stack-xs"><span class="label">${t('otFrom')}</span><input class="field" type="time" data-bind="ot.from" value="${esc(ot.from)}"></label>
+    <label class="stack-xs"><span class="label">${t('otTo')}</span><input class="field" type="time" data-bind="ot.to" value="${esc(ot.to)}"></label>
+  </div>
+  <section class="stack-sm"><h2 class="label">${t('otDay')}</h2><div class="stack-xs">${['normal', 'rest', 'ph'].map(k => `<button class="opt ${ot.day === k ? 'on' : ''}" data-act="otDay" data-k="${k}"><span class="radio"></span><span>${t('od_' + k)}</span></button>`).join('')}</div></section>
+  <label class="stack-xs"><span class="label">${t('otReason')}</span><input class="field" data-bind="ot.reason" value="${esc(ot.reason)}" placeholder="${t('otReasonPh')}" autocomplete="off"></label>
+  <div class="card gold stack-xs" id="otcalc">${otCalcHtml()}</div>
+  <div class="sticky-cta"><button class="btn btn-primary btn-block" data-act="otSubmit">${t('submitClaim')}</button></div>`;
+  return page({ back: '/t/claims', title: t('newOT'), body });
+}
+function vAClaims() {
+  const sec = (title, list) => `<h2 class="h2">${title}</h2>${list.length ? list.map(c => claimCard(c, true)).join('') : `<p class="muted small">${t('nothingHere')}</p>`}`;
+  const all = S.claims.slice().sort(byDate);
+  const body = `<h1 class="h1">${t('claimsT')}</h1>
+  ${sec(t('toApprove'), all.filter(c => c.status === 'pending'))}
+  ${sec(t('toPay'), all.filter(c => c.status === 'approved'))}
+  ${sec(t('doneClaims'), all.filter(c => c.status === 'paid' || c.status === 'rejected'))}
+  <p class="note gold">${icon('users', 16)}<span>${t('typeNote')}</span></p>`;
+  return page({ back: '/a/more', title: t('aMore'), body });
+}
+function vATeam() {
+  const body = `<h1 class="h1">${t('team')}</h1><p class="muted">${t('teamSub')}</p>
+  <div class="card flat" style="padding:4px 16px">${Object.keys(STAFF).map(k => {
+    const n = S.claims.filter(c => c.who === k && c.status === 'pending').length, kind = staffKind(k);
+    return `<a class="mrow" href="#/a/team/${k}"><span class="avatar sm">${initials(staffName(k))}</span><span class="grow"><span class="strong">${staffName(k)}</span><br><span class="small muted">${t('role_' + staffRole(k))} · ${STAFF[k].id}</span></span><span class="pill ${kind === 'staff' ? 'gold' : 'grey'}">${t('kind_' + kind)}</span>${n ? `<span class="pill amber">${n}</span>` : ''}${icon('chevR', 16)}</a>`;
+  }).join('')}</div>
+  <p class="note gold">${icon('receipt', 16)}<span>${t('typeNote')}</span></p>`;
+  return page({ back: '/a/more', title: t('aMore'), body });
+}
+function vATeamMember(k) {
+  if (!STAFF[k]) return vNotFound();
+  const kind = staffKind(k), role = staffRole(k), mine = S.claims.filter(c => c.who === k).sort(byDate);
+  const opt = (act, cur, v, label) => `<button class="opt ${cur === v ? 'on' : ''}" data-act="${act}" data-id="${k}" data-k="${v}"><span class="radio"></span><span>${label}</span></button>`;
+  const body = `<div class="row-start"><span class="avatar lg">${initials(staffName(k))}</span><div><p class="h-serif">${staffName(k)}</p><p class="small muted">${t('staffId', { id: STAFF[k].id })} · Lumière</p></div></div>
+  <div class="card stack-sm">
+    <p class="label">${t('empType')}</p><div class="stack-xs">${opt('teamKind', kind, 'staff', t('kind_staff'))}${opt('teamKind', kind, 'free', t('kind_free'))}</div>
+    <p class="label" style="padding-top:6px">${t('roleL')}</p><div class="stack-xs">${opt('teamRole', role, 'therapist', t('role_therapist'))}${opt('teamRole', role, 'consult', t('role_consult'))}</div>
+    ${kind === 'staff' ? `<label class="stack-xs" style="padding-top:6px"><span class="label">${t('salaryL')}</span><span class="row-start gap8"><input class="field" id="tsal" inputmode="numeric" value="${staffSalary(k)}"><button class="btn btn-sm btn-outline" data-act="teamSalary" data-id="${k}">${t('save')}</button></span></label><p class="small muted">${t('otRate', { r: hourlyRate(k).toFixed(2), s: rm(staffSalary(k)) })}</p>` : ''}
+  </div>
+  <div class="card flat" style="padding:4px 16px">${statrow(t('canClaim'), kind === 'staff' ? t('claimsStaff') : t('claimsFree'))}</div>
+  <p class="small muted">${t('typeNote')}</p>
+  <h2 class="h2">${t('tClaims')}</h2>
+  ${mine.length ? mine.map(c => claimCard(c, true)).join('') : `<p class="muted small">${t('noClaims')}</p>`}`;
+  return page({ back: '/a/team', title: t('team'), body });
+}
+
+/* ------------------------------------------------------------------ invoices */
+const BIZ_INFO = { name: 'Lumière Skin Studio Sdn Bhd', addr: '12, Jalan Telawi 3, Bangsar Baru, 59100 Kuala Lumpur', reg: 'Reg. no. 202301000000 (sample)', phone: '+60 3-2201 0000' };
+const invLineName = l => l.ref ? (l.ref.startsWith('p:') ? (product(l.ref.slice(2)) || { name: { [lang]: '' } }).name[lang] : (svc(l.ref.slice(2)) || { name: { [lang]: '' } }).name[lang]) : (l.label || t('otherItem'));
+function invTotals(x) {
+  const sub = x.items.reduce((a, l) => a + (Number(l.qty) || 0) * (Number(l.price) || 0), 0);
+  const disc = Math.min(sub, Math.max(0, Number(x.discount) || 0)), taxable = sub - disc;
+  const sst = x.sst ? Math.round(taxable * 0.08 * 100) / 100 : 0;
+  return { sub, disc, sst, total: taxable + sst };
+}
+const invStatus = x => x.status === 'issued' && new Date(x.due) < today0() ? 'overdue' : x.status;
+const INV_PILL = { draft: 'grey', issued: 'amber', overdue: 'rose', paid: 'sage' };
+const invCust = x => x.mid ? (member(x.mid) || { name: '' }).name : (x.name || '');
+function vAInvoices(f) {
+  f = ['all', 'issued', 'paid', 'draft'].includes(f) ? f : 'all';
+  const all = S.invoices.slice().sort((a, b) => new Date(b.date) - new Date(a.date));
+  const list = f === 'all' ? all : all.filter(x => f === 'issued' ? x.status === 'issued' : x.status === f);
+  const unpaid = all.filter(x => x.status === 'issued').reduce((a, x) => a + invTotals(x).total, 0);
+  const now = new Date(), paidM = all.filter(x => x.status === 'paid' && new Date(x.paidAt).getMonth() === now.getMonth() && new Date(x.paidAt).getFullYear() === now.getFullYear()).reduce((a, x) => a + invTotals(x).total, 0);
+  const body = `<div class="row"><h1 class="h1">${t('invoices')}</h1><button class="btn btn-primary btn-sm" data-act="invNew">${icon('plus', 16)} ${t('newInvoice')}</button></div>
+  <div class="kpis">${kpi(t('outstanding'), rm(unpaid, 2), '')}${kpi(t('paidMonth'), rm(paidM, 2), '')}</div>
+  <div class="seg">${[['all', 'invAll'], ['issued', 'inv_issued'], ['paid', 'inv_paid'], ['draft', 'inv_draft']].map(([k, l]) => `<a class="${f === k ? 'on' : ''}" href="#/a/invoices/${k}">${t(l)}</a>`).join('')}</div>
+  <div class="card flat" style="padding:4px 16px">${list.length ? list.map(x => { const st = invStatus(x); return `<a class="li" href="#/a/invoice/${x.id}"><div><p class="strong">${esc(invCust(x))}</p><p class="small muted">${x.no} · ${fDate(x.date)}</p></div><div class="r"><p class="strong">${rm(invTotals(x).total, 2)}</p><span class="pill ${INV_PILL[st]}">${t('inv_' + st)}</span></div></a>`; }).join('') : `<p class="muted center" style="padding:14px 0">${t('noInvoices')}</p>`}</div>`;
+  return page({ back: '/a/more', title: t('aMore'), body });
+}
+let inv = null;
+const newInv = () => ({ id: null, mid: 'meiling', name: '', contact: '', items: [], discount: '', sst: false, date: isoDay(today0()), due: isoDay(addDays(today0(), 14)), notes: '' });
+function invTotalsHtml() {
+  const T = invTotals(inv);
+  return `${statrow(t('subtotal'), rm(T.sub, 2))}${T.disc ? statrow(t('discL'), '−' + rm(T.disc, 2)) : ''}${inv.sst ? statrow('SST 8%', rm(T.sst, 2)) : ''}<div class="statrow total"><span>${t('total')}</span><b>${rm(T.total, 2)}</b></div>`;
+}
+function vAInvoiceEdit(id) {
+  if (id) {
+    if (!inv || inv.id !== id) { const x = S.invoices.find(v => v.id === id); if (!x) return vNotFound(); inv = JSON.parse(JSON.stringify(x)); inv.date = isoDay(x.date); inv.due = isoDay(x.due); inv.discount = x.discount ? String(x.discount) : ''; }
+  } else if (!inv || inv.id) inv = newInv();
+  const lumP = PRODUCTS.filter(x => x.biz === 'lumiere'), lumS = SERVICES.filter(s => s.biz === 'lumiere');
+  const body = `<h1 class="h1">${id ? inv.no : t('newInvoice')}</h1>
+  <section class="stack-sm"><h2 class="label">${t('billTo')}</h2>
+    <select class="field" id="invCust">${MEMBERS.map(m => `<option value="${m.id}" ${inv.mid === m.id ? 'selected' : ''}>${esc(m.name)}</option>`).join('')}<option value="" ${!inv.mid ? 'selected' : ''}>${t('otherCust')}</option></select>
+    ${!inv.mid ? `<input class="field" data-bind="inv.name" value="${esc(inv.name)}" placeholder="${t('custName')}" autocomplete="off"><input class="field" data-bind="inv.contact" value="${esc(inv.contact)}" placeholder="${t('custContact')}" autocomplete="off">` : ''}
+  </section>
+  <section class="stack-sm"><h2 class="label">${t('items')}</h2>
+    ${inv.items.map((l, i) => `<div class="card flat inv-line stack-xs"><div class="row"><b>${esc(invLineName(l))}</b><button class="icon-btn" data-act="invRemove" data-i="${i}" aria-label="${t('cancel')}">${icon('x', 18)}</button></div>
+      ${l.ref ? '' : `<input class="field" data-line="${i}" data-f="label" value="${esc(l.label || '')}" placeholder="${t('itemDescPh')}">`}
+      <div class="row" style="align-items:flex-end"><label>${t('qty')}<input class="field sm" type="number" min="1" inputmode="numeric" data-line="${i}" data-f="qty" value="${l.qty}"></label><label>${t('unitPrice')} (RM)<input class="field sm" inputmode="decimal" data-line="${i}" data-f="price" value="${l.price}"></label><b class="nowrap" id="lt${i}">${rm((Number(l.qty) || 0) * (Number(l.price) || 0), 2)}</b></div></div>`).join('')}
+    <select class="field" id="invAdd"><option value="">${t('addItem')}</option><optgroup label="${t('tabPackages')}">${lumP.map(x => `<option value="p:${x.id}">${x.name[lang]} · ${rm(x.price)}</option>`).join('')}</optgroup><optgroup label="${t('services')}">${lumS.map(s => `<option value="s:${s.id}">${s.name[lang]} · ${rm(s.price)}</option>`).join('')}</optgroup><option value="custom">${t('otherItem')}</option></select>
+  </section>
+  <div class="two">
+    <label class="stack-xs"><span class="label">${t('discount')}</span><input class="field" inputmode="decimal" data-bind="inv.discount" value="${esc(inv.discount)}" placeholder="0.00"></label>
+    <label class="stack-xs"><span class="label">${t('dueL')}</span><input class="field" type="date" data-bind="inv.due" value="${esc(inv.due)}"></label>
+  </div>
+  <label class="row toggle-row"><span>${t('sst')}</span><input type="checkbox" class="switch" id="invSst" ${inv.sst ? 'checked' : ''}></label>
+  <div class="card gold" style="padding:4px 16px" id="invtot">${invTotalsHtml()}</div>
+  <label class="stack-xs"><span class="label">${t('invNotes')}</span><textarea class="field" data-bind="inv.notes" placeholder="${t('invNotesPh')}">${esc(inv.notes)}</textarea></label>
+  <div class="row-start gap8"><button class="btn btn-outline grow" data-act="invSave" data-s="draft">${t('saveDraft')}</button><button class="btn btn-primary grow" data-act="invSave" data-s="issued">${t('issueInv')}</button></div>`;
+  return page({ back: id ? '/a/invoice/' + id : '/a/invoices', title: t('invoices'), body });
+}
+function vAInvoice(id) {
+  const x = S.invoices.find(v => v.id === id); if (!x) return vNotFound();
+  const T = invTotals(x), st = invStatus(x), m = x.mid ? member(x.mid) : null;
+  const doc = `<div class="card invdoc stack">
+    <div class="row" style="align-items:flex-start"><div><p class="inv-biz">${BIZ_INFO.name}</p><p class="small muted">${BIZ_INFO.addr}<br>${BIZ_INFO.reg} · ${BIZ_INFO.phone}</p></div></div>
+    <div class="row" style="align-items:flex-end"><p class="inv-title">${t('invoiceWord')}</p><span class="pill ${INV_PILL[st]}">${t('inv_' + st)}</span></div>
+    <div class="inv-meta"><span>${t('invNo')}<b>${x.no}</b></span><span>${t('invDate')}<b>${fFull(x.date)}</b></span><span>${t('billTo')}<b>${esc(invCust(x))}</b>${!m && x.contact ? `<span class="muted">${esc(x.contact)}</span>` : ''}</span><span>${t('dueL')}<b>${fFull(x.due)}</b></span></div>
+    <table class="tbl"><thead><tr><th>${t('items')}</th><th class="num">${t('qty')}</th><th class="num">${t('unitPrice')}</th><th class="num">RM</th></tr></thead><tbody>
+      ${x.items.map(l => `<tr><td>${esc(invLineName(l))}</td><td class="num">${l.qty}</td><td class="num">${(Number(l.price) || 0).toFixed(2)}</td><td class="num">${((Number(l.qty) || 0) * (Number(l.price) || 0)).toFixed(2)}</td></tr>`).join('')}</tbody></table>
+    <div>${statrow(t('subtotal'), rm(T.sub, 2))}${T.disc ? statrow(t('discL'), '−' + rm(T.disc, 2)) : ''}${x.sst ? statrow('SST 8%', rm(T.sst, 2)) : ''}<div class="statrow total"><span>${t('total')}</span><b>${rm(T.total, 2)}</b></div>${statrow(t('amountDue'), rm(x.status === 'paid' ? 0 : T.total, 2))}</div>
+    ${x.status === 'paid' ? `<p class="note sage">${icon('checkCircle', 16)}<span>${t('paidOn', { d: fFull(x.paidAt), m: t('m_' + x.method) })}</span></p>` : ''}
+    ${x.notes ? `<p class="small muted">${esc(x.notes)}</p>` : ''}</div>`;
+  const acts = x.status === 'draft'
+    ? `<div class="row-start gap8"><a class="btn btn-outline grow" href="#/a/invoice/${x.id}/edit">${t('editInv')}</a><button class="btn btn-primary grow" data-act="invIssue" data-id="${x.id}">${t('issueInv')}</button></div>`
+    : `${x.status !== 'paid' ? `<button class="btn btn-primary btn-block" data-act="invPaySheet" data-id="${x.id}">${icon('cash', 18)} ${t('markPaidInv')}</button>` : ''}
+      <div class="row-start gap8"><button class="btn btn-outline grow" data-act="toast" data-msg="waDemo">${icon('share', 16)} ${t('sendWA')}</button><button class="btn btn-outline grow" data-act="invPrint">${icon('download', 16)} ${t('printPdf')}</button></div>
+      <button class="btn btn-ghost btn-block" data-act="toast" data-msg="einvNote">${t('einvoice')}</button>`;
+  return page({ back: '/a/invoices', title: t('invoices'), body: `${doc}<div class="stack inv-actions">${acts}</div>` });
 }
 function vAMore() {
   const body = `<h1 class="h1">${t('aMore')}</h1>
-  <div class="card menu">${menuLink('/a/timing', 'clock', t('tmTitle'))}${menuLink('/a/commission', 'coins', t('commission'))}${menuLink('/a/promos', 'gift', t('promotions'))}${menuLink('/a/settings', 'settings', t('settings'))}${menuLink('/a/counter', 'cash', t('recordSale'))}</div>
+  <div class="card menu">${menuLink('/a/invoices', 'doc', t('invoices'))}${menuLink('/a/claims', 'receipt', t('claimsT'), (() => { const n = S.claims.filter(c => c.status === 'pending').length; return n ? String(n) : ''; })())}${menuLink('/a/team', 'users', t('team'))}${menuLink('/a/timing', 'clock', t('tmTitle'))}${menuLink('/a/commission', 'coins', t('commission'))}${menuLink('/a/promos', 'gift', t('promotions'))}${menuLink('/a/settings', 'settings', t('settings'))}${menuLink('/a/counter', 'cash', t('recordSale'))}</div>
   <div class="card menu">${menuBtn('lang', 'globe', t('language'), langName())}${menuBtn('roles', 'users', t('switchRole'))}${menuBtn('reset', 'refresh', t('resetDemo'))}${menuBtn('signout', 'logout', t('signOut'))}</div>`;
   return page({ tabs: 'a', active: '/a/more', body });
 }
@@ -1632,7 +2079,7 @@ function vTEarnings() {
 function vTMe() {
   const link = 'webcal://www.appt4u.com/feed/joanne-demo.ics';
   const body = `<h1 class="h1">${t('tabProfile')}</h1>
-  <div class="card stack-sm"><div class="row-start">${mark('J')}<div><p class="strong">Joanne</p><p class="small muted">${THER.joanne.title[lang]} · Lumière</p><p class="small"><span class="pill gold">${t('kind_' + STAFF.joanne.kind)}</span> <span class="muted">${t('staffId', { id: STAFF.joanne.id })}</span></p></div></div>
+  <div class="card stack-sm"><div class="row-start">${mark('J')}<div><p class="strong">Joanne</p><p class="small muted">${THER.joanne.title[lang]} · Lumière</p><p class="small"><span class="pill gold">${t('kind_' + staffKind('joanne'))}</span> <span class="muted">${t('staffId', { id: STAFF.joanne.id })}</span></p></div></div>
     <p class="small muted">${t('staffAccess')}</p></div>
   <div class="card stack-xs"><p class="strong">${t('remSet')}</p>
     <label class="row toggle-row"><span>${t('rem2h')}</span><input type="checkbox" class="switch" data-tnotif="rem" ${S.tNotif.rem ? 'checked' : ''}></label>
@@ -1686,8 +2133,8 @@ const ROUTES = [
   [/^\/m\/bookings(?:\/(\w+))?$/, vBookings], [/^\/m\/wallet(?:\/(\w+))?(?:\/(\w+))?$/, vWallet], [/^\/m\/me$/, vMe], [/^\/m\/skin$/, vSkin], [/^\/m\/aftercare$/, vAftercare],
   [/^\/a\/today$/, vAToday], [/^\/a\/diary(?:\/([\d-]+))?$/, vADiary], [/^\/a\/members(?:\/(\w+))?$/, vAMembers], [/^\/a\/member\/(\w+)$/, vAMember],
   [/^\/a\/counter(?:\/(\w+))?$/, vACounter], [/^\/a\/sale$/, vASaleDone], [/^\/a\/reports$/, vAReports], [/^\/a\/more$/, vAMore],
-  [/^\/a\/commission$/, vACommission], [/^\/a\/timing$/, vATiming], [/^\/a\/promos$/, vAPromos], [/^\/a\/settings$/, vASettings],
-  [/^\/t\/today(?:\/(\d+))?$/, vTToday], [/^\/t\/earnings$/, vTEarnings], [/^\/t\/me$/, vTMe],
+  [/^\/a\/commission$/, vACommission], [/^\/a\/timing$/, vATiming], [/^\/a\/claims$/, vAClaims], [/^\/a\/team$/, vATeam], [/^\/a\/team\/(\w+)$/, vATeamMember], [/^\/a\/invoices(?:\/(\w+))?$/, vAInvoices], [/^\/a\/invoice\/new$/, () => vAInvoiceEdit(null)], [/^\/a\/invoice\/(\w+)\/edit$/, vAInvoiceEdit], [/^\/a\/invoice\/(\w+)$/, vAInvoice], [/^\/a\/promos$/, vAPromos], [/^\/a\/settings$/, vASettings],
+  [/^\/t\/today(?:\/(\d+))?$/, vTToday], [/^\/t\/earnings$/, vTEarnings], [/^\/t\/me$/, vTMe], [/^\/t\/claims$/, vTClaims], [/^\/t\/claim\/exp$/, vTClaimExp], [/^\/t\/claim\/ot$/, vTClaimOT],
   [/^\/g\/home$/, vGHome], [/^\/g\/share$/, vGShare], [/^\/g\/payouts$/, vGPayouts],
 ];
 const APP = $('#app');
@@ -1891,7 +2338,7 @@ const ACT = {
   refer: () => openSheet(`<h2 class="h2">${t('refer')}</h2>${shareBlock('meiling')}`),
   copy: el => copyText(el.dataset.v),
   reset: () => openSheet(`<h2 class="h2">${t('resetQ')}</h2><p class="muted">${t('resetInfo')}</p><button class="btn btn-primary btn-block" data-act="doReset">${t('resetDemo')}</button><button class="btn btn-ghost btn-block" data-act="closeSheet">${t('notNow')}</button>`),
-  doReset: () => { LS.del(KEY); S = seed(); S.tLog = {}; draft = null; sel = null; hCat = 'all'; hQuery = ''; cdraft = { member: 'meiling', item: 'p-hydra6', method: 'card', receipt: '', by: 'sara' }; shownCal.clear(); closeSheet(true); go('/welcome'); },
+  doReset: () => { LS.del(KEY); S = seed(); S.tLog = {}; S.team = {}; S.claims = seedClaims(); S.invoices = seedInvoices(); S.invSeq = 41; cl = null; ot = null; inv = null; draft = null; sel = null; hCat = 'all'; hQuery = ''; cdraft = { member: 'meiling', item: 'p-hydra6', method: 'card', receipt: '', by: 'sara' }; shownCal.clear(); closeSheet(true); go('/welcome'); },
   signout: () => { S.signedIn = false; S.role = null; save(); go('/welcome'); },
   checkin: el => { recLog(el.dataset.id, { arr: new Date().toISOString() }); save(); render(); toast(t('arrivedSt')); },
   cby: el => { cdraft.by = el.dataset.k; render(); },
@@ -1915,6 +2362,50 @@ const ACT = {
   },
   rp: el => { RP[el.dataset.k] = el.dataset.v; render(); },
   approve: el => { const id = el.dataset.id; S.approvals[id] = S.approvals[id] ? 'paid' : 'approved'; save(); render(); },
+  clCat: el => { cl.cat = el.dataset.k; render(); },
+  clSubmit: () => {
+    const amt = Math.round(parseFloat(String(cl.amount).replace(/[^\d.]/g, '')) * 100) / 100;
+    if (!(amt > 0)) { toast(t('needAmount')); return; }
+    if (!cl.desc.trim()) { toast(t('needDesc')); return; }
+    S.claims.push({ id: 'c' + Date.now().toString(36), who: ME, type: 'exp', cat: cl.cat, amount: amt, date: fromIsoDay(cl.date).toISOString(), desc: cl.desc.trim(), receipt: cl.receipt, status: 'pending' });
+    cl = null; save(); go('/t/claims'); toast(t('claimSent'));
+  },
+  otDay: el => { ot.day = el.dataset.k; render(); },
+  otSubmit: () => {
+    if (!canOT(ME)) return;
+    const c = otAmount(ME, ot.from || '00:00', ot.to || '00:00', ot.day);
+    if (!(c.hours > 0)) { toast(t('endBeforeStart')); return; }
+    S.claims.push(Object.assign({ id: 'c' + Date.now().toString(36), who: ME, type: 'ot', date: fromIsoDay(ot.date).toISOString(), from: ot.from, to: ot.to, day: ot.day, desc: ot.reason.trim(), status: 'pending' }, c));
+    ot = null; save(); go('/t/claims'); toast(t('claimSent'));
+  },
+  clSet: el => { const c = S.claims.find(x => x.id === el.dataset.id); if (!c) return; c.status = el.dataset.s; save(); render(); toast(t('cl_' + c.status)); },
+  teamKind: el => { const k = el.dataset.id; S.team[k] = Object.assign(S.team[k] || {}, { kind: el.dataset.k === 'staff' ? 'staff' : 'free' }); save(); render(); toast(t('typeChanged', { n: staffName(k), k: t('kind_' + staffKind(k)) })); },
+  teamRole: el => { const k = el.dataset.id; S.team[k] = Object.assign(S.team[k] || {}, { role: el.dataset.k === 'consult' ? 'consult' : 'therapist' }); save(); render(); },
+  teamSalary: el => { const k = el.dataset.id, v = Math.round(Number(($('#tsal') || {}).value)); if (!(v > 0)) return; S.team[k] = Object.assign(S.team[k] || {}, { salary: v }); save(); render(); toast(t('saved')); },
+  invNew: () => { inv = newInv(); go('/a/invoice/new'); },
+  invRemove: el => { inv.items.splice(Number(el.dataset.i), 1); render(); },
+  invSave: el => {
+    const status = el.dataset.s === 'issued' ? 'issued' : 'draft';
+    if (!inv.mid && !inv.name.trim()) { toast(t('needCust')); return; }
+    if (!inv.items.length) { toast(t('needItems')); return; }
+    const old = inv.id ? S.invoices.find(v => v.id === inv.id) : null;
+    const rec = { id: inv.id || 'i' + Date.now().toString(36), no: old ? old.no : 'INV-' + String(S.invSeq++).padStart(4, '0'), date: old ? old.date : new Date().toISOString(), due: fromIsoDay(inv.due).toISOString(),
+      mid: inv.mid || null, name: inv.mid ? '' : inv.name.trim(), contact: inv.mid ? '' : inv.contact.trim(),
+      items: inv.items.map(l => ({ ref: l.ref || null, label: l.ref ? undefined : (l.label || '').trim(), qty: Math.max(1, Math.round(Number(l.qty) || 1)), price: Math.max(0, Number(l.price) || 0) })),
+      discount: Math.max(0, Number(String(inv.discount).replace(/[^\d.]/g, '')) || 0), sst: !!inv.sst, notes: (inv.notes || '').trim(), status };
+    if (old) Object.assign(old, rec); else S.invoices.push(rec);
+    inv = null; save(); go('/a/invoice/' + rec.id); toast(status === 'issued' ? t('invIssued', { n: rec.no }) : t('invDraftSaved'));
+  },
+  invIssue: el => { const x = S.invoices.find(v => v.id === el.dataset.id); if (!x) return; x.status = 'issued'; save(); render(); toast(t('invIssued', { n: x.no })); },
+  invPaySheet: el => openSheet(`<h2 class="h2">${t('payHow')}</h2><div class="stack-xs">${['cash', 'card', 'duitnow', 'ewallet'].map(k => `<button class="opt" data-act="invPay" data-id="${el.dataset.id}" data-m="${k}">${icon('cash', 20)}<span>${t('m_' + k)}</span></button>`).join('')}</div><button class="btn btn-ghost btn-block" data-act="closeSheet">${t('notNow')}</button>`),
+  invPay: el => { const x = S.invoices.find(v => v.id === el.dataset.id); if (!x) return; x.status = 'paid'; x.paidAt = new Date().toISOString(); x.method = el.dataset.m; save(); closeSheet(); render(); toast(t('inv_paid')); },
+  invPrint: () => window.print(),
+  invFromSale: () => {
+    const s = S.lastSale; if (!s) return; const p = product(s.item); if (!p) return;
+    const now = new Date().toISOString(), id = 'i' + Date.now().toString(36);
+    S.invoices.push({ id, no: 'INV-' + String(S.invSeq++).padStart(4, '0'), date: now, due: now, mid: s.member, name: '', contact: '', items: [{ ref: 'p:' + p.id, qty: 1, price: p.price }], discount: 0, sst: false, notes: s.receipt ? 'Till receipt ' + s.receipt : '', status: 'paid', paidAt: now, method: s.method });
+    s.inv = id; save(); go('/a/invoice/' + id);
+  },
   tArr: el => { recLog(el.dataset.id, { arr: new Date().toISOString() }); S.tAck[el.dataset.id] = true; save(); render(); },
   tStart: el => { const id = el.dataset.id, L = S.tLog[id] || {}, now = new Date().toISOString(); recLog(id, { arr: L.arr || now, start: now }); S.tAck[id] = true; save(); render(); },
   tEnd: el => {
@@ -1976,10 +2467,29 @@ document.addEventListener('input', e => {
   else if (el.id === 'receipt') cdraft.receipt = el.value;
   else if (el.id === 'allergy') { S.skin.allergy = el.value; save(); }
   else if (el.id === 'otp' && /^\d{6}$/.test(el.value)) ACT.verify();
+  else if (el.dataset && el.dataset.bind) {
+    const [o, k] = el.dataset.bind.split('.'), D = o === 'cl' ? cl : o === 'ot' ? ot : o === 'inv' ? inv : null;
+    if (!D) return;
+    D[k] = el.value;
+    if (o === 'ot') { const c = $('#otcalc'); if (c) c.innerHTML = otCalcHtml(); }
+    if (o === 'inv' && k === 'discount') { const c = $('#invtot'); if (c) c.innerHTML = invTotalsHtml(); }
+  } else if (el.dataset && el.dataset.line != null && inv) {
+    const l = inv.items[Number(el.dataset.line)]; if (!l) return;
+    l[el.dataset.f] = el.value;
+    const lt = $('#lt' + el.dataset.line); if (lt) lt.textContent = rm((Number(l.qty) || 0) * (Number(l.price) || 0), 2);
+    const c = $('#invtot'); if (c) c.innerHTML = invTotalsHtml();
+  }
 });
 document.addEventListener('change', e => {
   const el = e.target;
   if (el.id === 'csel') { cdraft.member = el.value; render(); }
+  else if (el.id === 'clr' && cl) { const f = el.files && el.files[0]; cl.receipt = f ? f.name : null; render(); }
+  else if (el.id === 'invCust' && inv) { inv.mid = el.value || null; render(); }
+  else if (el.id === 'invSst' && inv) { inv.sst = el.checked; const c = $('#invtot'); if (c) c.innerHTML = invTotalsHtml(); }
+  else if (el.id === 'invAdd' && inv && el.value) {
+    const v = el.value, ref = v === 'custom' ? null : v, it = ref ? (ref.startsWith('p:') ? product(ref.slice(2)) : svc(ref.slice(2))) : null;
+    inv.items.push({ ref, label: '', qty: 1, price: it ? it.price : 0 }); render();
+  }
   else if (el.dataset && el.dataset.notif) { S.notif[el.dataset.notif] = el.checked; save(); }
   else if (el.dataset && el.dataset.tnotif) { S.tNotif[el.dataset.tnotif] = el.checked; save(); }
 });
