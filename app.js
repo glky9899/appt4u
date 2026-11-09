@@ -166,6 +166,17 @@ const STR = {
   sideTitle: ['Interactive demo', '互动演示'],
   sideText: ['A mobile web app for studios and salons. On your phone, open www.appt4u.com and add it to your Home Screen — it opens full screen like a native app.', '为工作室与沙龙打造的手机网页 App。在手机打开 www.appt4u.com 并添加到主屏幕，即可像原生 App 一样全屏使用。'],
   sideRoles: ['View as', '切换身份'], sideData: ['Sample businesses and data only. Your changes stay in this browser.', '仅示例商家与数据，改动只保存在此浏览器。'],
+  tSchedule: ['Schedule', '日程'], newBooking: ['New booking', '新预约'], gotIt: ['Got it', '知道了'], inCal: ['In calendar', '已在日历'],
+  syncT: ['Keep your calendar in sync', '让日历保持同步'], syncSub: ['Put your appointments in your own phone calendar so you never miss one.', '把预约放进自己的手机日历，不再错过。'],
+  addWeek: ['Add next 7 days', '加入未来 7 天'], subscribe: ['Auto-sync', '自动同步'],
+  subInfo: ['Subscribe once and new, moved or cancelled appointments update in your calendar by themselves. Works with Google, Apple and Outlook.', '订阅一次，新增、改期或取消的预约都会自动更新到你的日历。支持 Google、Apple 与 Outlook。'],
+  subDemo: ['The live feed switches on in the full version. In this demo, use “Add next 7 days”.', '实时订阅在完整版开放；演示版请使用「加入未来 7 天」。'],
+  noAppts: ['No appointments this day', '当天没有预约'], apptsN: ['{n} appointments', '{n} 个预约'],
+  remSet: ['Reminders', '提醒'], rem2h: ['Push 2 hours before each appointment', '每个预约前 2 小时推送'], runSheet: ['Daily run-sheet at 8:00 am', '每天早上 8 点发送当日清单'], newPush: ['Instant alert for new, moved or cancelled bookings', '新增、改期或取消时即时提醒'],
+  calPrivacy: ['Your calendar shows only the client’s first name and the service. Health notes stay inside appt4u.', '日历只显示顾客名字与项目，健康备注只保留在 appt4u 内。'],
+  weekAdded: ['{n} appointments sent to your calendar', '已将 {n} 个预约发送至日历'],
+  calWhyT: ['You get a reminder 30 minutes before, with the client’s first name and room.', '提前 30 分钟提醒，并显示顾客名字与房间。'],
+  firmPressure: ['Prefers firm pressure', '喜欢较重的力度'], pregnantNote: ['Pregnant — avoid certain essential oils', '孕期——避免部分精油'],
   notFound: ['Page not found', '找不到页面'], goHome: ['Go home', '返回首页'], demoOnly: ['Available in the full version', '完整版提供此功能'],
 };
 function t(k, v) {
@@ -270,7 +281,7 @@ const THER = {
 const HOME_CATS = [['all', 'apps'], ['facial', 'face'], ['hair', 'scissors'], ['nails', 'polish'], ['body', 'leaf'], ['pilates', 'activity']];
 const BIZS = [
   { id: 'lumiere', cats: ['facial', 'nails', 'body'], name: { en: 'Lumière Skin Studio', zh: 'Lumière 护肤工作室' }, area: { en: 'Bangsar, Kuala Lumpur', zh: '吉隆坡 Bangsar' }, dist: 1.2, rating: 4.8, reviews: 412,
-    hours: { en: '10AM–8PM, Tue–Sun', zh: '周二至周日 10:00–20:00' }, img: IMG.facial, thumb: IMG.spa, staff: ['joanne', 'weiling', 'aida'],
+    hours: { en: '10AM–8PM, daily', zh: '每天 10:00–20:00' }, img: IMG.facial, thumb: IMG.spa, staff: ['joanne', 'weiling', 'aida'],
     desc: { en: 'Skin-first facials, lash and nail care, and calming body treatments. Members use packages and stored value right in the app.', zh: '以肌肤为本的面部护理、美睫美甲与舒缓身体护理。会员可直接在 App 内使用疗程与储值。' },
     tabs: [['facial', 'Facial', '面部护理'], ['lash', 'Lash & nails', '美睫美甲'], ['body', 'Body & scalp', '身体与头皮']] },
   { id: 'glow', cats: ['hair'], name: { en: 'Studio Glow Hair Lounge', zh: 'Studio Glow 美发沙龙' }, area: { en: 'Mont Kiara, Kuala Lumpur', zh: '吉隆坡 Mont Kiara' }, dist: 2.4, rating: 4.7, reviews: 312,
@@ -372,7 +383,7 @@ function seed() {
       { id: 'l5', wallet: 'pk1', date: addDays(t0, -11).toISOString(), kind: 'use', amount: -1, bal: 4, serviceId: 'hydra' },
     ],
     bookings: [
-      { id: 'b1', biz: 'lumiere', serviceId: 'hydra', extra: [], therapistId: 'joanne', room: 'r2', start: at(addDays(t0, 3), '14:30').toISOString(), status: 'booked', pay: 'package', pkg: 'pk1' },
+      { id: 'b1', biz: 'lumiere', serviceId: 'hydra', extra: [], therapistId: 'joanne', room: 'r2', start: at(addDays(t0, 3), '14:30').toISOString(), status: 'booked', pay: 'package', pkg: 'pk1', staffNew: true },
       { id: 'b2', biz: 'glow', serviceId: 'cutw', extra: ['wash'], therapistId: 'marcus', room: null, start: at(addDays(t0, -18), '11:00').toISOString(), status: 'completed', pay: 'store', pkg: null },
       { id: 'b0', biz: 'lumiere', serviceId: 'hydra', extra: [], therapistId: 'joanne', room: 'r2', start: at(addDays(t0, -11), '14:30').toISOString(), status: 'completed', pay: 'package', pkg: 'pk1' },
       { id: 'bz', biz: 'lumiere', serviceId: 'hydra', extra: [], therapistId: 'joanne', room: 'r2', start: at(addDays(t0, -25), '15:00').toISOString(), status: 'completed', pay: 'package', pkg: 'pk1' },
@@ -382,6 +393,9 @@ function seed() {
 }
 let S = LS.get(KEY, null);
 if (!S || S.v !== 3) S = seed();
+S.tNotif = S.tNotif || { rem: true, run: true, change: true };
+S.tAck = S.tAck || {}; S.tAdded = S.tAdded || {}; if (S.tCal === undefined) S.tCal = null;
+if (!S.mig4) { const b1 = S.bookings.find(b => b.id === 'b1'); if (b1) b1.staffNew = true; S.mig4 = true; }
 const save = () => LS.set(KEY, S);
 
 const isBooked = b => b.status === 'booked';
@@ -411,7 +425,7 @@ function ledgerAdd(wallet, kind, amount, extra) {
 const TABS = {
   m: [['home', '/m/home', 'tabHome'], ['calendar', '/m/bookings', 'tabBookings'], ['wallet', '/m/wallet', 'tabWallet'], ['user', '/m/me', 'tabProfile']],
   a: [['home', '/a/today', 'aToday'], ['grid', '/a/diary', 'aDiary'], ['users', '/a/members', 'aMembers'], ['chart', '/a/reports', 'aReports'], ['more', '/a/more', 'aMore']],
-  t: [['home', '/t/today', 'tToday'], ['coins', '/t/earnings', 'tEarnings'], ['user', '/t/me', 'tabProfile']],
+  t: [['calendar', '/t/today', 'tSchedule'], ['coins', '/t/earnings', 'tEarnings'], ['user', '/t/me', 'tabProfile']],
   g: [['home', '/g/home', 'gHome'], ['share', '/g/share', 'gShare'], ['coins', '/g/payouts', 'gPayouts']],
 };
 const HOME = { member: '/m/home', admin: '/a/today', therapist: '/t/today', agent: '/g/home' };
@@ -582,22 +596,24 @@ function vDone(id) {
   const d = new Date(b.start), B = bBiz(b);
   const held = b.pay === 'package' ? t('heldPkg') : b.pay === 'stored' ? t('heldStored', { a: rm(bPrice(b)) }) : t('payAtStore');
   const calBtn = S.calAlways
-    ? `<button class="btn btn-outline btn-block" data-act="calDo" data-id="${b.id}" data-c="${S.calAlways}">${icon('calendar', 18)} ${t('addTo', { c: calName(S.calAlways) })}</button>`
-    : `<button class="btn btn-outline btn-block" data-act="calSheet" data-id="${b.id}">${icon('calendar', 18)} ${t('addToCalendar')}</button>`;
+    ? `<button class="btn btn-outline btn-block" data-act="calDo" data-ev="b:${b.id}" data-c="${S.calAlways}">${icon('calendar', 18)} ${t('addTo', { c: calName(S.calAlways) })}</button>`
+    : `<button class="btn btn-outline btn-block" data-act="calSheet" data-ev="b:${b.id}">${icon('calendar', 18)} ${t('addToCalendar')}</button>`;
   return page({ cls: 'center-main', body: `<div class="done stack-lg center">
     <div class="done-icon">${icon('checkCircle', 68)}</div>
     <div class="stack-sm"><h1 class="h1">${t('booked')}</h1><p class="muted lines">${bName(b)}<br>${B.name[lang]}<br>${fDay(d)} · ${hm(d)} · ${THER[b.therapistId].name}${b.room ? ' · ' + roomName(b.room) : ''}</p></div>
     <span class="pill sage" style="align-self:center">${held}</span>
     <div class="stack w100">${calBtn}<a class="btn btn-primary btn-block" href="#/m/home">${t('done')}</a></div></div>` });
 }
-function calSheet(id) {
-  openSheet(`<h2 class="h2">${t('addCal')}</h2><p class="small muted">${t('calWhy')}</p>
+function calSheet(key) {
+  const staff = key.startsWith('t:');
+  openSheet(`<h2 class="h2">${t('addCal')}</h2><p class="small muted">${t(staff ? 'calWhyT' : 'calWhy')}</p>
   <div class="stack-xs">
-    <button class="opt" data-act="calPick" data-id="${id}" data-c="apple">${icon('calendar', 20)}<span>${t('appleCal')}</span></button>
-    <button class="opt" data-act="calPick" data-id="${id}" data-c="google">${icon('globe', 20)}<span>${t('googleCal')}</span></button>
-    <button class="opt" data-act="calPick" data-id="${id}" data-c="ics">${icon('download', 20)}<span>${t('otherCal')}</span></button>
+    <button class="opt" data-act="calPick" data-ev="${key}" data-c="apple">${icon('calendar', 20)}<span>${t('appleCal')}</span></button>
+    <button class="opt" data-act="calPick" data-ev="${key}" data-c="google">${icon('globe', 20)}<span>${t('googleCal')}</span></button>
+    <button class="opt" data-act="calPick" data-ev="${key}" data-c="ics">${icon('download', 20)}<span>${t('otherCal')}</span></button>
   </div>
   <label class="row toggle-row"><span>${t('alwaysDo')}</span><input type="checkbox" class="switch" id="calAlways"></label>
+  ${staff ? `<p class="small muted">${t('calPrivacy')}</p>` : ''}
   <button class="btn btn-ghost btn-block" data-act="closeSheet">${t('notNow')}</button>`);
 }
 
@@ -608,7 +624,7 @@ function bkCard(b, up) {
   return `<div class="card stack-sm"><div class="row-start" style="align-items:flex-start">${pic(B.thumb, 120, 'biz-img sm')}<div class="grow">
     <div class="row" style="align-items:flex-start"><span class="strong">${bName(b)}</span><span class="pill ${pill}">${t('st_' + b.status)}</span></div>
     <span class="small muted block">${B.name[lang]}</span><span class="small muted">${fDay(d)} · ${hm(d)} · ${THER[b.therapistId].name}</span></div></div>
-  ${up ? `<div class="row-start gap8"><button class="btn btn-soft btn-sm" data-act="${S.calAlways ? 'calDo' : 'calSheet'}" data-id="${b.id}" data-c="${S.calAlways || ''}">${icon('calendar', 16)} ${t('calendarSet')}</button><button class="btn btn-sm btn-outline" data-act="qr">${icon('qr', 16)} QR</button><button class="btn btn-sm btn-ghost" data-act="cancelBk" data-id="${b.id}">${t('cancel')}</button></div>` : ''}</div>`;
+  ${up ? `<div class="row-start gap8"><button class="btn btn-soft btn-sm" data-act="${S.calAlways ? 'calDo' : 'calSheet'}" data-ev="b:${b.id}" data-c="${S.calAlways || ''}">${icon('calendar', 16)} ${t('calendarSet')}</button><button class="btn btn-sm btn-outline" data-act="qr">${icon('qr', 16)} QR</button><button class="btn btn-sm btn-ghost" data-act="cancelBk" data-id="${b.id}">${t('cancel')}</button></div>` : ''}</div>`;
 }
 function vBookings(tab) {
   tab = tab === 'past' ? 'past' : 'up';
@@ -1026,23 +1042,59 @@ function vASettings() {
 }
 
 /* ------------------------------------------------------------------ therapist */
-function tSessions() {
-  const now = new Date();
-  const items = DAYPLAN.filter(a => a.th === 'joanne').map(a => { const s = svc(a.s); return { id: a.id, name: s.name[lang], price: s.price, mins: s.mins, start: at(today0(), a.t), client: masked(member(a.c).name), room: a.room, note: a.c === 'priya' ? 'Prefers firm pressure' : '' }; });
-  S.bookings.filter(b => isBooked(b) && isLumiere(b) && b.therapistId === 'joanne' && sameDay(b.start, now)).forEach(b => items.push({ id: b.id, name: bName(b), price: bPrice(b), mins: bMins(b), start: new Date(b.start), client: 'Mei L.', room: b.room, note: t('note1') }));
-  return items.sort((a, b) => a.start - b.start).map(i => {
-    const end = new Date(i.start.getTime() + i.mins * 60000);
-    i.state = S.tSessions[i.id] || (end < now ? 'done' : 'todo');
-    return i;
+/* Joanne's appointments: today's diary, a sample pattern for the next days, plus member bookings made in the app */
+const T_TEMPLATE = [['10:00', 'deep', 'r1'], ['11:30', 'hydra', 'r1'], ['14:00', 'calm', 'r1'], ['16:00', 'body', 'r1'], ['17:30', 'deep', 'r2']];
+const T_CLIENTS = ['grace', 'jessica', 'priya', 'lina', 'rachel', 'farah', 'nur', 'kavitha', 'joyce'];
+function tAppointments(days) {
+  const now = new Date(), out = [];
+  for (let i = 0; i < days; i++) {
+    const day = addDays(today0(), i);
+    if (i === 0) {
+      DAYPLAN.filter(a => a.th === 'joanne').forEach(a => { const s = svc(a.s); out.push({ id: a.id, start: at(day, a.t), mins: s.mins, name: s.name[lang], price: s.price, client: masked(member(a.c).name), room: a.room, note: a.c === 'priya' ? t('firmPressure') : '' }); });
+    } else {
+      T_TEMPLATE.forEach(([tm, sid, room], j) => {
+        const h = hash(day.toDateString() + tm);
+        if (h % 10 < 4) return;
+        const s = svc(sid), c = member(T_CLIENTS[h % T_CLIENTS.length]);
+        out.push({ id: `d${i}s${j}`, start: at(day, tm), mins: s.mins, name: s.name[lang], price: s.price, client: masked(c.name), room, note: c.id === 'rachel' ? t('pregnantNote') : c.id === 'priya' ? t('firmPressure') : '' });
+      });
+    }
+    S.bookings.filter(b => isBooked(b) && isLumiere(b) && b.therapistId === 'joanne' && sameDay(b.start, day)).forEach(b => out.push({ id: b.id, start: new Date(b.start), mins: bMins(b), name: bName(b), price: bPrice(b), client: 'Mei L.', room: b.room, note: t('note1'), member: true, isNew: !!b.staffNew && !S.tAck[b.id] }));
+  }
+  const mine = out.filter(a => a.member);
+  return out.filter(a => a.member || !mine.some(m => Math.abs(m.start - a.start) < 60 * 60000)).sort((a, b) => a.start - b.start).map(a => {
+    const end = new Date(a.start.getTime() + a.mins * 60000);
+    a.state = S.tSessions[a.id] || (end < now ? 'done' : 'todo');
+    return a;
   });
 }
-function vTToday() {
-  const items = tSessions();
-  const body = `<div class="row"><div><p class="muted">${t('hi', { n: 'Joanne' })}</p><h1 class="h1">${fDay(new Date())}</h1></div>${mark('J')}</div>
-  <a class="card tint-gold row" href="#/t/earnings"><span><span class="small muted">${t('earnedMonth')}</span><br><span class="h-serif">${rm(2340 + S.tExtra)}</span></span><span class="small muted">${t('sessionsN', { n: 26 + S.tCount })}</span></a>
-  ${items.map(i => `<div class="card stack-xs ${i.state === 'in' ? 'gold' : ''}"><div class="row"><span class="small muted">${hm(i.start)}${i.room ? ' · ' + roomName(i.room) : ''}</span>${i.state === 'done' ? `<span class="pill sage">${t('doneSt')}</span>` : i.state === 'in' ? `<span class="pill gold">${t('inProg')}</span>` : ''}</div>
-    <p class="strong">${i.name}</p><p class="small muted">${esc(i.client)}</p>${i.note ? `<p class="note rose">${icon('heart', 16)} ${esc(i.note)}</p>` : ''}
-    ${i.state === 'todo' ? `<button class="btn btn-outline btn-block" data-act="tAct" data-id="${i.id}">${t('startS')}</button>` : i.state === 'in' ? `<button class="btn btn-primary btn-block" data-act="tAct" data-id="${i.id}" data-p="${i.price}">${t('completeS')}</button>` : ''}</div>`).join('')}`;
+const tCalBtn = (a, label, cls) => `<button class="btn btn-sm ${cls || 'btn-soft'}" ${S.tCal ? `data-act="calDo" data-c="${S.tCal}"` : 'data-act="calSheet"'} data-ev="t:${a.id}">${icon('calendar', 16)} ${label}</button>`;
+function apptCard(a, isToday) {
+  const end = new Date(a.start.getTime() + a.mins * 60000);
+  const status = a.state === 'done' ? `<span class="pill sage">${t('doneSt')}</span>` : a.state === 'in' ? `<span class="pill gold">${t('inProg')}</span>` : a.isNew ? `<span class="pill amber">${t('newBooking')}</span>` : S.tAdded[a.id] ? `<span class="pill grey">${t('inCal')}</span>` : '';
+  const action = !isToday || a.state === 'done' ? '' : a.state === 'in'
+    ? `<button class="btn btn-sm btn-primary" data-act="tAct" data-id="${a.id}" data-p="${a.price}">${t('completeS')}</button>`
+    : `<button class="btn btn-sm btn-outline" data-act="tAct" data-id="${a.id}">${t('startS')}</button>`;
+  return `<div class="card stack-xs ${a.state === 'in' || a.isNew ? 'gold' : ''}"><div class="row"><span class="small muted">${hm(a.start)} – ${hm(end)}${a.room ? ' · ' + roomName(a.room) : ''}</span>${status}</div>
+  <p class="strong">${a.name}</p><p class="small muted">${esc(a.client)}</p>${a.note ? `<p class="note rose">${icon('heart', 16)} ${esc(a.note)}</p>` : ''}
+  ${a.state === 'done' ? '' : `<div class="row-start gap8">${tCalBtn(a, t('calendarSet'))}${action}</div>`}</div>`;
+}
+function vTToday(di) {
+  di = Math.max(0, Math.min(6, Number(di) || 0));
+  const all = tAppointments(7), day = addDays(today0(), di);
+  const items = all.filter(a => sameDay(a.start, day)), fresh = all.filter(a => a.isNew);
+  const days = [...Array(7)].map((_, i) => addDays(today0(), i));
+  const count = d => all.filter(a => sameDay(a.start, d)).length;
+  const body = `<div class="row"><div><p class="muted">${t('hi', { n: 'Joanne' })}</p><h1 class="h1">${t('tSchedule')}</h1></div>${mark('J')}</div>
+  ${fresh.map(a => `<div class="card gold stack-sm"><div class="row"><span class="pill amber">${t('newBooking')}</span><span class="small muted">${fDay(a.start)} · ${hm(a.start)}</span></div>
+    <p class="strong">${a.name} · ${esc(a.client)}</p>
+    <div class="row-start gap8">${tCalBtn(a, t('addToCalendar'), 'btn-primary')}<button class="btn btn-sm btn-ghost" data-act="ackNew" data-id="${a.id}">${t('gotIt')}</button></div></div>`).join('')}
+  <div class="card stack-sm"><div class="row-start" style="align-items:flex-start"><span style="color:var(--primary)">${icon('calendar')}</span><div><p class="strong">${t('syncT')}</p><p class="small muted">${t('syncSub')}</p></div></div>
+    <div class="row-start gap8"><button class="btn btn-sm btn-primary" data-act="addWeek">${icon('download', 16)} ${t('addWeek')}</button><button class="btn btn-sm btn-outline" data-act="subFeed">${icon('refresh', 16)} ${t('subscribe')}</button></div></div>
+  <div class="hscroll">${days.map((d, i) => `<a class="date ${i === di ? 'on' : ''}" href="#/t/today/${i}"><span>${i === 0 ? t('today') : dayShort(d)}</span><b>${d.getDate()}</b><small>${count(d) || '–'}</small></a>`).join('')}</div>
+  <div class="row"><h2 class="h2">${fDay(day)}</h2><span class="small muted">${t('apptsN', { n: items.length })}</span></div>
+  ${items.length ? items.map(a => apptCard(a, di === 0)).join('') : `<p class="muted center" style="padding:12px 0">${t('noAppts')}</p>`}
+  <a class="card tint-gold row" href="#/t/earnings"><span><span class="small muted">${t('earnedMonth')}</span><br><span class="h-serif">${rm(2340 + S.tExtra)}</span></span><span class="small muted">${t('sessionsN', { n: 26 + S.tCount })}</span></a>`;
   return page({ tabs: 't', active: '/t/today', body });
 }
 function vTEarnings() {
@@ -1060,8 +1112,12 @@ function vTMe() {
   const link = 'webcal://www.appt4u.com/feed/joanne-demo.ics';
   const body = `<h1 class="h1">${t('tabProfile')}</h1>
   <div class="card row-start">${mark('J')}<div><p class="strong">Joanne</p><p class="small muted">${THER.joanne.title[lang]} · Lumière</p></div></div>
-  <div class="card stack-sm"><p class="strong">${t('calFeed')}</p><p class="small muted">${t('calFeedSub')}</p><div class="copybox">${icon('link', 18)}<span class="grow">${link}</span><button class="btn btn-sm btn-soft" data-act="copy" data-v="${link}">${t('copy')}</button></div></div>
-  <div class="card menu">${menuBtn('lang', 'globe', t('language'), lang === 'zh' ? '中文' : 'English')}${menuBtn('roles', 'users', t('switchRole'))}${menuBtn('signout', 'logout', t('signOut'))}</div>`;
+  <div class="card stack-xs"><p class="strong">${t('remSet')}</p>
+    <label class="row toggle-row"><span>${t('rem2h')}</span><input type="checkbox" class="switch" data-tnotif="rem" ${S.tNotif.rem ? 'checked' : ''}></label>
+    <label class="row toggle-row"><span>${t('runSheet')}</span><input type="checkbox" class="switch" data-tnotif="run" ${S.tNotif.run ? 'checked' : ''}></label>
+    <label class="row toggle-row"><span>${t('newPush')}</span><input type="checkbox" class="switch" data-tnotif="change" ${S.tNotif.change ? 'checked' : ''}></label></div>
+  <div class="card stack-sm"><p class="strong">${t('calFeed')}</p><p class="small muted">${t('calFeedSub')}</p><div class="copybox">${icon('link', 18)}<span class="grow">${link}</span><button class="btn btn-sm btn-soft" data-act="copy" data-v="${link}">${t('copy')}</button></div><p class="small muted">${t('calPrivacy')}</p></div>
+  <div class="card menu"><button class="menu-item" data-act="calSettings" data-who="t">${icon('calendar', 20)}<span class="grow">${t('calendarSet')}</span><span class="val">${S.tCal ? calName(S.tCal) : t('calAsk')}</span>${icon('chevR', 16)}</button>${menuBtn('lang', 'globe', t('language'), lang === 'zh' ? '中文' : 'English')}${menuBtn('roles', 'users', t('switchRole'))}${menuBtn('signout', 'logout', t('signOut'))}</div>`;
   return page({ tabs: 't', active: '/t/me', body });
 }
 
@@ -1109,7 +1165,7 @@ const ROUTES = [
   [/^\/a\/today$/, vAToday], [/^\/a\/diary(?:\/([\d-]+))?$/, vADiary], [/^\/a\/members(?:\/(\w+))?$/, vAMembers], [/^\/a\/member\/(\w+)$/, vAMember],
   [/^\/a\/counter(?:\/(\w+))?$/, vACounter], [/^\/a\/sale$/, vASaleDone], [/^\/a\/reports$/, vAReports], [/^\/a\/more$/, vAMore],
   [/^\/a\/commission$/, vACommission], [/^\/a\/promos$/, vAPromos], [/^\/a\/settings$/, vASettings],
-  [/^\/t\/today$/, vTToday], [/^\/t\/earnings$/, vTEarnings], [/^\/t\/me$/, vTMe],
+  [/^\/t\/today(?:\/(\d+))?$/, vTToday], [/^\/t\/earnings$/, vTEarnings], [/^\/t\/me$/, vTMe],
   [/^\/g\/home$/, vGHome], [/^\/g\/share$/, vGShare], [/^\/g\/payouts$/, vGPayouts],
 ];
 const APP = $('#app');
@@ -1131,7 +1187,7 @@ function render() {
   lastPath = path;
   renderSide();
   const dm = path.match(/^\/m\/done\/(\w+)$/);
-  if (dm && !S.calAlways && !shownCal.has(dm[1])) { shownCal.add(dm[1]); setTimeout(() => { if (route() === path) calSheet(dm[1]); }, 450); }
+  if (dm && !S.calAlways && !shownCal.has(dm[1])) { shownCal.add(dm[1]); setTimeout(() => { if (route() === path) calSheet('b:' + dm[1]); }, 450); }
 }
 window.addEventListener('hashchange', render);
 
@@ -1167,27 +1223,37 @@ function toast(msg) {
 /* ------------------------------------------------------------------ calendar export */
 const icsStamp = d => new Date(d).toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
 const icsEsc = s => String(s).replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\n/g, '\\n');
-function icsFor(b) {
-  const B = bBiz(b), st = new Date(b.start), en = new Date(st.getTime() + bMins(b) * 60000);
-  return ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//appt4u//Booking//EN', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH', 'BEGIN:VEVENT',
-    `UID:${b.id}@appt4u.com`, `DTSTAMP:${icsStamp(new Date())}`, `DTSTART:${icsStamp(st)}`, `DTEND:${icsStamp(en)}`,
-    `SUMMARY:${icsEsc(bName(b) + ' · ' + B.name[lang])}`, `LOCATION:${icsEsc(B.area[lang])}`,
-    `DESCRIPTION:${icsEsc(THER[b.therapistId].name + (b.room ? ' · ' + roomName(b.room) : '') + ' · appt4u demo')}`,
-    'BEGIN:VALARM', 'TRIGGER:-PT2H', 'ACTION:DISPLAY', 'DESCRIPTION:Reminder', 'END:VALARM', 'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
+/* A calendar event is built from a member booking ("b:<id>") or a therapist appointment ("t:<id>").
+   Therapist events carry the client's first name and service only; health notes stay in the app. */
+function evFromBooking(b) {
+  const B = bBiz(b), st = new Date(b.start);
+  return { uid: b.id, start: st, end: new Date(st.getTime() + bMins(b) * 60000), title: bName(b) + ' · ' + B.name[lang], location: B.area[lang], desc: THER[b.therapistId].name + (b.room ? ' · ' + roomName(b.room) : '') + ' · appt4u', alarm: 120 };
 }
-function addToCalendar(b, kind) {
-  const B = bBiz(b), st = new Date(b.start), en = new Date(st.getTime() + bMins(b) * 60000);
-  if (kind === 'google') {
-    const url = 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + encodeURIComponent(bName(b) + ' · ' + B.name[lang]) +
-      '&dates=' + icsStamp(st) + '/' + icsStamp(en) + '&details=' + encodeURIComponent(THER[b.therapistId].name) + '&location=' + encodeURIComponent(B.area[lang]);
-    window.open(url, '_blank', 'noopener');
-    return;
-  }
-  const ics = icsFor(b);
+function evFromAppt(a) {
+  return { uid: 't-' + a.id + '-' + a.start.toISOString().slice(0, 10), start: a.start, end: new Date(a.start.getTime() + a.mins * 60000), title: a.name + ' · ' + a.client, location: BIZS[0].name[lang] + (a.room ? ' · ' + roomName(a.room) : ''), desc: 'appt4u · ' + BIZS[0].area[lang], alarm: 30 };
+}
+function evByKey(key) {
+  const i = key.indexOf(':'), type = key.slice(0, i), id = key.slice(i + 1);
+  if (type === 'b') { const b = S.bookings.find(x => x.id === id); return b ? evFromBooking(b) : null; }
+  const a = tAppointments(14).find(x => x.id === id); return a ? evFromAppt(a) : null;
+}
+const vevent = e => ['BEGIN:VEVENT', `UID:${e.uid}@appt4u.com`, `DTSTAMP:${icsStamp(new Date())}`, `DTSTART:${icsStamp(e.start)}`, `DTEND:${icsStamp(e.end)}`,
+  `SUMMARY:${icsEsc(e.title)}`, `LOCATION:${icsEsc(e.location)}`, `DESCRIPTION:${icsEsc(e.desc)}`,
+  'BEGIN:VALARM', `TRIGGER:-PT${e.alarm}M`, 'ACTION:DISPLAY', 'DESCRIPTION:Reminder', 'END:VALARM', 'END:VEVENT'];
+const icsDoc = evs => ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//appt4u//Booking//EN', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH'].concat(...evs.map(vevent), ['END:VCALENDAR']).join('\r\n');
+function openIcs(ics, name) {
   if (isIOS) { location.href = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(ics); return; }
   const url = URL.createObjectURL(new Blob([ics], { type: 'text/calendar;charset=utf-8' }));
-  const a = document.createElement('a'); a.href = url; a.download = 'appt4u-booking.ics'; document.body.appendChild(a); a.click();
+  const a = document.createElement('a'); a.href = url; a.download = name; document.body.appendChild(a); a.click();
   setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 1500);
+}
+function addToCalendar(e, kind) {
+  if (kind === 'google') {
+    window.open('https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + encodeURIComponent(e.title) + '&dates=' + icsStamp(e.start) + '/' + icsStamp(e.end) +
+      '&details=' + encodeURIComponent(e.desc) + '&location=' + encodeURIComponent(e.location), '_blank', 'noopener');
+    return;
+  }
+  openIcs(icsDoc([e]), 'appt4u-booking.ics');
 }
 
 /* ------------------------------------------------------------------ actions */
@@ -1226,18 +1292,33 @@ const ACT = {
     const th = draft.therapist === 'any' ? by.find(x => slotState(by, key, draft.day, draft.time, x) === 'open') || by[0] : draft.therapist;
     const pk = draft.pay === 'package' && ss.length === 1 ? pkgFor(ss[0].id) : null;
     const room = B.id === 'lumiere' ? (ss.some(s => s.cat === 'facial') ? 'r2' : 'r1') : null;
-    const b = { id: 'b' + Date.now().toString(36), biz: B.id, serviceId: ss[0].id, extra: draft.ids.slice(1), therapistId: th, room, start: at(new Date(draft.day), draft.time).toISOString(), status: 'booked', pay: pk ? 'package' : draft.pay === 'package' ? 'store' : draft.pay, pkg: pk ? pk.id : null };
+    const b = { id: 'b' + Date.now().toString(36), biz: B.id, serviceId: ss[0].id, extra: draft.ids.slice(1), therapistId: th, room, start: at(new Date(draft.day), draft.time).toISOString(), status: 'booked', pay: pk ? 'package' : draft.pay === 'package' ? 'store' : draft.pay, pkg: pk ? pk.id : null, staffNew: true };
     S.bookings.push(b); save(); draft = null; sel = null; go('/m/done/' + b.id);
   },
   quickBook: el => { const d = new Date(el.dataset.d); d.setHours(0, 0, 0, 0); draft = { biz: 'lumiere', ids: ['hydra'], therapist: 'joanne', day: d.toISOString(), time: '14:30', pay: null }; go('/m/time'); },
-  calSheet: el => calSheet(el.dataset.id),
+  calSheet: el => calSheet(el.dataset.ev),
   calPick: el => {
-    const b = S.bookings.find(x => x.id === el.dataset.id); if (!b) return;
-    const sw = $('#calAlways'); if (sw && sw.checked) { S.calAlways = el.dataset.c; save(); }
-    addToCalendar(b, el.dataset.c); closeSheet(); toast(t('addedCal'));
-    if (S.calAlways) setTimeout(render, 300);
+    const key = el.dataset.ev, e = evByKey(key); if (!e) return;
+    const staff = key.startsWith('t:');
+    const sw = $('#calAlways'); if (sw && sw.checked) { if (staff) S.tCal = el.dataset.c; else S.calAlways = el.dataset.c; }
+    if (staff) S.tAdded[key.slice(2)] = true;
+    save(); addToCalendar(e, el.dataset.c); closeSheet(); toast(t('addedCal'));
+    setTimeout(render, 300);
   },
-  calDo: el => { const b = S.bookings.find(x => x.id === el.dataset.id); if (!b) return; addToCalendar(b, el.dataset.c || 'ics'); toast(t('addedCal')); },
+  calDo: el => {
+    const key = el.dataset.ev, e = evByKey(key); if (!e) return;
+    if (key.startsWith('t:')) { S.tAdded[key.slice(2)] = true; save(); setTimeout(render, 300); }
+    addToCalendar(e, el.dataset.c || 'ics'); toast(t('addedCal'));
+  },
+  ackNew: el => { S.tAck[el.dataset.id] = true; save(); render(); },
+  addWeek: () => {
+    const now = new Date(), list = tAppointments(7).filter(a => a.start > now);
+    if (!list.length) { toast(t('noAppts')); return; }
+    list.forEach(a => { S.tAdded[a.id] = true; }); save();
+    openIcs(icsDoc(list.map(evFromAppt)), 'appt4u-next-7-days.ics');
+    toast(t('weekAdded', { n: list.length })); setTimeout(render, 300);
+  },
+  subFeed: () => { const link = 'webcal://www.appt4u.com/feed/joanne-demo.ics'; openSheet(`<h2 class="h2">${t('subscribe')}</h2><p class="muted">${t('subInfo')}</p><div class="copybox">${icon('link', 18)}<span class="grow">${link}</span><button class="btn btn-sm btn-soft" data-act="copy" data-v="${link}">${t('copy')}</button></div><p class="note gold">${icon('sparkle', 16)} ${t('subDemo')}</p><p class="small muted">${t('calPrivacy')}</p>`); },
   closeSheet: () => closeSheet(),
   cancelBk: el => {
     const b = S.bookings.find(x => x.id === el.dataset.id); if (!b) return;
@@ -1258,8 +1339,11 @@ const ACT = {
   skinChip: el => { const g = el.dataset.g, v = el.dataset.v, a = S.skin[g]; const i = a.indexOf(v); if (i >= 0) a.splice(i, 1); else a.push(v); save(); render(); },
   photo: el => { S.skin.photo = el.dataset.k; save(); render(); },
   saveSkin: () => { save(); toast(t('saved')); },
-  calSettings: () => openSheet(`<h2 class="h2">${t('calendarSet')}</h2><div class="stack-xs">${[[null, t('calAsk')], ['apple', t('appleCal')], ['google', t('googleCal')], ['ics', t('otherCal')]].map(([k, l]) => `<button class="opt ${S.calAlways === k ? 'on' : ''}" data-act="setCal" data-k="${k || ''}"><span class="radio"></span><span>${l}</span></button>`).join('')}</div>`),
-  setCal: el => { S.calAlways = el.dataset.k || null; save(); closeSheet(); render(); },
+  calSettings: el => {
+    const who = el.dataset.who === 't' ? 't' : 'm', cur = who === 't' ? S.tCal : S.calAlways;
+    openSheet(`<h2 class="h2">${t('calendarSet')}</h2><div class="stack-xs">${[[null, t('calAsk')], ['apple', t('appleCal')], ['google', t('googleCal')], ['ics', t('otherCal')]].map(([k, l]) => `<button class="opt ${cur === k ? 'on' : ''}" data-act="setCal" data-who="${who}" data-k="${k || ''}"><span class="radio"></span><span>${l}</span></button>`).join('')}</div>`);
+  },
+  setCal: el => { const v = el.dataset.k || null; if (el.dataset.who === 't') S.tCal = v; else S.calAlways = v; save(); closeSheet(); render(); },
   notifSettings: () => openSheet(`<h2 class="h2">${t('notifications')}</h2>${['rem', 'offers', 'after'].map(k => `<label class="row toggle-row"><span>${t('n_' + k)}</span><input type="checkbox" class="switch" data-notif="${k}" ${S.notif[k] ? 'checked' : ''}></label>`).join('')}<p class="small muted">${t('n_note')}</p>`),
   refer: () => openSheet(`<h2 class="h2">${t('refer')}</h2>${shareBlock('meiling')}`),
   copy: el => copyText(el.dataset.v),
@@ -1290,7 +1374,7 @@ const ACT = {
   tAct: el => {
     const id = el.dataset.id, cur = S.tSessions[id];
     if (!cur || cur === 'todo') S.tSessions[id] = 'in';
-    else if (cur === 'in') { S.tSessions[id] = 'done'; const c = Number(el.dataset.p) * 0.3; S.tExtra += c; S.tCount += 1; toast(t('commAdded', { a: rm(c, 2) })); }
+    else if (cur === 'in') { S.tSessions[id] = 'done'; S.tAck[id] = true; const c = Number(el.dataset.p) * 0.3; S.tExtra += c; S.tCount += 1; toast(t('commAdded', { a: rm(c, 2) })); }
     save(); render();
   },
 };
@@ -1311,6 +1395,7 @@ document.addEventListener('change', e => {
   const el = e.target;
   if (el.id === 'csel') { cdraft.member = el.value; render(); }
   else if (el.dataset && el.dataset.notif) { S.notif[el.dataset.notif] = el.checked; save(); }
+  else if (el.dataset && el.dataset.tnotif) { S.tNotif[el.dataset.tnotif] = el.checked; save(); }
 });
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closeSheet();
