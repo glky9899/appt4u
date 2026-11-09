@@ -164,7 +164,7 @@ const STR = {
   yourLink: ['Your personal link', '你的专属链接'], shareWA: ['Share on WhatsApp', '分享到 WhatsApp'], msgPreview: ['Message preview', '信息预览'],
   waMsg: ['Hi! Try {b} — book online in seconds and get your first facial for RM98: {l}', '你好！推荐你试试 {b}，在线预约，首次面部护理只需 RM98：{l}'],
   sideTitle: ['Interactive demo', '互动演示'],
-  sideText: ['A mobile web app for studios and salons. On your phone, open appt4u.com and add it to your Home Screen — it opens full screen like a native app.', '为工作室与沙龙打造的手机网页 App。在手机打开 appt4u.com 并添加到主屏幕，即可像原生 App 一样全屏使用。'],
+  sideText: ['A mobile web app for studios and salons. On your phone, open www.appt4u.com and add it to your Home Screen — it opens full screen like a native app.', '为工作室与沙龙打造的手机网页 App。在手机打开 www.appt4u.com 并添加到主屏幕，即可像原生 App 一样全屏使用。'],
   sideRoles: ['View as', '切换身份'], sideData: ['Sample businesses and data only. Your changes stay in this browser.', '仅示例商家与数据，改动只保存在此浏览器。'],
   notFound: ['Page not found', '找不到页面'], goHome: ['Go home', '返回首页'], demoOnly: ['Available in the full version', '完整版提供此功能'],
 };
@@ -1057,7 +1057,7 @@ function vTEarnings() {
   return page({ tabs: 't', active: '/t/earnings', body });
 }
 function vTMe() {
-  const link = 'webcal://appt4u.com/feed/joanne-demo.ics';
+  const link = 'webcal://www.appt4u.com/feed/joanne-demo.ics';
   const body = `<h1 class="h1">${t('tabProfile')}</h1>
   <div class="card row-start">${mark('J')}<div><p class="strong">Joanne</p><p class="small muted">${THER.joanne.title[lang]} · Lumière</p></div></div>
   <div class="card stack-sm"><p class="strong">${t('calFeed')}</p><p class="small muted">${t('calFeedSub')}</p><div class="copybox">${icon('link', 18)}<span class="grow">${link}</span><button class="btn btn-sm btn-soft" data-act="copy" data-v="${link}">${t('copy')}</button></div></div>
@@ -1077,7 +1077,7 @@ function vGHome() {
   return page({ tabs: 'g', active: '/g/home', body });
 }
 function shareBlock(code) {
-  const link = `https://appt4u.com/r/${code}`, msg = t('waMsg', { b: BIZS[0].name[lang], l: link });
+  const link = `https://www.appt4u.com/r/${code}`, msg = t('waMsg', { b: BIZS[0].name[lang], l: link });
   return `<div class="center stack"><div class="qr">${fakeQR(code, 168)}</div><p class="small muted">${t('qrDemo')}</p></div>
   <section class="stack-sm"><h2 class="label">${t('yourLink')}</h2><div class="copybox">${icon('link', 18)}<span class="grow">${link}</span><button class="btn btn-sm btn-soft" data-act="copy" data-v="${link}">${t('copy')}</button></div></section>
   <section class="stack-sm"><h2 class="label">${t('msgPreview')}</h2><div class="msg">${esc(msg)}</div></section>
