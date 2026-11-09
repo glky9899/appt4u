@@ -581,7 +581,7 @@ let lastPath = null;
 function sideHtml(path) {
   const s = S(), badge = { '/claims': s.claims.filter(c => c.status === 'pending').length, '/invoices': s.invoices.filter(x => A.invStatus(x) === 'overdue').length };
   const active = path === '/' ? '/' : (NAV.find(n => n[0] !== '/' && (path === n[0] || path.startsWith(n[0] + '/'))) || [''])[0];
-  return `<aside class="ad-side"><a class="ad-logo" href="#/">${logoImg('')}<span class="ad-tag">${t('ad_full')}</span></a>
+  return `<aside class="ad-side"><a class="ad-logo" href="#/"><img src="../icons/logo.png" alt="appt4u" width="139" height="38" style="height:38px;width:auto;align-self:flex-start;object-fit:contain"><span class="ad-tag">${t('ad_full')}</span></a>
     <div class="ad-biz">Lumière Skin Studio<br><span>Bangsar · Subang Jaya</span></div>
     <nav class="ad-nav">${NAV.map(([h, ic, k]) => `<a class="${active === h ? 'on' : ''}" href="#${h}">${icon(ic, 19)}<span>${t(k)}</span>${badge[h] ? `<span class="badge">${badge[h]}</span>` : ''}</a>`).join('')}</nav>
     <div class="ad-side-foot"><div class="langseg">${A.LANGS.map(([k, , sh]) => `<button class="${k === L() ? 'on' : ''}" data-x="lang" data-l="${k}">${sh}</button>`).join('')}</div>
