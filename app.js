@@ -420,11 +420,11 @@ const STR = {
   f_phone: ['Phone', '电话'],
   f_email: ['Email', '电邮'],
   f_wechat: ['WeChat ID', '微信号'],
-  contactPrivacy: ['Only the owner and admins can see contact details. Staff and freelancers can’t.', '只有老板与管理员能看到联系方式，员工与自由职业者看不到。'],
+  contactPrivacy: ['Only the owner and people with admin access can see contact details. Other staff and freelancers can’t.', '只有老板与拥有管理员权限的人能看到联系方式，其他员工与自由职业者看不到。'],
   editMember: ['Edit member', '编辑会员'],
   memberSaved: ['Member details saved', '会员资料已保存'],
   needName: ['Enter a name', '请输入姓名'],
-  noContactStaff: ['Client phone numbers, emails and social accounts are only visible to the owner and admins.', '顾客的电话、电邮与社交账号只有老板与管理员可见。'],
+  noContactStaff: ['Client phone numbers, emails and social accounts are only visible to the owner and people with admin access.', '顾客的电话、电邮与社交账号只有老板与拥有管理员权限的人可见。'],
   tr_title: ['Treatment records', '护理记录'],
   tr_open: ['Treatment history', '护理记录'],
   tr_last: ['Last visit', '上次到访'],
@@ -452,6 +452,16 @@ const STR = {
   tr_by: ['Therapist', '美容师'],
   roleOwner: ['Owner', '老板'],
   tr_new: ['New', '新'],
+  adminAccess: ['Admin access', '管理员权限'],
+  adminAccessSub: ['Can see and edit client contact details (phone, email, WeChat, Facebook, Instagram).', '可查看并编辑顾客联系方式（电话、电邮、微信、Facebook、Instagram）。'],
+  adminOn: ['{n} now has admin access', '{n} 已获得管理员权限'],
+  adminOff: ['{n} no longer has admin access', '{n} 的管理员权限已取消'],
+  adminGranted: ['Given by {b} · {d}', '{b} 于 {d} 授予'],
+  adminRemoved: ['Removed by {b} · {d}', '{b} 于 {d} 取消'],
+  adminYou: ['You have admin access, so you can see and edit client contact details.', '你有管理员权限，可以查看并编辑顾客联系方式。'],
+  adminNote: ['Turn on Admin access only for people you trust with client contact details, such as the front desk. Everyone else sees treatment records but not contacts.', '只为可信任的人（例如前台）开启管理员权限。其他人能看到护理记录，但看不到联系方式。'],
+  yesW: ['Yes', '是'],
+  noW: ['No', '否'],
   notFound: ['Page not found', '找不到页面'], goHome: ['Go home', '返回首页'], demoOnly: ['Available in the full version', '完整版提供此功能'],
 };
 /* Bahasa Melayu. Any key missing here falls back to English. */
@@ -857,11 +867,11 @@ const STR_MS = {
   f_phone: 'Telefon',
   f_email: 'E-mel',
   f_wechat: 'ID WeChat',
-  contactPrivacy: 'Hanya pemilik dan admin boleh melihat butiran hubungan. Staf dan pekerja bebas tidak boleh.',
+  contactPrivacy: 'Hanya pemilik dan orang yang mempunyai akses admin boleh melihat butiran hubungan. Staf dan pekerja bebas lain tidak boleh.',
   editMember: 'Ubah ahli',
   memberSaved: 'Butiran ahli disimpan',
   needName: 'Masukkan nama',
-  noContactStaff: 'Nombor telefon, e-mel dan akaun media sosial pelanggan hanya boleh dilihat oleh pemilik dan admin.',
+  noContactStaff: 'Nombor telefon, e-mel dan akaun media sosial pelanggan hanya boleh dilihat oleh pemilik dan orang yang mempunyai akses admin.',
   tr_title: 'Rekod rawatan',
   tr_open: 'Sejarah rawatan',
   tr_last: 'Lawatan terakhir',
@@ -889,6 +899,16 @@ const STR_MS = {
   tr_by: 'Terapis',
   roleOwner: 'Pemilik',
   tr_new: 'Baharu',
+  adminAccess: 'Akses admin',
+  adminAccessSub: 'Boleh melihat dan mengubah butiran hubungan pelanggan (telefon, e-mel, WeChat, Facebook, Instagram).',
+  adminOn: '{n} kini mempunyai akses admin',
+  adminOff: 'Akses admin {n} telah ditarik balik',
+  adminGranted: 'Diberi oleh {b} · {d}',
+  adminRemoved: 'Ditarik balik oleh {b} · {d}',
+  adminYou: 'Anda mempunyai akses admin, jadi anda boleh melihat dan mengubah butiran hubungan pelanggan.',
+  adminNote: 'Hidupkan Akses admin hanya untuk orang yang anda percayai dengan butiran hubungan pelanggan, seperti kaunter depan. Orang lain boleh melihat rekod rawatan tetapi bukan butiran hubungan.',
+  yesW: 'Ya',
+  noW: 'Tidak',
   notFound: 'Halaman tidak ditemui', goHome: 'Ke halaman utama', demoOnly: 'Tersedia dalam versi penuh',
 };
 function t(k, v) {
@@ -1149,7 +1169,7 @@ const BREAKS = [{ th: 'joanne', t: '12:45', m: 60 }, { th: 'weiling', t: '12:15'
 /* everyone who works at Lumière signs in with their own ID: employees, freelancers and beauty consultants */
 const STAFF = {
   joanne: { id: 'LUM-012', kind: 'free', role: 'therapist' }, weiling: { id: 'LUM-004', kind: 'staff', role: 'therapist', salary: 2800 },
-  aida: { id: 'LUM-019', kind: 'free', role: 'therapist' }, sara: { name: 'Sara', id: 'LUM-007', kind: 'staff', role: 'consult', salary: 2400 },
+  aida: { id: 'LUM-019', kind: 'free', role: 'therapist' }, sara: { name: 'Sara', id: 'LUM-007', kind: 'staff', role: 'consult', salary: 2400, admin: true },
 };
 /* the owner's edits (S.team) win over the defaults above */
 const teamOf = k => Object.assign({}, STAFF[k], (S && S.team && S.team[k]) || {});
@@ -1158,6 +1178,14 @@ const staffRole = k => teamOf(k).role;
 const staffSalary = k => Number(teamOf(k).salary) || 2600;
 const hourlyRate = k => Math.round(staffSalary(k) / 26 / 8 * 100) / 100;
 const canOT = k => staffKind(k) === 'staff';
+/* admin access: the owner switches it on per person; it lets them see and edit client contact details */
+const staffAdmin = k => !!teamOf(k).admin;
+function setStaffAdmin(k, on, by) {
+  if (!STAFF[k]) return false;
+  S.team[k] = Object.assign(S.team[k] || {}, { admin: !!on, adminBy: { name: by.name, at: new Date().toISOString(), on: !!on } });
+  save(); return true;
+}
+const adminByText = k => { const b = teamOf(k).adminBy; return b ? t(b.on ? 'adminGranted' : 'adminRemoved', { b: esc(b.name), d: fDate(b.at) }) : ''; };
 const OT_MULT = { normal: 1.5, rest: 2, ph: 3 };
 const SHIFT_END = '18:00';
 const staffName = k => (THER[k] || STAFF[k] || { name: k }).name;
@@ -1837,12 +1865,12 @@ function recordsSection(mid, a, full) {
     ${vs.length ? (full ? vs : vs.slice(0, 1)).map((v, i) => visitCard(v, a, i === 0)).join('') : `<p class="muted">${t('tr_none')}</p>`}
     <p class="small muted">${t('tr_who')}</p>`;
 }
-function contactCard(id) {
+function contactCard(id, editHref) {
   const c = mContact(id), ln = contactLinks(c);
   const row = (label, val, href) => val
     ? (href ? `<a class="statrow" href="${esc(href)}" ${href.startsWith('http') ? 'target="_blank" rel="noopener"' : ''}><span>${label}</span><b style="color:var(--primary-d)">${esc(val)}</b></a>` : `<div class="statrow"><span>${label}</span><b>${esc(val)}</b></div>`)
     : `<div class="statrow"><span>${label}</span><b class="muted">—</b></div>`;
-  return `<div class="card stack-sm"><div class="row"><p class="strong">${t('contactT')}</p><a class="btn btn-sm btn-outline" href="#/a/member/${id}/edit">${t('editInv')}</a></div>
+  return `<div class="card stack-sm"><div class="row"><p class="strong">${t('contactT')}</p><a class="btn btn-sm btn-outline" href="${editHref || '#/a/member/' + id + '/edit'}">${t('editInv')}</a></div>
     <div>${row(t('f_phone'), c.phone, ln.phone)}${row(t('f_email'), c.email, ln.email)}${row(t('f_wechat'), c.wechat)}${row('Facebook', c.fb, ln.fb)}${row('Instagram', c.ig, ln.ig)}</div>
     ${ln.wa ? `<a class="btn btn-soft btn-block" href="${ln.wa}" target="_blank" rel="noopener">${icon('phone', 16)} WhatsApp</a>` : ''}
     <p class="small muted">${t('contactPrivacy')}</p></div>`;
@@ -1854,21 +1882,24 @@ function vAMemberRecords(id) {
 /* staff / freelancer view of a client: treatment history only — short name, no contact details */
 function vTClient(cid) {
   const m = member(cid); if (!m) return vNotFound();
+  const adm = staffAdmin(ME);
   const health = cid === 'meiling' ? t('note1') : cid === 'rachel' ? t('pregnantNote') : cid === 'priya' ? t('firmPressure') : '';
-  return page({ back: '/t/today', title: t('tr_title'), body: `<div class="row-start"><span class="avatar lg">${initials(m.name)}</span><div><p class="h-serif">${esc(masked(m.name))}</p><p class="small muted">${t('tr_visits', { n: visitsOf(cid).length })}</p></div></div>
+  return page({ back: '/t/today', title: t('tr_title'), body: `<div class="row-start"><span class="avatar lg">${initials(m.name)}</span><div><p class="h-serif">${esc(adm ? m.name : masked(m.name))}</p><p class="small muted">${t('tr_visits', { n: visitsOf(cid).length })}${adm ? ' · ' + t('adminAccess') : ''}</p></div></div>
     ${health ? `<div class="card tint-rose stack-xs"><p class="strong" style="color:var(--rose)">${t('tr_health')}</p><p>${esc(health)}</p></div>` : ''}
+    ${adm ? contactCard(cid, '#/t/client/' + cid + '/edit') : ''}
     ${recordsSection(cid, 'act', true)}
-    <p class="note gold">${icon('users', 16)}<span>${t('noContactStaff')}</span></p>` });
+    ${adm ? '' : `<p class="note gold">${icon('users', 16)}<span>${t('noContactStaff')}</span></p>`}` });
 }
-function vAMemberEdit(id) {
+function vAMemberEdit(id, back) {
   const m = member(id); if (!m) return vNotFound();
+  back = back || '/a/member/' + id;
   const c = mContact(id);
   const f = (k, label, ph, type) => `<label class="stack-xs"><span class="label">${label}</span><input class="field" id="me-${k}" value="${esc(c[k] || '')}" placeholder="${ph || ''}" ${type ? `type="${type}"` : ''} autocomplete="off"></label>`;
-  return page({ back: '/a/member/' + id, title: t('editMember'), body: `<div class="stack">
+  return page({ back, title: t('editMember'), body: `<div class="stack">
     ${f('name', t('f_name'))}${f('phone', t('f_phone'), '+60 12-000 0000', 'tel')}${f('email', t('f_email'), 'name@example.com', 'email')}
     ${f('wechat', t('f_wechat'))}${f('fb', 'Facebook', 'facebook.com/…')}${f('ig', 'Instagram', '@…')}
     <p class="note gold">${icon('users', 16)}<span>${t('contactPrivacy')}</span></p>
-    <button class="btn btn-primary btn-block" data-act="saveMember" data-id="${id}">${t('save')}</button></div>` });
+    <button class="btn btn-primary btn-block" data-act="saveMember" data-id="${id}" data-back="${back}">${t('save')}</button></div>` });
 }
 let cdraft = { member: 'meiling', item: 'p-hydra6', method: 'card', receipt: '', by: 'sara' };
 function vACounter(mid) {
@@ -2230,7 +2261,7 @@ function vATeam() {
   const body = `<h1 class="h1">${t('team')}</h1><p class="muted">${t('teamSub')}</p>
   <div class="card flat" style="padding:4px 16px">${Object.keys(STAFF).map(k => {
     const n = S.claims.filter(c => c.who === k && c.status === 'pending').length, kind = staffKind(k);
-    return `<a class="mrow" href="#/a/team/${k}"><span class="avatar sm">${initials(staffName(k))}</span><span class="grow"><span class="strong">${staffName(k)}</span><br><span class="small muted">${t('role_' + staffRole(k))} · ${STAFF[k].id}</span></span><span class="pill ${kind === 'staff' ? 'gold' : 'grey'}">${t('kind_' + kind)}</span>${n ? `<span class="pill amber">${n}</span>` : ''}${icon('chevR', 16)}</a>`;
+    return `<a class="mrow" href="#/a/team/${k}"><span class="avatar sm">${initials(staffName(k))}</span><span class="grow"><span class="strong">${staffName(k)}</span><br><span class="small muted">${t('role_' + staffRole(k))} · ${STAFF[k].id}</span>${staffAdmin(k) ? ` <span class="pill ink" style="margin-top:4px">${t('adminAccess')}</span>` : ''}</span><span class="pill ${kind === 'staff' ? 'gold' : 'grey'}">${t('kind_' + kind)}</span>${n ? `<span class="pill amber">${n}</span>` : ''}${icon('chevR', 16)}</a>`;
   }).join('')}</div>
   <p class="note gold">${icon('receipt', 16)}<span>${t('typeNote')}</span></p>`;
   return page({ back: '/a/more', title: t('aMore'), body });
@@ -2245,6 +2276,8 @@ function vATeamMember(k) {
     <p class="label" style="padding-top:6px">${t('roleL')}</p><div class="stack-xs">${opt('teamRole', role, 'therapist', t('role_therapist'))}${opt('teamRole', role, 'consult', t('role_consult'))}</div>
     ${kind === 'staff' ? `<label class="stack-xs" style="padding-top:6px"><span class="label">${t('salaryL')}</span><span class="row-start gap8"><input class="field" id="tsal" inputmode="numeric" value="${staffSalary(k)}"><button class="btn btn-sm btn-outline" data-act="teamSalary" data-id="${k}">${t('save')}</button></span></label><p class="small muted">${t('otRate', { r: hourlyRate(k).toFixed(2), s: rm(staffSalary(k)) })}</p>` : ''}
   </div>
+  <div class="card stack-xs"><label class="row toggle-row"><span><b>${t('adminAccess')}</b><br><span class="small muted">${t('adminAccessSub')}</span></span><input type="checkbox" class="switch" data-teamadmin="${k}" ${staffAdmin(k) ? 'checked' : ''}></label>
+    ${adminByText(k) ? `<p class="small muted">${adminByText(k)}</p>` : ''}<p class="small muted">${t('adminNote')}</p></div>
   <div class="card flat" style="padding:4px 16px">${statrow(t('canClaim'), kind === 'staff' ? t('claimsStaff') : t('claimsFree'))}</div>
   <p class="small muted">${t('typeNote')}</p>
   <h2 class="h2">${t('tClaims')}</h2>
@@ -2474,7 +2507,7 @@ function vTMe() {
   const link = 'webcal://www.appt4u.com/feed/joanne-demo.ics';
   const body = `<h1 class="h1">${t('tabProfile')}</h1>
   <div class="card stack-sm"><div class="row-start">${mark('J')}<div><p class="strong">Joanne</p><p class="small muted">${THER.joanne.title[lang]} · Lumière</p><p class="small"><span class="pill gold">${t('kind_' + staffKind('joanne'))}</span> <span class="muted">${t('staffId', { id: STAFF.joanne.id })}</span></p></div></div>
-    <p class="small muted">${t('staffAccess')}</p><p class="note gold">${icon('users', 16)}<span>${t('noContactStaff')}</span></p></div>
+    <p class="small muted">${t('staffAccess')}</p><p class="note gold">${icon('users', 16)}<span>${staffAdmin(ME) ? t('adminYou') : t('noContactStaff')}</span></p></div>
   <div class="card stack-xs"><p class="strong">${t('remSet')}</p>
     <label class="row toggle-row"><span>${t('rem2h')}</span><input type="checkbox" class="switch" data-tnotif="rem" ${S.tNotif.rem ? 'checked' : ''}></label>
     <label class="row toggle-row"><span>${t('runSheet')}</span><input type="checkbox" class="switch" data-tnotif="run" ${S.tNotif.run ? 'checked' : ''}></label>
@@ -2525,7 +2558,7 @@ const ROUTES = [
   [/^\/m\/book(?:\/\w+)?$/, () => redirect('/m/home')],
   [/^\/m\/service\/(\w+)$/, id => { const s = svc(id); if (!s) return vNotFound(); draft = { biz: s.biz, ids: [id], therapist: 'any', day: today0().toISOString(), time: null, pay: null }; return redirect('/m/time'); }],
   [/^\/m\/bookings(?:\/(\w+))?$/, vBookings], [/^\/m\/wallet(?:\/(\w+))?(?:\/(\w+))?$/, vWallet], [/^\/m\/me$/, vMe], [/^\/m\/skin$/, vSkin], [/^\/m\/aftercare$/, vAftercare],
-  [/^\/a\/today$/, vAToday], [/^\/a\/diary(?:\/([\d-]+))?$/, vADiary], [/^\/a\/members(?:\/(\w+))?$/, vAMembers], [/^\/a\/member\/(\w+)$/, vAMember], [/^\/a\/member\/(\w+)\/edit$/, vAMemberEdit], [/^\/a\/member\/(\w+)\/records$/, vAMemberRecords], [/^\/t\/client\/(\w+)$/, vTClient],
+  [/^\/a\/today$/, vAToday], [/^\/a\/diary(?:\/([\d-]+))?$/, vADiary], [/^\/a\/members(?:\/(\w+))?$/, vAMembers], [/^\/a\/member\/(\w+)$/, vAMember], [/^\/a\/member\/(\w+)\/edit$/, vAMemberEdit], [/^\/a\/member\/(\w+)\/records$/, vAMemberRecords], [/^\/t\/client\/(\w+)$/, vTClient], [/^\/t\/client\/(\w+)\/edit$/, id => staffAdmin(ME) ? vAMemberEdit(id, '/t/client/' + id) : redirect('/t/client/' + id)],
   [/^\/a\/counter(?:\/(\w+))?$/, vACounter], [/^\/a\/sale$/, vASaleDone], [/^\/a\/reports$/, vAReports], [/^\/a\/more$/, vAMore],
   [/^\/a\/commission$/, vACommission], [/^\/a\/timing$/, vATiming], [/^\/a\/claims$/, vAClaims], [/^\/a\/team$/, vATeam], [/^\/a\/team\/(\w+)$/, vATeamMember], [/^\/a\/invoices(?:\/(\w+))?$/, vAInvoices], [/^\/a\/invoice\/new$/, () => vAInvoiceEdit(null)], [/^\/a\/invoice\/(\w+)\/edit$/, vAInvoiceEdit], [/^\/a\/invoice\/(\w+)$/, vAInvoice], [/^\/a\/promos$/, vAPromos], [/^\/a\/settings$/, vASettings],
   [/^\/t\/today(?:\/(\d+))?$/, vTToday], [/^\/t\/earnings$/, vTEarnings], [/^\/t\/me$/, vTMe], [/^\/t\/claims$/, vTClaims], [/^\/t\/claim\/exp$/, vTClaimExp], [/^\/t\/claim\/ot$/, vTClaimOT],
@@ -2779,7 +2812,7 @@ const ACT = {
     const id = el.dataset.id, v = k => (($('#me-' + k) || {}).value || '');
     const c = { name: v('name') }; CONTACT_KEYS.forEach(k => { c[k] = v(k); });
     if (!c.name.trim()) { toast(t('needName')); return; }
-    if (setMemberContact(id, c)) { go('/a/member/' + id); toast(t('memberSaved')); }
+    if (setMemberContact(id, c)) { go(el.dataset.back || '/a/member/' + id); toast(t('memberSaved')); }
   },
   clCat: el => { cl.cat = el.dataset.k; render(); },
   clSubmit: () => {
@@ -2903,6 +2936,7 @@ if (MODE === 'app') document.addEventListener('change', e => {
   }
   else if (el.dataset && el.dataset.notif) { S.notif[el.dataset.notif] = el.checked; save(); }
   else if (el.dataset && el.dataset.tnotif) { S.tNotif[el.dataset.tnotif] = el.checked; save(); }
+  else if (el.dataset && el.dataset.teamadmin) { const k = el.dataset.teamadmin; if (setStaffAdmin(k, el.checked, { name: 'Michelle' })) { render(); toast(t(el.checked ? 'adminOn' : 'adminOff', { n: staffName(k) })); } }
 });
 if (MODE === 'app') document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closeSheet();
@@ -2932,6 +2966,7 @@ window.A4U = {
   esc, icon, logo, rm, hm, pad, fDate, fFull, fDay, fMonth, fMon, today0, addDays, sameDay, isoDay, fromIsoDay, initials, masked, hash, DAY,
   BIZS, biz, SERVICES, svc, PRODUCTS, product, MEMBERS, member, THER, STAFF, staffName, staffKind, staffRole, staffSalary, hourlyRate, canOT,
   todayList, findAppt, recLog, cancelAppt, stOf, logOf, minsDiff, startLateOf, timingData, TM, roomName,
+  staffAdmin, setStaffAdmin, adminByText,
   visitsOf, visitCard, recordFormHtml, commentFormHtml, saveRecordFromForm, saveCommentFromForm, recordsSection,
   meilingBalance, activePk, pkgLeft, pkgName, storedOf, mContact, setMemberContact, contactLinks, CONTACT_KEYS,
   invTotals, invStatus, invCust, invLineName, BIZ_INFO, INV_PILL, CL_PILL,

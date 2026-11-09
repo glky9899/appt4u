@@ -468,10 +468,11 @@ function pTeam() {
     { label: t('salaryL'), num: true, z: MONEY, x: k => A.canOT(k) ? A.staffSalary(k) : '', html: k => A.canOT(k) ? `<input class="field" style="width:110px;text-align:right" inputmode="numeric" data-team="salary" data-k="${k}" value="${A.staffSalary(k)}">` : `<span class="muted">${t('ad_salaryNA')}</span>` },
     { label: t('ad_hourly'), num: true, z: MONEY, x: k => A.canOT(k) ? A.hourlyRate(k) : '', html: k => A.canOT(k) ? rm(A.hourlyRate(k), 2) : '—' },
     { label: t('canClaim'), x: k => A.canOT(k) ? t('claimsStaff') : t('claimsFree') },
+    { label: t('adminAccess'), x: k => A.staffAdmin(k) ? t('yesW') : t('noW'), html: k => `<label class="row-start gap8" title="${t('adminAccessSub')}"><input type="checkbox" class="switch" data-team="admin" data-k="${k}" ${A.staffAdmin(k) ? 'checked' : ''}>${A.adminByText(k) ? `<span class="sub">${A.adminByText(k)}</span>` : ''}</label>` },
     { label: t('toApprove'), num: true, x: pend, html: k => pend(k) ? pill('amber', pend(k)) : '0' },
   ];
   return head(t('team'), t('teamSub')) + dt('team', { cols, rows: keys, file: `appt4u-team-${stamp()}.xlsx`, sheet: t('team') })
-    + `<p class="note gold">${icon('receipt', 16)}<span>${t('typeNote')}</span></p>`;
+    + `<p class="note gold">${icon('receipt', 16)}<span>${t('typeNote')}</span></p><p class="note gold">${icon('users', 16)}<span>${t('adminAccess')}: ${t('adminAccessSub')} ${t('adminNote')}</span></p>`;
 }
 
 /* ------------------------------------------------------------------ commission statements */
@@ -716,6 +717,7 @@ document.addEventListener('change', e => {
     ED.items.push({ ref, label: '', qty: 1, price: it ? it.price : 0 }); render(); return;
   }
   if (el.id === 'impFile') { const f = el.files && el.files[0]; el.value = ''; if (f) importInvoices(f); return; }
+  if (el.dataset.team === 'admin') { const k = el.dataset.k; if (A.setStaffAdmin(k, el.checked, OWNER)) { render(); toast(t(el.checked ? 'adminOn' : 'adminOff', { n: A.staffName(k) })); } return; }
   if (el.dataset.team) {
     const k = el.dataset.k, s = S(); s.team[k] = Object.assign(s.team[k] || {}, {});
     if (el.dataset.team === 'kind') s.team[k].kind = el.value === 'staff' ? 'staff' : 'free';
