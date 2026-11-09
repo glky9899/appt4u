@@ -1,5 +1,5 @@
 /* appt4u service worker: network first, cached copy when offline. */
-const CACHE = 'appt4u-v12';
+const CACHE = 'appt4u-v13';
 const SHELL = ['./', './index.html', './styles.css', './app.js', './manifest.webmanifest', './icons/icon-192.png', './icons/icon-512.png', './icons/apple-touch-icon.png', './icons/favicon-64.png', './icons/logo.png'];
 
 self.addEventListener('install', e => {
@@ -27,4 +27,14 @@ self.addEventListener('fetch', e => {
       })
       .catch(() => caches.match(req).then(hit => hit || (req.mode === 'navigate' ? caches.match('./index.html') : undefined)))
   );
+});
+
+/* tapping a reminder (for example a member's birthday) opens the page it points to */
+self.addEventListener('notificationclick', e => {
+  e.notification.close();
+  const url = (e.notification.data && e.notification.data.url) || './';
+  e.waitUntil(self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then(list => {
+    for (const c of list) { if ('focus' in c) { if ('navigate' in c) c.navigate(url).catch(() => {}); return c.focus(); } }
+    return self.clients.openWindow(url);
+  }));
 });

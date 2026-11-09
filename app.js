@@ -462,6 +462,53 @@ const STR = {
   adminNote: ['Turn on Admin access only for people you trust with client contact details, such as the front desk. Everyone else sees treatment records but not contacts.', '只为可信任的人（例如前台）开启管理员权限。其他人能看到护理记录，但看不到联系方式。'],
   yesW: ['Yes', '是'],
   noW: ['No', '否'],
+  f_bday: ['Birthday', '生日'],
+  bdays: ['Birthdays', '会员生日'],
+  bdaySub: ['Send a wish or a birthday offer before the day.', '在生日前发送祝福或生日优惠。'],
+  bdayToday: ['{n}’s birthday is today', '今天是 {n} 的生日'],
+  bdayTomorrow: ['{n}’s birthday is tomorrow', '明天是 {n} 的生日'],
+  bdayIn: ['{n}’s birthday is in {d} days', '{n} 的生日还有 {d} 天'],
+  bdayWeek: ['Birthdays in the next 7 days: {n}', '未来 7 天内生日：{n} 位'],
+  bd_thisWeek: ['Next 7 days', '未来 7 天'],
+  bd_month: ['Next 30 days', '未来 30 天'],
+  bd_later: ['Later this year', '之后'],
+  bdMissing: ['No birthday saved yet', '尚未填写生日'],
+  turns: ['turns {n}', '{n} 岁'],
+  inDays: ['in {n} days', '{n} 天后'],
+  tomorrowW: ['Tomorrow', '明天'],
+  sendWish: ['Send wish', '发送祝福'],
+  bdayOffer: ['Birthday offer', '生日优惠'],
+  wished: ['Wished {d}', '已于 {d} 祝福'],
+  offerSent: ['Offer sent {d}', '已于 {d} 送出优惠'],
+  of_pct15: ['15% off any treatment', '任何护理 85 折'],
+  of_rm50: ['RM50 off a treatment', '护理立减 RM50'],
+  of_addon: ['Free add-on: LED or scalp massage', '免费加购：LED 或头皮按摩'],
+  of_custom: ['Write my own offer', '自定义优惠'],
+  offerPh: ['e.g. Free brow shaping with any facial', '例如：任何面部护理送修眉'],
+  needOffer: ['Write the offer first', '请先填写优惠内容'],
+  bdayMsg: ['Happy birthday, {n}! 🎂 From all of us at {b}: {o}, valid until {d}. See you soon!', '{n}，生日快乐！🎂 {b} 全体同仁送上：{o}，有效期至 {d}。期待见到你！'],
+  bdayWishMsg: ['Happy birthday, {n}! 🎂 Wishing you a wonderful year ahead. From all of us at {b}.', '{n}，生日快乐！🎂 祝你新的一岁美丽顺心。{b} 全体同仁敬上。'],
+  sendInApp: ['Send in the app', '发到会员 App'],
+  offerDone: ['Birthday offer sent to {n}', '已向 {n} 送出生日优惠'],
+  wishDone: ['Birthday wish sent to {n}', '已向 {n} 发送生日祝福'],
+  noBdays: ['No birthdays coming up', '近期没有会员生日'],
+  bdayRem: ['Birthday reminders', '生日提醒'],
+  bdayRemDay: ['On the birthday', '生日当天'],
+  bdayRemBefore: ['3 days before', '提前 3 天'],
+  notifAllow: ['Allow notifications on this device', '允许此设备接收通知'],
+  notifOn: ['Notifications are on for this device', '此设备已开启通知'],
+  notifBlocked: ['Notifications are blocked. Turn them on in your browser or phone settings.', '通知已被阻止，请在浏览器或手机设置中开启。'],
+  notifNA: ['This browser can’t show notifications. On iPhone, add appt4u to your Home Screen first.', '此浏览器无法显示通知。iPhone 请先将 appt4u 添加到主屏幕。'],
+  notifTest: ['Send a test reminder', '发送测试提醒'],
+  notifNote: ['Reminders go to the owner and people with admin access, when they open appt4u on that day.', '提醒会在当天打开 appt4u 时发送给老板与拥有管理员权限的人。'],
+  pushTitle: ['Birthday reminder', '生日提醒'],
+  bdayPushTail: [' Send a wish or a birthday offer.', ' 记得发送祝福或生日优惠。'],
+  bdayVoucher: ['Birthday gift: {o}', '生日礼：{o}'],
+  remOnDone: ['Saved', '已保存'],
+  bd_when: ['When', '时间'],
+  bd_age: ['Turning', '岁数'],
+  bd_todo: ['To do', '待处理'],
+  bd_sentYear: ['Offers sent this year', '今年已送优惠'],
   notFound: ['Page not found', '找不到页面'], goHome: ['Go home', '返回首页'], demoOnly: ['Available in the full version', '完整版提供此功能'],
 };
 /* Bahasa Melayu. Any key missing here falls back to English. */
@@ -909,6 +956,53 @@ const STR_MS = {
   adminNote: 'Hidupkan Akses admin hanya untuk orang yang anda percayai dengan butiran hubungan pelanggan, seperti kaunter depan. Orang lain boleh melihat rekod rawatan tetapi bukan butiran hubungan.',
   yesW: 'Ya',
   noW: 'Tidak',
+  f_bday: 'Hari jadi',
+  bdays: 'Hari jadi ahli',
+  bdaySub: 'Hantar ucapan atau tawaran hari jadi sebelum harinya.',
+  bdayToday: 'Hari ini hari jadi {n}',
+  bdayTomorrow: 'Esok hari jadi {n}',
+  bdayIn: 'Hari jadi {n} dalam {d} hari',
+  bdayWeek: 'Hari jadi dalam 7 hari: {n}',
+  bd_thisWeek: '7 hari akan datang',
+  bd_month: '30 hari akan datang',
+  bd_later: 'Kemudian',
+  bdMissing: 'Hari jadi belum disimpan',
+  turns: 'genap {n} tahun',
+  inDays: 'dalam {n} hari',
+  tomorrowW: 'Esok',
+  sendWish: 'Hantar ucapan',
+  bdayOffer: 'Tawaran hari jadi',
+  wished: 'Diucapkan {d}',
+  offerSent: 'Tawaran dihantar {d}',
+  of_pct15: 'Diskaun 15% untuk sebarang rawatan',
+  of_rm50: 'Potongan RM50 untuk rawatan',
+  of_addon: 'Tambahan percuma: LED atau urutan kulit kepala',
+  of_custom: 'Tulis tawaran sendiri',
+  offerPh: 'cth. Bentuk kening percuma dengan sebarang rawatan muka',
+  needOffer: 'Tulis tawaran dahulu',
+  bdayMsg: 'Selamat hari jadi, {n}! 🎂 Daripada kami semua di {b}: {o}, sah hingga {d}. Jumpa lagi!',
+  bdayWishMsg: 'Selamat hari jadi, {n}! 🎂 Semoga tahun ini indah untuk anda. Daripada kami semua di {b}.',
+  sendInApp: 'Hantar dalam aplikasi',
+  offerDone: 'Tawaran hari jadi dihantar kepada {n}',
+  wishDone: 'Ucapan hari jadi dihantar kepada {n}',
+  noBdays: 'Tiada hari jadi akan datang',
+  bdayRem: 'Peringatan hari jadi',
+  bdayRemDay: 'Pada hari jadi',
+  bdayRemBefore: '3 hari sebelum',
+  notifAllow: 'Benarkan pemberitahuan pada peranti ini',
+  notifOn: 'Pemberitahuan dihidupkan untuk peranti ini',
+  notifBlocked: 'Pemberitahuan disekat. Hidupkan dalam tetapan pelayar atau telefon.',
+  notifNA: 'Pelayar ini tidak boleh memaparkan pemberitahuan. Di iPhone, tambah appt4u ke Skrin Utama dahulu.',
+  notifTest: 'Hantar peringatan ujian',
+  notifNote: 'Peringatan dihantar kepada pemilik dan orang yang mempunyai akses admin apabila mereka membuka appt4u pada hari itu.',
+  pushTitle: 'Peringatan hari jadi',
+  bdayPushTail: ' Hantar ucapan atau tawaran hari jadi.',
+  bdayVoucher: 'Hadiah hari jadi: {o}',
+  remOnDone: 'Disimpan',
+  bd_when: 'Bila',
+  bd_age: 'Umur',
+  bd_todo: 'Belum',
+  bd_sentYear: 'Tawaran dihantar tahun ini',
   notFound: 'Halaman tidak ditemui', goHome: 'Ke halaman utama', demoOnly: 'Tersedia dalam versi penuh',
 };
 function t(k, v) {
@@ -1133,13 +1227,17 @@ const MEMBER_CONTACT = {
   joyce: { phone: '+60 16-000 0111', email: 'joyce.lee@example.com', wechat: 'joycelee_', fb: '', ig: '' },
   emily: { phone: '+60 12-000 0112', email: '', wechat: 'emilytan', fb: '', ig: '' },
 };
-const CONTACT_KEYS = ['phone', 'email', 'wechat', 'fb', 'ig'];
+/* sample birthdays, placed around today so the demo always has some coming up */
+const BDAY_SEED = { priya: [0, 1990], grace: [2, 1988], meiling: [5, 1992], siti: [12, 1995], joyce: [23, 1999], lina: [-30, 1991], jessica: [60, 1987], rachel: [95, 1993], nur: [140, 2000], farah: [-120, 1989], kavitha: [200, 1985] };
+Object.keys(BDAY_SEED).forEach(id => { const [dd, y] = BDAY_SEED[id], x = addDays(today0(), dd); MEMBER_CONTACT[id].bday = `${y}-${pad(x.getMonth() + 1)}-${pad(x.getDate())}`; });
+const CONTACT_KEYS = ['phone', 'email', 'wechat', 'fb', 'ig', 'bday'];
 function mContact(id) { const m = member(id); return Object.assign({ name: m ? m.name0 : '' }, MEMBER_CONTACT[id] || {}, (S && S.mEdit && S.mEdit[id]) || {}); }
 function applyMemberEdits() { MEMBERS.forEach(m => { const e = S && S.mEdit && S.mEdit[m.id]; m.name = e && e.name ? e.name : m.name0; }); }
 function setMemberContact(id, c) {
   if (!member(id)) return false;
   const clean = {}; ['name'].concat(CONTACT_KEYS).forEach(k => { clean[k] = String(c[k] == null ? '' : c[k]).trim().slice(0, 120); });
   if (!clean.name) return false;
+  if (clean.bday && !/^\d{4}-\d{2}-\d{2}$/.test(clean.bday)) clean.bday = '';
   S.mEdit = S.mEdit || {}; S.mEdit[id] = clean; applyMemberEdits(); save(); return true;
 }
 const contactLinks = c => {
@@ -1299,6 +1397,7 @@ function loadState() {
   if (!S.mig4) { const b1 = S.bookings.find(b => b.id === 'b1'); if (b1) b1.staffNew = true; S.mig4 = true; }
   S.mEdit = S.mEdit || {};
   if (!S.visits) S.visits = seedVisits();
+  S.bday = S.bday || {}; S.bdayRem = S.bdayRem || { day: true, before: true }; S.bdayNotified = S.bdayNotified || {};
   applyMemberEdits();
 }
 loadState();
@@ -1617,7 +1716,7 @@ function vWalletStore(id, tab) {
     const offers = id === 'lumiere' ? offerCard('o1', t('offer1'), t('offer1Sub', { d: fDate(addDays(today0(), 21)) }), 'gift') + offerCard('o2', t('offer2'), t('offer2Sub'), 'sparkle') : '';
     const mine = S.vouchers.filter(v => v.biz === id);
     content = `${offers ? `<h2 class="h2">${t('offersT')}</h2>${offers}` : ''}
-    ${mine.length ? `<h2 class="h2">${t('myVouchers')}</h2>${mine.map(v => `<div class="card gold stack-xs"><p class="offer-t">${t(v.key)}</p><p class="small muted">${t('voucherUse')}</p></div>`).join('')}` : ''}
+    ${mine.length ? `<h2 class="h2">${t('myVouchers')}</h2>${mine.map(v => `<div class="card gold stack-xs"><p class="offer-t">${v.text ? esc(v.text) : t(v.key)}</p><p class="small muted">${v.until ? t('validUntil', { d: fFull(v.until) }) + ' · ' : ''}${t('voucherUse')}</p></div>`).join('')}` : ''}
     ${!offers && !mine.length ? empty('noOffers') : ''}`;
   }
   const others = walletStores().some(b => b.id !== id);
@@ -1718,7 +1817,7 @@ function vAToday() {
     ${kpi(t('kRoom'), '78%', delta('5 pts', 'up'))}
   </div>
   <p class="small muted">${t('vsLastWeek')} ${t('sample')}.</p>
-  <section class="card stack-xs"><h2 class="h2">${t('needs')}</h2>${att.map(([k, href]) => `<a class="att" href="#${href}"><span>${t(k)}</span>${icon('chevR', 16)}</a>`).join('')}${(items.find(i => i.id === 'a8') || {}).status === 'todo' ? `<a class="att" href="#/a/timing"><span>${t('att5', { n: 'Farah', t: '16:00', m: 17 })}</span>${icon('chevR', 16)}</a>` : ''}${(() => { const n = S.claims.filter(c => c.status === 'pending').length; return n ? `<a class="att" href="#/a/claims"><span>${t('att6', { n })}</span>${icon('chevR', 16)}</a>` : ''; })()}${(() => { const n = S.invoices.filter(x => invStatus(x) === 'overdue').length; return n ? `<a class="att" href="#/a/invoices/issued"><span>${t('att7', { n })}</span>${icon('chevR', 16)}</a>` : ''; })()}</section>
+  <section class="card stack-xs"><h2 class="h2">${t('needs')}</h2>${bdayAttItems('#/a/birthdays').map(([h, txt]) => `<a class="att" href="${h}"><span>${esc(txt)}</span>${icon('chevR', 16)}</a>`).join('')}${att.map(([k, href]) => `<a class="att" href="#${href}"><span>${t(k)}</span>${icon('chevR', 16)}</a>`).join('')}${(items.find(i => i.id === 'a8') || {}).status === 'todo' ? `<a class="att" href="#/a/timing"><span>${t('att5', { n: 'Farah', t: '16:00', m: 17 })}</span>${icon('chevR', 16)}</a>` : ''}${(() => { const n = S.claims.filter(c => c.status === 'pending').length; return n ? `<a class="att" href="#/a/claims"><span>${t('att6', { n })}</span>${icon('chevR', 16)}</a>` : ''; })()}${(() => { const n = S.invoices.filter(x => invStatus(x) === 'overdue').length; return n ? `<a class="att" href="#/a/invoices/issued"><span>${t('att7', { n })}</span>${icon('chevR', 16)}</a>` : ''; })()}</section>
   <h2 class="h2">${t('appts')}</h2>
   ${items.map(adminRow).join('')}`;
   return page({ tabs: 'a', active: '/a/today', body });
@@ -1865,13 +1964,126 @@ function recordsSection(mid, a, full) {
     ${vs.length ? (full ? vs : vs.slice(0, 1)).map((v, i) => visitCard(v, a, i === 0)).join('') : `<p class="muted">${t('tr_none')}</p>`}
     <p class="small muted">${t('tr_who')}</p>`;
 }
+const bdayOf = id => (mContact(id).bday || '');
+const staffNameOrMember = id => (member(id) || { name: '' }).name;
+function nextBday(iso) {
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || ''); if (!m) return null;
+  const t0 = today0(); let n = new Date(t0.getFullYear(), +m[2] - 1, +m[3]);
+  if (n < t0) n = new Date(t0.getFullYear() + 1, +m[2] - 1, +m[3]);
+  return n;
+}
+const daysToBday = iso => { const n = nextBday(iso); return n ? Math.round((n - today0()) / DAY) : null; };
+const ageTurning = iso => { const n = nextBday(iso), y = Number((iso || '').slice(0, 4)); return n && y > 1900 ? n.getFullYear() - y : null; };
+const bdayKey = mid => { const n = nextBday(bdayOf(mid)); return n ? mid + '@' + n.getFullYear() : ''; };
+const bdayStatus = mid => (S.bday && S.bday[bdayKey(mid)]) || {};
+function bdayList(maxDays) {
+  return MEMBERS.map(m => { const iso = bdayOf(m.id), d = daysToBday(iso); return { m, iso, d, next: nextBday(iso), age: ageTurning(iso), st: bdayStatus(m.id) }; })
+    .filter(x => x.iso && (maxDays == null || x.d <= maxDays)).sort((a, b) => a.d - b.d);
+}
+const bdayPending = days => bdayList(days).filter(x => !x.st.wished && !x.st.offer);
+const bdayWhen = d => d === 0 ? t('today') : d === 1 ? t('tomorrowW') : t('inDays', { n: d });
+const bdayLine = x => x.d === 0 ? t('bdayToday', { n: x.m.name }) : x.d === 1 ? t('bdayTomorrow', { n: x.m.name }) : t('bdayIn', { n: x.m.name, d: x.d });
+/* alert lines for "Needs attention" on the phone and desktop dashboards */
+function bdayAttItems(href) {
+  const list = bdayPending(7), out = list.filter(x => x.d <= 1).map(x => [href, '🎂 ' + bdayLine(x)]);
+  const rest = list.filter(x => x.d > 1).length;
+  if (rest) out.push([href, '🎂 ' + t('bdayWeek', { n: rest })]);
+  return out;
+}
+/* device notifications (local): shown when the owner or an admin opens appt4u */
+const notifState = () => !('Notification' in window) ? 'na' : Notification.permission;
+async function askNotify() {
+  if (!('Notification' in window)) return 'na';
+  if (Notification.permission !== 'default') return Notification.permission;
+  try { return await Notification.requestPermission(); } catch (e) { return 'denied'; }
+}
+function notifyLocal(title, body, url, tag) {
+  if (notifState() !== 'granted') return false;
+  const opts = { body, icon: '/icons/icon-192.png', badge: '/icons/icon-192.png', tag: tag || 'appt4u', data: { url } };
+  const plain = () => { try { const n = new Notification(title, opts); n.onclick = () => { window.focus(); location.href = url; n.close(); }; } catch (e) { /* this browser only allows service-worker notifications */ } };
+  if ('serviceWorker' in navigator && navigator.serviceWorker.controller) navigator.serviceWorker.ready.then(r => r.showNotification(title, opts)).catch(plain);
+  else plain();
+  return true;
+}
+function bdayAutoNotify(url) {
+  if (notifState() !== 'granted') return;
+  let sent = 0;
+  bdayPending(3).forEach(x => {
+    const kind = x.d === 0 ? 'day' : 'before';
+    if (!S.bdayRem[kind]) return;
+    const key = `${x.m.id}@${x.next.getFullYear()}-${kind}`;
+    if (S.bdayNotified[key]) return;
+    S.bdayNotified[key] = new Date().toISOString(); sent++;
+    notifyLocal(t('pushTitle'), bdayLine(x) + '.' + t('bdayPushTail'), url, 'bday-' + key);
+  });
+  if (sent) save();
+}
+function bdayRemCard(a) {
+  const st = notifState();
+  return `<div class="card stack-xs"><p class="strong">${icon('bell', 16)} ${t('bdayRem')}</p>
+    <label class="row toggle-row"><span>${t('bdayRemDay')}</span><input type="checkbox" class="switch" data-bdrem="day" ${S.bdayRem.day ? 'checked' : ''}></label>
+    <label class="row toggle-row"><span>${t('bdayRemBefore')}</span><input type="checkbox" class="switch" data-bdrem="before" ${S.bdayRem.before ? 'checked' : ''}></label>
+    ${st === 'granted' ? `<p class="note sage">${icon('check', 16)}<span>${t('notifOn')}</span></p><button class="btn btn-sm btn-outline" data-${a}="bdTest">${t('notifTest')}</button>`
+      : st === 'denied' ? `<p class="note rose"><span>${t('notifBlocked')}</span></p>`
+      : st === 'na' ? `<p class="small muted">${t('notifNA')}</p>`
+      : `<button class="btn btn-sm btn-primary" data-${a}="bdAllow">${icon('bell', 16)} ${t('notifAllow')}</button>`}
+    <p class="small muted">${t('notifNote')}</p></div>`;
+}
+const setBdRem = (k, on) => { S.bdayRem[k] = !!on; save(); };
+let bdDraft = { mid: null, opt: 'pct15', custom: '' };
+const BIZ_SHORT = 'Lumière Skin Studio';
+function bdOfferText() { return bdDraft.opt === 'custom' ? (bdDraft.custom || '').trim() : t('of_' + bdDraft.opt); }
+function bdUntil(mid) { const n = nextBday(bdayOf(mid)); return n ? new Date(n.getFullYear(), n.getMonth() + 1, 0) : addDays(today0(), 30); }
+function bdMessage(mid) { const m = member(mid); return t('bdayMsg', { n: firstName(m ? m.name : ''), b: BIZ_SHORT, o: bdOfferText() || '…', d: fFull(bdUntil(mid)) }); }
+function bdWaLink(mid, text) { const ln = contactLinks(mContact(mid)); return ln.wa ? ln.wa + '?text=' + encodeURIComponent(text) : ''; }
+function bdOfferHtml(mid, a) {
+  const m = member(mid); if (!m) return '';
+  if (bdDraft.mid !== mid) bdDraft = { mid, opt: 'pct15', custom: '' };
+  const n = nextBday(bdayOf(mid)), age = ageTurning(bdayOf(mid));
+  return `<h2 class="h2">${t('bdayOffer')} · ${esc(m.name)}</h2><p class="small muted">${n ? fFull(n) + ' · ' + bdayWhen(daysToBday(bdayOf(mid))) : ''}${age ? ' · ' + t('turns', { n: age }) : ''}</p>
+    <div class="stack-xs">${['pct15', 'rm50', 'addon', 'custom'].map(k => `<button class="opt ${bdDraft.opt === k ? 'on' : ''}" data-${a}="bdOpt" data-k="${k}" data-id="${mid}"><span class="radio"></span><span>${t('of_' + k)}</span></button>`).join('')}</div>
+    ${bdDraft.opt === 'custom' ? `<textarea class="field" id="bd-custom" rows="2" placeholder="${t('offerPh')}">${esc(bdDraft.custom)}</textarea>` : ''}
+    <p class="label">${t('msgPreview')}</p><div class="msg" id="bd-preview">${esc(bdMessage(mid))}</div>
+    <div class="row-start gap8"><button class="btn btn-primary grow" data-${a}="bdSend" data-id="${mid}" data-via="app">${t('sendInApp')}</button>${bdWaLink(mid, 'x') ? `<button class="btn btn-outline grow" data-${a}="bdSend" data-id="${mid}" data-via="wa">${icon('phone', 16)} WhatsApp</button>` : ''}</div>`;
+}
+const bdSetOpt = k => { bdDraft.opt = ['pct15', 'rm50', 'addon', 'custom'].includes(k) ? k : 'pct15'; };
+function bdCustom(v) { bdDraft.custom = v; const p = document.getElementById('bd-preview'); if (p && bdDraft.mid) p.textContent = bdMessage(bdDraft.mid); }
+/* returns { err } or { ok, wa } — wa is a WhatsApp link with the message filled in */
+function bdSendDo(mid, via, who) {
+  const offer = bdOfferText(); if (!offer) return { err: 'needOffer' };
+  const key = bdayKey(mid); if (!key) return { err: 'needOffer' };
+  const until = bdUntil(mid), msg = bdMessage(mid);
+  S.bday[key] = Object.assign(S.bday[key] || {}, { offer: { at: new Date().toISOString(), by: who.name, text: offer, until: until.toISOString(), via } });
+  if (mid === 'meiling') S.vouchers.push({ id: 'bd' + Date.now().toString(36), biz: 'lumiere', text: t('bdayVoucher', { o: offer }), until: until.toISOString() });
+  save(); return { ok: true, wa: via === 'wa' ? bdWaLink(mid, msg) : '' };
+}
+function bdWishDo(mid, who) {
+  const key = bdayKey(mid), m = member(mid); if (!key || !m) return '';
+  S.bday[key] = Object.assign(S.bday[key] || {}, { wished: { at: new Date().toISOString(), by: who.name } }); save();
+  return bdWaLink(mid, t('bdayWishMsg', { n: firstName(m.name), b: BIZ_SHORT }));
+}
+function bdayRow(x, a, memberHref) {
+  const m = x.m, st = x.st;
+  return `<div class="card stack-sm ${x.d === 0 ? 'gold' : ''}"><div class="row" style="align-items:flex-start"><a class="row-start" href="${memberHref}${m.id}"><span class="avatar">${x.d <= 7 ? '🎂' : initials(m.name)}</span><span><b>${esc(m.name)}</b><span class="small muted block">${fDate(x.next)} · ${bdayWhen(x.d)}${x.age ? ' · ' + t('turns', { n: x.age }) : ''}</span></span></a>${m.tier === 'gold' ? `<span class="pill gold">${t('goldMember')}</span>` : ''}</div>
+    ${st.wished || st.offer ? `<div class="flags">${st.wished ? `<span class="pill sage">${t('wished', { d: fDate(st.wished.at) })} · ${esc(st.wished.by)}</span>` : ''}${st.offer ? `<span class="pill sage">${t('offerSent', { d: fDate(st.offer.at) })} · ${esc(st.offer.by)}</span>` : ''}</div>${st.offer ? `<p class="small muted">${esc(st.offer.text)}</p>` : ''}` : ''}
+    <div class="row-start gap8 wrap"><button class="btn btn-sm btn-outline" data-${a}="bdWish" data-id="${m.id}">${t('sendWish')}</button><button class="btn btn-sm btn-primary" data-${a}="bdOffer" data-id="${m.id}">${icon('gift', 16)} ${t('bdayOffer')}</button></div></div>`;
+}
+function vABirthdays() {
+  const all = bdayList(null), wk = all.filter(x => x.d <= 7), mo = all.filter(x => x.d > 7 && x.d <= 30), later = all.filter(x => x.d > 30);
+  const missing = MEMBERS.filter(m => !bdayOf(m.id));
+  const sec = (title, list) => list.length ? `<h2 class="h2">${title}</h2>${list.map(x => bdayRow(x, 'act', '#/a/member/')).join('')}` : '';
+  return page({ back: '/a/more', title: t('bdays'), body: `<p class="muted">${t('bdaySub')}</p>${bdayRemCard('act')}
+    ${all.length ? sec(t('bd_thisWeek'), wk) + sec(t('bd_month'), mo) + sec(t('bd_later'), later) : `<p class="muted center">${t('noBdays')}</p>`}
+    ${missing.length ? `<p class="small muted">${t('bdMissing')}: ${missing.map(m => `<a href="#/a/member/${m.id}/edit" style="color:var(--primary)">${esc(m.name)}</a>`).join(', ')}</p>` : ''}
+    <p class="small muted">${t('contactPrivacy')}</p>` });
+}
 function contactCard(id, editHref) {
   const c = mContact(id), ln = contactLinks(c);
   const row = (label, val, href) => val
     ? (href ? `<a class="statrow" href="${esc(href)}" ${href.startsWith('http') ? 'target="_blank" rel="noopener"' : ''}><span>${label}</span><b style="color:var(--primary-d)">${esc(val)}</b></a>` : `<div class="statrow"><span>${label}</span><b>${esc(val)}</b></div>`)
     : `<div class="statrow"><span>${label}</span><b class="muted">—</b></div>`;
   return `<div class="card stack-sm"><div class="row"><p class="strong">${t('contactT')}</p><a class="btn btn-sm btn-outline" href="${editHref || '#/a/member/' + id + '/edit'}">${t('editInv')}</a></div>
-    <div>${row(t('f_phone'), c.phone, ln.phone)}${row(t('f_email'), c.email, ln.email)}${row(t('f_wechat'), c.wechat)}${row('Facebook', c.fb, ln.fb)}${row('Instagram', c.ig, ln.ig)}</div>
+    <div>${row(t('f_phone'), c.phone, ln.phone)}${row(t('f_email'), c.email, ln.email)}${row(t('f_wechat'), c.wechat)}${row('Facebook', c.fb, ln.fb)}${row('Instagram', c.ig, ln.ig)}${row(t('f_bday'), c.bday ? `${fFull(c.bday)}${daysToBday(c.bday) <= 30 ? ' · ' + bdayWhen(daysToBday(c.bday)) : ''}` : '')}</div>
     ${ln.wa ? `<a class="btn btn-soft btn-block" href="${ln.wa}" target="_blank" rel="noopener">${icon('phone', 16)} WhatsApp</a>` : ''}
     <p class="small muted">${t('contactPrivacy')}</p></div>`;
 }
@@ -1897,7 +2109,7 @@ function vAMemberEdit(id, back) {
   const f = (k, label, ph, type) => `<label class="stack-xs"><span class="label">${label}</span><input class="field" id="me-${k}" value="${esc(c[k] || '')}" placeholder="${ph || ''}" ${type ? `type="${type}"` : ''} autocomplete="off"></label>`;
   return page({ back, title: t('editMember'), body: `<div class="stack">
     ${f('name', t('f_name'))}${f('phone', t('f_phone'), '+60 12-000 0000', 'tel')}${f('email', t('f_email'), 'name@example.com', 'email')}
-    ${f('wechat', t('f_wechat'))}${f('fb', 'Facebook', 'facebook.com/…')}${f('ig', 'Instagram', '@…')}
+    ${f('wechat', t('f_wechat'))}${f('fb', 'Facebook', 'facebook.com/…')}${f('ig', 'Instagram', '@…')}${f('bday', t('f_bday'), '', 'date')}
     <p class="note gold">${icon('users', 16)}<span>${t('contactPrivacy')}</span></p>
     <button class="btn btn-primary btn-block" data-act="saveMember" data-id="${id}" data-back="${back}">${t('save')}</button></div>` });
 }
@@ -2362,7 +2574,7 @@ function vAInvoice(id) {
 function vAMore() {
   const body = `<h1 class="h1">${t('aMore')}</h1>
   <a class="card row" href="admin/"><span class="row-start"><span class="ic-box">${icon('grid', 20)}</span><span><span class="strong block">${t('ad_fullLink')}</span><span class="small muted">www.appt4u.com/admin</span></span></span>${icon('chevR', 18)}</a>
-  <div class="card menu">${menuLink('/a/invoices', 'doc', t('invoices'))}${menuLink('/a/claims', 'receipt', t('claimsT'), (() => { const n = S.claims.filter(c => c.status === 'pending').length; return n ? String(n) : ''; })())}${menuLink('/a/team', 'users', t('team'))}${menuLink('/a/timing', 'clock', t('tmTitle'))}${menuLink('/a/commission', 'coins', t('commission'))}${menuLink('/a/promos', 'gift', t('promotions'))}${menuLink('/a/settings', 'settings', t('settings'))}${menuLink('/a/counter', 'cash', t('recordSale'))}</div>
+  <div class="card menu">${menuLink('/a/birthdays', 'gift', t('bdays'), (() => { const n = bdayPending(7).length; return n ? '🎂 ' + n : ''; })())}${menuLink('/a/invoices', 'doc', t('invoices'))}${menuLink('/a/claims', 'receipt', t('claimsT'), (() => { const n = S.claims.filter(c => c.status === 'pending').length; return n ? String(n) : ''; })())}${menuLink('/a/team', 'users', t('team'))}${menuLink('/a/timing', 'clock', t('tmTitle'))}${menuLink('/a/commission', 'coins', t('commission'))}${menuLink('/a/promos', 'gift', t('promotions'))}${menuLink('/a/settings', 'settings', t('settings'))}${menuLink('/a/counter', 'cash', t('recordSale'))}</div>
   <div class="card menu">${menuBtn('lang', 'globe', t('language'), langName())}${menuBtn('roles', 'users', t('switchRole'))}${menuBtn('reset', 'refresh', t('resetDemo'))}${menuBtn('signout', 'logout', t('signOut'))}</div>`;
   return page({ tabs: 'a', active: '/a/more', body });
 }
@@ -2558,7 +2770,7 @@ const ROUTES = [
   [/^\/m\/book(?:\/\w+)?$/, () => redirect('/m/home')],
   [/^\/m\/service\/(\w+)$/, id => { const s = svc(id); if (!s) return vNotFound(); draft = { biz: s.biz, ids: [id], therapist: 'any', day: today0().toISOString(), time: null, pay: null }; return redirect('/m/time'); }],
   [/^\/m\/bookings(?:\/(\w+))?$/, vBookings], [/^\/m\/wallet(?:\/(\w+))?(?:\/(\w+))?$/, vWallet], [/^\/m\/me$/, vMe], [/^\/m\/skin$/, vSkin], [/^\/m\/aftercare$/, vAftercare],
-  [/^\/a\/today$/, vAToday], [/^\/a\/diary(?:\/([\d-]+))?$/, vADiary], [/^\/a\/members(?:\/(\w+))?$/, vAMembers], [/^\/a\/member\/(\w+)$/, vAMember], [/^\/a\/member\/(\w+)\/edit$/, vAMemberEdit], [/^\/a\/member\/(\w+)\/records$/, vAMemberRecords], [/^\/t\/client\/(\w+)$/, vTClient], [/^\/t\/client\/(\w+)\/edit$/, id => staffAdmin(ME) ? vAMemberEdit(id, '/t/client/' + id) : redirect('/t/client/' + id)],
+  [/^\/a\/today$/, vAToday], [/^\/a\/diary(?:\/([\d-]+))?$/, vADiary], [/^\/a\/members(?:\/(\w+))?$/, vAMembers], [/^\/a\/member\/(\w+)$/, vAMember], [/^\/a\/member\/(\w+)\/edit$/, vAMemberEdit], [/^\/a\/birthdays$/, vABirthdays], [/^\/a\/member\/(\w+)\/records$/, vAMemberRecords], [/^\/t\/client\/(\w+)$/, vTClient], [/^\/t\/client\/(\w+)\/edit$/, id => staffAdmin(ME) ? vAMemberEdit(id, '/t/client/' + id) : redirect('/t/client/' + id)],
   [/^\/a\/counter(?:\/(\w+))?$/, vACounter], [/^\/a\/sale$/, vASaleDone], [/^\/a\/reports$/, vAReports], [/^\/a\/more$/, vAMore],
   [/^\/a\/commission$/, vACommission], [/^\/a\/timing$/, vATiming], [/^\/a\/claims$/, vAClaims], [/^\/a\/team$/, vATeam], [/^\/a\/team\/(\w+)$/, vATeamMember], [/^\/a\/invoices(?:\/(\w+))?$/, vAInvoices], [/^\/a\/invoice\/new$/, () => vAInvoiceEdit(null)], [/^\/a\/invoice\/(\w+)\/edit$/, vAInvoiceEdit], [/^\/a\/invoice\/(\w+)$/, vAInvoice], [/^\/a\/promos$/, vAPromos], [/^\/a\/settings$/, vASettings],
   [/^\/t\/today(?:\/(\d+))?$/, vTToday], [/^\/t\/earnings$/, vTEarnings], [/^\/t\/me$/, vTMe], [/^\/t\/claims$/, vTClaims], [/^\/t\/claim\/exp$/, vTClaimExp], [/^\/t\/claim\/ot$/, vTClaimOT],
@@ -2582,6 +2794,7 @@ function render() {
   if (lastPath !== path) closeSheet(true);
   lastPath = path;
   renderSide();
+  if (/^\/a\//.test(path) || (/^\/t\//.test(path) && staffAdmin(ME))) bdayAutoNotify(location.pathname + '#/a/birthdays');
   const dm = path.match(/^\/m\/done\/(\w+)$/);
   if (dm && !S.calAlways && !shownCal.has(dm[1])) { shownCal.add(dm[1]); setTimeout(() => { if (route() === path) calSheet('b:' + dm[1]); }, 450); }
 }
@@ -2784,7 +2997,7 @@ const ACT = {
   refer: () => openSheet(`<h2 class="h2">${t('refer')}</h2>${shareBlock('meiling')}`),
   copy: el => copyText(el.dataset.v),
   reset: () => openSheet(`<h2 class="h2">${t('resetQ')}</h2><p class="muted">${t('resetInfo')}</p><button class="btn btn-primary btn-block" data-act="doReset">${t('resetDemo')}</button><button class="btn btn-ghost btn-block" data-act="closeSheet">${t('notNow')}</button>`),
-  doReset: () => { LS.del(KEY); S = seed(); S.mEdit = {}; S.visits = seedVisits(); applyMemberEdits(); S.tLog = {}; S.team = {}; S.claims = seedClaims(); S.invoices = seedInvoices(); S.invSeq = 41; cl = null; ot = null; inv = null; draft = null; sel = null; hCat = 'all'; hQuery = ''; cdraft = { member: 'meiling', item: 'p-hydra6', method: 'card', receipt: '', by: 'sara' }; shownCal.clear(); closeSheet(true); go('/welcome'); },
+  doReset: () => { LS.del(KEY); S = seed(); S.bday = {}; S.bdayRem = { day: true, before: true }; S.bdayNotified = {}; S.mEdit = {}; S.visits = seedVisits(); applyMemberEdits(); S.tLog = {}; S.team = {}; S.claims = seedClaims(); S.invoices = seedInvoices(); S.invSeq = 41; cl = null; ot = null; inv = null; draft = null; sel = null; hCat = 'all'; hQuery = ''; cdraft = { member: 'meiling', item: 'p-hydra6', method: 'card', receipt: '', by: 'sara' }; shownCal.clear(); closeSheet(true); go('/welcome'); },
   signout: () => { S.signedIn = false; S.role = null; save(); go('/welcome'); },
   checkin: el => { recLog(el.dataset.id, { arr: new Date().toISOString() }); save(); render(); toast(t('arrivedSt')); },
   cby: el => { cdraft.by = el.dataset.k; render(); },
@@ -2808,6 +3021,12 @@ const ACT = {
   },
   rp: el => { RP[el.dataset.k] = el.dataset.v; render(); },
   approve: el => { const id = el.dataset.id; S.approvals[id] = S.approvals[id] ? 'paid' : 'approved'; save(); render(); },
+  bdAllow: async () => { const r = await askNotify(); render(); if (r === 'granted') bdayAutoNotify(location.pathname + '#/a/birthdays'); },
+  bdTest: () => { const x = bdayList(30)[0]; notifyLocal(t('pushTitle'), (x ? bdayLine(x) + '.' : '') + t('bdayPushTail'), location.pathname + '#/a/birthdays', 'bday-test'); },
+  bdWish: el => { const wa = bdWishDo(el.dataset.id, actorNow()); render(); toast(t('wishDone', { n: staffNameOrMember(el.dataset.id) })); if (wa) window.open(wa, '_blank', 'noopener'); },
+  bdOffer: el => openSheet(bdOfferHtml(el.dataset.id, 'act')),
+  bdOpt: el => { bdSetOpt(el.dataset.k); openSheet(bdOfferHtml(el.dataset.id, 'act')); },
+  bdSend: el => { const r = bdSendDo(el.dataset.id, el.dataset.via, actorNow()); if (r.err) { toast(t(r.err)); return; } closeSheet(); render(); toast(t('offerDone', { n: staffNameOrMember(el.dataset.id) })); if (r.wa) window.open(r.wa, '_blank', 'noopener'); },
   saveMember: el => {
     const id = el.dataset.id, v = k => (($('#me-' + k) || {}).value || '');
     const c = { name: v('name') }; CONTACT_KEYS.forEach(k => { c[k] = v(k); });
@@ -2911,6 +3130,7 @@ if (MODE === 'app') document.addEventListener('input', e => {
   else if (el.id === 'receipt') cdraft.receipt = el.value;
   else if (el.id === 'allergy') { S.skin.allergy = el.value; save(); }
   else if (el.id === 'otp' && /^\d{6}$/.test(el.value)) ACT.verify();
+  else if (el.id === 'bd-custom') bdCustom(el.value);
   else if (el.dataset && el.dataset.bind) {
     const [o, k] = el.dataset.bind.split('.'), D = o === 'cl' ? cl : o === 'ot' ? ot : o === 'inv' ? inv : null;
     if (!D) return;
@@ -2936,6 +3156,7 @@ if (MODE === 'app') document.addEventListener('change', e => {
   }
   else if (el.dataset && el.dataset.notif) { S.notif[el.dataset.notif] = el.checked; save(); }
   else if (el.dataset && el.dataset.tnotif) { S.tNotif[el.dataset.tnotif] = el.checked; save(); }
+  else if (el.dataset && el.dataset.bdrem) { setBdRem(el.dataset.bdrem, el.checked); toast(t('remOnDone')); }
   else if (el.dataset && el.dataset.teamadmin) { const k = el.dataset.teamadmin; if (setStaffAdmin(k, el.checked, { name: 'Michelle' })) { render(); toast(t(el.checked ? 'adminOn' : 'adminOff', { n: staffName(k) })); } }
 });
 if (MODE === 'app') document.addEventListener('keydown', e => {
@@ -2960,13 +3181,14 @@ if (MODE === 'app') render();
 document.documentElement.lang = htmlLang(lang);
 window.A4U = {
   get S() { return S; }, save, reload: loadState,
-  reset() { LS.del(KEY); S = seed(); S.mEdit = {}; S.visits = seedVisits(); applyMemberEdits(); S.tLog = {}; S.team = {}; S.claims = seedClaims(); S.invoices = seedInvoices(); S.invSeq = 41; save(); },
+  reset() { LS.del(KEY); S = seed(); S.bday = {}; S.bdayRem = { day: true, before: true }; S.bdayNotified = {}; S.mEdit = {}; S.visits = seedVisits(); applyMemberEdits(); S.tLog = {}; S.team = {}; S.claims = seedClaims(); S.invoices = seedInvoices(); S.invSeq = 41; save(); },
   t, get lang() { return lang; }, LANGS, htmlLang,
   setLang(l) { if (!LANGS.some(x => x[0] === l)) return; lang = l; LS.set('appt4u-lang', l); document.documentElement.lang = htmlLang(l); },
   esc, icon, logo, rm, hm, pad, fDate, fFull, fDay, fMonth, fMon, today0, addDays, sameDay, isoDay, fromIsoDay, initials, masked, hash, DAY,
   BIZS, biz, SERVICES, svc, PRODUCTS, product, MEMBERS, member, THER, STAFF, staffName, staffKind, staffRole, staffSalary, hourlyRate, canOT,
   todayList, findAppt, recLog, cancelAppt, stOf, logOf, minsDiff, startLateOf, timingData, TM, roomName,
   staffAdmin, setStaffAdmin, adminByText,
+  bdayList, bdayPending, bdayAttItems, bdayRemCard, setBdRem, bdOfferHtml, bdSetOpt, bdCustom, bdSendDo, bdWishDo, bdayWhen, askNotify, notifyLocal, bdayAutoNotify, bdayLine, nextBday, daysToBday, ageTurning, bdayOf,
   visitsOf, visitCard, recordFormHtml, commentFormHtml, saveRecordFromForm, saveCommentFromForm, recordsSection,
   meilingBalance, activePk, pkgLeft, pkgName, storedOf, mContact, setMemberContact, contactLinks, CONTACT_KEYS,
   invTotals, invStatus, invCust, invLineName, BIZ_INFO, INV_PILL, CL_PILL,

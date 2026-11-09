@@ -127,7 +127,7 @@ function pDash() {
   const unpaid = s.invoices.filter(x => x.status === 'issued'), overdue = s.invoices.filter(x => A.invStatus(x) === 'overdue');
   const pend = s.claims.filter(c => c.status === 'pending');
   const cur = A.agg(A.range('month', 'cur')), base = A.agg(A.range('month', 'prev'));
-  const att = [];
+  const att = A.bdayAttItems('#/birthdays');
   if (pend.length) att.push(['#/claims', t('att6', { n: pend.length })]);
   if (overdue.length) att.push(['#/invoices', t('att7', { n: overdue.length })]);
   att.push(['#/members', t('att1')], ['#/reports', t('att2')], ['#/commission', t('att4')]);
@@ -200,6 +200,7 @@ function pMembers() {
     { label: t('f_wechat'), x: m => A.mContact(m.id).wechat || '', hidden: true },
     { label: 'Facebook', x: m => A.mContact(m.id).fb || '', hidden: true, w: 24 },
     { label: 'Instagram', x: m => A.mContact(m.id).ig || '', hidden: true, w: 16 },
+    { label: t('f_bday'), x: m => { const b = A.bdayOf(m.id); return b ? dayOf(b) : ''; }, sv: m => { const d = A.daysToBday(A.bdayOf(m.id)); return d == null ? 999 : d; }, html: m => { const b = A.bdayOf(m.id), d = A.daysToBday(b); return b ? `<span class="nowrap">${fDate(A.nextBday(b))}</span>${d <= 30 ? `<span class="sub">${d <= 7 ? '🎂 ' : ''}${A.bdayWhen(d)}</span>` : ''}` : '<span class="muted">—</span>'; } },
     { label: t('ad_tier'), x: m => m.tier === 'gold' ? t('goldMember') : 'Silver', html: m => m.tier === 'gold' ? pill('gold', t('goldMember')) : pill('grey', 'Silver') },
     { label: t('ad_segment'), x: m => t('seg_' + m.seg) },
     { label: t('ad_lastDays'), num: true, x: m => m.last },
@@ -231,6 +232,30 @@ function pMember(id) {
     <aside class="inv-side"><section class="ad-card"><h2>${t('contactT')}</h2><div>${row(t('f_phone'), c.phone, ln.phone)}${row(t('f_email'), c.email, ln.email)}${row(t('f_wechat'), c.wechat)}${row('Facebook', c.fb, ln.fb)}${row('Instagram', c.ig, ln.ig)}</div>
       ${ln.wa ? `<a class="btn btn-soft btn-block" href="${ln.wa}" target="_blank" rel="noopener">${icon('phone', 16)} WhatsApp</a>` : ''}<p class="small muted">${t('contactPrivacy')}</p></section>
       <section class="ad-card"><h2>${t('consent')}</h2><p>${m.consent ? pill('sage', t('consentOk')) : pill('rose', t('consentMissing'))}</p></section></aside></div>`;
+}
+
+function pBirthdays() {
+  const all = A.bdayList(null), yr = new Date().getFullYear();
+  const st = x => x.st.offer ? 'offer' : x.st.wished ? 'wished' : 'todo';
+  const stTxt = x => [x.st.wished ? t('wished', { d: fDate(x.st.wished.at) }) + ' · ' + x.st.wished.by : '', x.st.offer ? t('offerSent', { d: fDate(x.st.offer.at) }) + ' · ' + x.st.offer.by : ''].filter(Boolean).join(' · ') || t('bd_todo');
+  const cols = [
+    { label: t('ad_name'), x: x => x.m.name, html: x => `<a class="who" href="#/members/${x.m.id}"><span class="avatar">${x.d <= 7 ? '🎂' : initials(x.m.name)}</span><b>${esc(x.m.name)}</b></a>` },
+    { label: t('f_bday'), x: x => dayOf(x.next), sv: x => x.d, html: x => `<span class="nowrap">${fDate(x.next)}</span>` },
+    { label: t('bd_when'), x: x => A.bdayWhen(x.d), sv: x => x.d, html: x => x.d <= 1 ? `<b class="t-bad">${A.bdayWhen(x.d)}</b>` : A.bdayWhen(x.d) },
+    { label: t('bd_age'), num: true, x: x => x.age || '' },
+    { label: t('ad_tier'), x: x => x.m.tier === 'gold' ? t('goldMember') : 'Silver', html: x => x.m.tier === 'gold' ? pill('gold', t('goldMember')) : pill('grey', 'Silver') },
+    { label: t('ad_lastDays'), num: true, x: x => x.m.last },
+    { label: t('f_phone'), x: x => A.mContact(x.m.id).phone || '', hidden: true }, { label: t('f_email'), x: x => A.mContact(x.m.id).email || '', hidden: true },
+    { label: t('ad_status'), x: stTxt, html: x => st(x) === 'todo' ? pill('amber', t('bd_todo')) : `<span class="p-docs">${x.st.wished ? pill('sage', t('wished', { d: fDate(x.st.wished.at) })) : ''}${x.st.offer ? pill('sage', t('offerSent', { d: fDate(x.st.offer.at) })) : ''}</span>${x.st.offer ? `<span class="sub">${esc(x.st.offer.text)}</span>` : ''}` },
+    { label: t('ad_actions'), html: x => `<span class="acts wrap"><button class="btn btn-sm btn-outline" data-x="bdWish" data-id="${x.m.id}">${t('sendWish')}</button><button class="btn btn-sm btn-primary" data-x="bdOffer" data-id="${x.m.id}">${t('bdayOffer')}</button></span>` },
+  ];
+  const sent = Object.keys(S().bday || {}).filter(k => k.endsWith('@' + yr) && S().bday[k].offer).length;
+  const missing = A.MEMBERS.filter(m => !A.bdayOf(m.id));
+  return head(t('bdays'), t('bdaySub'))
+  + `<div class="ad-kpis">${kcard(t('today'), all.filter(x => x.d === 0).length, '', all.some(x => x.d === 0 && st(x) === 'todo') ? 'warn' : '')}${kcard(t('bd_thisWeek'), all.filter(x => x.d <= 7).length)}${kcard(t('bd_month'), all.filter(x => x.d <= 30).length)}${kcard(t('bd_sentYear'), sent)}</div>
+  <div class="ad-grid2 even">${A.bdayRemCard('x')}<section class="ad-card"><h2>${t('bdMissing')}</h2><p>${missing.length ? missing.map(m => `<a href="#/members/${m.id}" style="color:var(--primary)">${esc(m.name)}</a>`).join(', ') : '—'}</p><p class="small muted">${t('contactPrivacy')}</p></section></div>
+  ${dt('bdays', { cols, rows: all, sort: 1, dir: 1, file: `appt4u-birthdays-${stamp()}.xlsx`, sheet: t('bdays'),
+    filters: [{ k: 'w', label: t('bd_when'), opts: [['7', t('bd_thisWeek')], ['30', t('bd_month')]], test: (x, v) => x.d <= Number(v) }, { k: 's', label: t('ad_status'), opts: [['todo', t('bd_todo')], ['done', t('wished', { d: '' }).trim()]], test: (x, v) => v === 'todo' ? st(x) === 'todo' : st(x) !== 'todo' }] })}`;
 }
 
 /* ------------------------------------------------------------------ invoices: list, Excel listing, import template, import */
@@ -594,9 +619,9 @@ function pSettings() {
 }
 
 /* ------------------------------------------------------------------ shell & router */
-let NAV = [['/', 'home', 'ad_dash'], ['/appointments', 'calendar', 'ad_appts'], ['/members', 'users', 'aMembers'], ['/invoices', 'doc', 'invoices'], ['/claims', 'receipt', 'claimsT'],
+let NAV = [['/', 'home', 'ad_dash'], ['/appointments', 'calendar', 'ad_appts'], ['/members', 'users', 'aMembers'], ['/birthdays', 'gift', 'bdays'], ['/invoices', 'doc', 'invoices'], ['/claims', 'receipt', 'claimsT'],
   ['/team', 'user', 'team'], ['/commission', 'coins', 'commission'], ['/reports', 'chart', 'aReports'], ['/timing', 'clock', 'tmTitle'], ['/settings', 'settings', 'settings']];
-let PAGES = [[/^\/$/, pDash], [/^\/appointments$/, pAppts], [/^\/members$/, pMembers], [/^\/members\/(\w+)$/, pMember], [/^\/invoices$/, pInvoices], [/^\/invoices\/new$/, () => pInvEdit(null)],
+let PAGES = [[/^\/$/, pDash], [/^\/appointments$/, pAppts], [/^\/members$/, pMembers], [/^\/members\/(\w+)$/, pMember], [/^\/birthdays$/, pBirthdays], [/^\/invoices$/, pInvoices], [/^\/invoices\/new$/, () => pInvEdit(null)],
   [/^\/invoices\/(\w+)\/edit$/, pInvEdit], [/^\/invoices\/(\w+)$/, pInvoice], [/^\/claims$/, pClaims], [/^\/team$/, pTeam], [/^\/commission$/, pComm],
   [/^\/reports$/, pReports], [/^\/timing$/, pTiming], [/^\/settings$/, pSettings]];
 const route = () => (location.hash.replace(/^#/, '') || '/').split('?')[0];
@@ -606,7 +631,7 @@ const SIDE = {
   title: 'appt4u Admin',
   tag: () => t('ad_full'),
   card: () => `<div class="ad-biz">Lumière Skin Studio<br><span>Bangsar · Subang Jaya</span></div>`,
-  badges: () => { const s = S(); return { '/claims': s.claims.filter(c => c.status === 'pending').length, '/invoices': s.invoices.filter(x => A.invStatus(x) === 'overdue').length }; },
+  badges: () => { const s = S(); return { '/birthdays': A.bdayPending(7).length, '/claims': s.claims.filter(c => c.status === 'pending').length, '/invoices': s.invoices.filter(x => A.invStatus(x) === 'overdue').length }; },
   foot: () => `<a class="btn btn-sm btn-outline" href="../#/a/today">${icon('phone', 16)} ${t('ad_phone')}</a><p class="small muted">${t('ad_sample')}</p>`,
 };
 function sideHtml(path) {
@@ -651,6 +676,12 @@ const X_ = {
   },
   cxDo: el => { if (A.cancelAppt(el.dataset.id, el.dataset.by)) { closeModal(); render(); toast(t('cxToast')); } },
   invFor: el => { ED = newDraft(el.dataset.id); location.hash = '#/invoices/new'; },
+  bdAllow: async () => { const r = await A.askNotify(); render(); if (r === 'granted') A.bdayAutoNotify(location.pathname + '#/birthdays'); },
+  bdTest: () => { const x = A.bdayList(30)[0]; A.notifyLocal(t('pushTitle'), (x ? A.bdayLine(x) + '.' : '') + t('bdayPushTail'), location.pathname + '#/birthdays', 'bday-test'); },
+  bdWish: el => { const wa = A.bdWishDo(el.dataset.id, OWNER); render(); toast(t('wishDone', { n: A.member(el.dataset.id).name })); if (wa) window.open(wa, '_blank', 'noopener'); },
+  bdOffer: el => modal(A.bdOfferHtml(el.dataset.id, 'x')),
+  bdOpt: el => { A.bdSetOpt(el.dataset.k); modal(A.bdOfferHtml(el.dataset.id, 'x')); },
+  bdSend: el => { const r = A.bdSendDo(el.dataset.id, el.dataset.via, OWNER); if (r.err) { toast(t(r.err)); return; } closeModal(); render(); toast(t('offerDone', { n: A.member(el.dataset.id).name })); if (r.wa) window.open(r.wa, '_blank', 'noopener'); },
   vAdd: el => modal(A.recordFormHtml(null, 'x', { mid: el.dataset.mid })),
   vEdit: el => { const v = S().visits.find(x => x.id === el.dataset.id); if (v) modal(A.recordFormHtml(v, 'x')); },
   vComment: el => { const v = S().visits.find(x => x.id === el.dataset.id); if (v) modal(A.commentFormHtml(v, 'x')); },
@@ -660,7 +691,7 @@ const X_ = {
     const id = el.dataset.id, c = A.mContact(id);
     const f = (k, label, ph, type) => `<label class="ed-col"><span class="label">${label}</span><input class="field" id="me-${k}" value="${esc(c[k] || '')}" placeholder="${ph || ''}" ${type ? `type="${type}"` : ''} autocomplete="off"></label>`;
     modal(`<h2>${t('editMember')}</h2>${f('name', t('f_name'))}<div class="ed-grid">${f('phone', t('f_phone'), '+60 12-000 0000', 'tel')}${f('email', t('f_email'), 'name@example.com', 'email')}</div>
-      ${f('wechat', t('f_wechat'))}<div class="ed-grid">${f('fb', 'Facebook', 'facebook.com/…')}${f('ig', 'Instagram', '@…')}</div>
+      <div class="ed-grid">${f('wechat', t('f_wechat'))}${f('bday', t('f_bday'), '', 'date')}</div><div class="ed-grid">${f('fb', 'Facebook', 'facebook.com/…')}${f('ig', 'Instagram', '@…')}</div>
       <p class="note gold">${icon('users', 16)}<span>${t('contactPrivacy')}</span></p>
       <div class="row-start gap8"><button class="btn btn-primary" data-x="memSave" data-id="${id}">${t('save')}</button><button class="btn btn-ghost" data-x="closeModal">${t('notNow')}</button></div>`);
   },
@@ -703,6 +734,7 @@ document.addEventListener('click', e => {
 });
 document.addEventListener('input', e => {
   const el = e.target;
+  if (el.id === 'bd-custom') { A.bdCustom(el.value); return; }
   if (el.dataset.dq != null) { const st = TB[el.dataset.dt]; if (st) { st.q = el.value; render(); } return; }
   if (ED && el.dataset.ed) { ED[el.dataset.ed] = el.value; refreshPreview(); return; }
   if (ED && el.dataset.li != null) { const l = ED.items[Number(el.dataset.li)]; if (l) { l[el.dataset.lf] = el.value; refreshPreview(); } }
@@ -717,6 +749,7 @@ document.addEventListener('change', e => {
     ED.items.push({ ref, label: '', qty: 1, price: it ? it.price : 0 }); render(); return;
   }
   if (el.id === 'impFile') { const f = el.files && el.files[0]; el.value = ''; if (f) importInvoices(f); return; }
+  if (el.dataset.bdrem) { A.setBdRem(el.dataset.bdrem, el.checked); toast(t('remOnDone')); return; }
   if (el.dataset.team === 'admin') { const k = el.dataset.k; if (A.setStaffAdmin(k, el.checked, OWNER)) { render(); toast(t(el.checked ? 'adminOn' : 'adminOff', { n: A.staffName(k) })); } return; }
   if (el.dataset.team) {
     const k = el.dataset.k, s = S(); s.team[k] = Object.assign(s.team[k] || {}, {});
@@ -740,5 +773,5 @@ window.A4UC = {
   dt, head, kcard, pill, toast, modal, closeModal, downloadBook, sheetOf, sheetAOA, money, MONEY, DATEF, serial, sum, stamp, plain, dayOf, TB, render,
   use(cfg) { NAV = cfg.nav; PAGES = cfg.pages; Object.assign(X_, cfg.actions || {}); Object.assign(SIDE, cfg.side || {}); },
 };
-if (CONSOLE === 'business') render();
+if (CONSOLE === 'business') { render(); A.bdayAutoNotify(location.pathname + '#/birthdays'); }
 })();
