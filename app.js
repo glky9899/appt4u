@@ -1,6 +1,8 @@
 /* appt4u — interactive demo with sample data. Nothing here talks to a server. */
 (() => {
 'use strict';
+/* 'app' renders the phone app; 'admin' (admin/index.html) only shares data and helpers through window.A4U */
+const MODE = document.documentElement.dataset.mode === 'admin' ? 'admin' : 'app';
 
 /* ------------------------------------------------------------------ storage */
 const KEY = 'appt4u-demo-v3';
@@ -333,6 +335,84 @@ const STR = {
   paidOn: ['Paid {d} · {m}', '{d} 已付 · {m}'],
   editInv: ['Edit', '编辑'],
   noInvoices: ['No invoices here', '这里没有发票'],
+  ad_full: ['Admin · full version', '管理后台 · 完整版'],
+  ad_fullLink: ['Full admin for computers', '电脑版完整管理后台'],
+  ad_phone: ['Open phone app', '打开手机版'],
+  ad_dash: ['Dashboard', '概览'],
+  ad_appts: ['Appointments', '预约'],
+  ad_search: ['Search', '搜索'],
+  ad_rows: ['{n} rows', '{n} 行'],
+  ad_excel: ['Export to Excel', '导出 Excel'],
+  ad_template: ['Import template', '导入模板'],
+  ad_import: ['Import from Excel', '从 Excel 导入'],
+  ad_importDone: ['{n} invoices imported as drafts', '已导入 {n} 张发票（草稿）'],
+  ad_importSkip: ['Rows skipped ({n}):', '跳过 {n} 行：'],
+  ad_importNone: ['No invoices found. Use the import template and keep the first row as headers.', '没有找到发票。请使用导入模板，并保留第一行标题。'],
+  ad_importErr: ['Could not read this file. Save it as .xlsx and try again.', '无法读取此文件，请另存为 .xlsx 后重试。'],
+  ad_rowNoCust: ['row {r}: no customer', '第 {r} 行：没有客户'],
+  ad_rowNoItem: ['row {r}: no item or price', '第 {r} 行：没有项目或价格'],
+  ad_xlsLoading: ['Preparing your Excel file…', '正在生成 Excel 文件…'],
+  ad_xlsFail: ['Could not create the Excel file. Check your connection and try again.', '无法生成 Excel 文件，请检查网络后重试。'],
+  ad_downloaded: ['Downloaded {f}', '已下载 {f}'],
+  ad_sample: ['Demo with sample data. Changes are shared with the phone app in this browser.', '示例数据演示。改动会与本浏览器中的手机版同步。'],
+  ad_actions: ['Actions', '操作'],
+  ad_status: ['Status', '状态'],
+  ad_type: ['Type', '类型'],
+  ad_person: ['Person', '人员'],
+  ad_tier: ['Tier', '等级'],
+  ad_segment: ['Segment', '分群'],
+  ad_lastDays: ['Last visit (days ago)', '上次到访（天前）'],
+  ad_contact: ['Contact', '联系方式'],
+  ad_method: ['Payment method', '付款方式'],
+  ad_paidDate: ['Paid on', '付款日期'],
+  ad_details: ['Details', '详情'],
+  ad_hours: ['Hours', '小时'],
+  ad_room: ['Room', '房间'],
+  ad_client: ['Client', '顾客'],
+  ad_treatment: ['Treatment', '项目'],
+  ad_time: ['Time', '时间'],
+  ad_arrived: ['Arrived', '到店'],
+  ad_started: ['Started', '开始'],
+  ad_ended: ['Ended', '结束'],
+  ad_lateC: ['Client late (min)', '顾客迟到（分钟）'],
+  ad_lateS: ['Late start (min)', '延迟开始（分钟）'],
+  ad_exportReport: ['Export report to Excel', '导出报表 Excel'],
+  ad_kpiUnpaid: ['Unpaid invoices', '未收发票'],
+  ad_drafts: ['Drafts', '草稿'],
+  ad_hourly: ['OT hourly rate', '加班时薪'],
+  ad_salaryNA: ['Not on salary', '无月薪'],
+  ad_dup: ['Duplicate', '复制'],
+  ad_delete: ['Delete draft', '删除草稿'],
+  ad_deleted: ['Draft deleted', '草稿已删除'],
+  ad_tplHelp: ['How to fill', '填写说明'],
+  ad_codes: ['Item codes', '项目代码'],
+  ad_code: ['Code', '代码'],
+  ad_name: ['Name', '名称'],
+  ad_priceRM: ['Price (RM)', '价格（RM）'],
+  ad_h1: ['One row per item. Rows with the same Ref become one invoice.', '每行一个项目；Ref 相同的行会合并为一张发票。'],
+  ad_h2: ['For a member, put their Member ID (see the Members sheet). Otherwise fill in Customer name.', '会员请填写会员编号（见 Members 工作表），否则请填写客户名称。'],
+  ad_h3: ['Item code is optional (see Item codes). With a code, a blank price uses the price list.', '项目代码可不填（见 Item codes）；有代码而价格留空时，将使用价目表价格。'],
+  ad_h4: ['Dates as YYYY-MM-DD. Discount (RM) and SST (Y/N) are read from the first row of each invoice.', '日期格式为 YYYY-MM-DD；折扣（RM）与 SST（Y/N）读取每张发票的第一行。'],
+  ad_h5: ['Imported invoices are saved as drafts so you can check them before issuing.', '导入的发票会存为草稿，方便你开具前检查。'],
+  ad_h6: ['Keep the first row (headers) exactly as it is.', '请保持第一行（标题）不变。'],
+  ad_preview: ['Preview', '预览'],
+  ad_newFor: ['New invoice', '开发票'],
+  ad_today: ['Today', '今天'],
+  ad_viewAll: ['View all', '查看全部'],
+  ad_salesMonth: ['Revenue earned this month', '本月已实现营收'],
+  ad_cancelAppt: ['Cancel appointment', '取消预约'],
+  ad_rules: ['Booking rules', '预约规则'],
+  ad_demo: ['Demo data', '演示数据'],
+  ad_resetDone: ['Demo data reset', '演示数据已重置'],
+  ad_narrow: ['This admin is made for a computer screen. On a phone, use the phone app.', '此管理后台为电脑屏幕设计；手机上请使用手机版。'],
+  ad_itemsSheet: ['Items', '明细'],
+  ad_summary: ['Summary', '摘要'],
+  ad_trendSheet: ['Monthly trend', '月度趋势'],
+  ad_month: ['Month', '月份'],
+  ad_metric: ['Measure', '指标'],
+  ad_value: ['Value', '数值'],
+  ad_compare: ['Compared with', '对比'],
+  ad_change: ['Change', '变化'],
   notFound: ['Page not found', '找不到页面'], goHome: ['Go home', '返回首页'], demoOnly: ['Available in the full version', '完整版提供此功能'],
 };
 /* Bahasa Melayu. Any key missing here falls back to English. */
@@ -653,6 +733,84 @@ const STR_MS = {
   paidOn: 'Dibayar {d} · {m}',
   editInv: 'Ubah',
   noInvoices: 'Tiada invois di sini',
+  ad_full: 'Admin · versi penuh',
+  ad_fullLink: 'Admin penuh untuk komputer',
+  ad_phone: 'Buka aplikasi telefon',
+  ad_dash: 'Papan pemuka',
+  ad_appts: 'Temu janji',
+  ad_search: 'Cari',
+  ad_rows: '{n} baris',
+  ad_excel: 'Eksport ke Excel',
+  ad_template: 'Templat import',
+  ad_import: 'Import dari Excel',
+  ad_importDone: '{n} invois diimport sebagai draf',
+  ad_importSkip: 'Baris dilangkau ({n}):',
+  ad_importNone: 'Tiada invois ditemui. Gunakan templat import dan kekalkan baris pertama sebagai tajuk.',
+  ad_importErr: 'Fail ini tidak dapat dibaca. Simpan sebagai .xlsx dan cuba lagi.',
+  ad_rowNoCust: 'baris {r}: tiada pelanggan',
+  ad_rowNoItem: 'baris {r}: tiada item atau harga',
+  ad_xlsLoading: 'Menyediakan fail Excel…',
+  ad_xlsFail: 'Fail Excel tidak dapat dibuat. Semak sambungan anda dan cuba lagi.',
+  ad_downloaded: 'Dimuat turun {f}',
+  ad_sample: 'Demo dengan data contoh. Perubahan dikongsi dengan aplikasi telefon dalam pelayar ini.',
+  ad_actions: 'Tindakan',
+  ad_status: 'Status',
+  ad_type: 'Jenis',
+  ad_person: 'Individu',
+  ad_tier: 'Tahap',
+  ad_segment: 'Segmen',
+  ad_lastDays: 'Lawatan terakhir (hari lalu)',
+  ad_contact: 'Hubungan',
+  ad_method: 'Kaedah bayaran',
+  ad_paidDate: 'Dibayar pada',
+  ad_details: 'Butiran',
+  ad_hours: 'Jam',
+  ad_room: 'Bilik',
+  ad_client: 'Pelanggan',
+  ad_treatment: 'Rawatan',
+  ad_time: 'Masa',
+  ad_arrived: 'Tiba',
+  ad_started: 'Mula',
+  ad_ended: 'Tamat',
+  ad_lateC: 'Pelanggan lewat (min)',
+  ad_lateS: 'Mula lewat (min)',
+  ad_exportReport: 'Eksport laporan ke Excel',
+  ad_kpiUnpaid: 'Invois belum dibayar',
+  ad_drafts: 'Draf',
+  ad_hourly: 'Kadar OT sejam',
+  ad_salaryNA: 'Tiada gaji',
+  ad_dup: 'Salin',
+  ad_delete: 'Padam draf',
+  ad_deleted: 'Draf dipadam',
+  ad_tplHelp: 'Cara mengisi',
+  ad_codes: 'Kod item',
+  ad_code: 'Kod',
+  ad_name: 'Nama',
+  ad_priceRM: 'Harga (RM)',
+  ad_h1: 'Satu baris bagi setiap item. Baris dengan Ref yang sama menjadi satu invois.',
+  ad_h2: 'Untuk ahli, isi ID Ahli (lihat helaian Members). Jika tidak, isi nama pelanggan.',
+  ad_h3: 'Kod item adalah pilihan (lihat Item codes). Dengan kod, harga kosong akan guna senarai harga.',
+  ad_h4: 'Tarikh dalam format YYYY-MM-DD. Diskaun (RM) dan SST (Y/N) dibaca daripada baris pertama setiap invois.',
+  ad_h5: 'Invois yang diimport disimpan sebagai draf supaya anda boleh menyemaknya sebelum dikeluarkan.',
+  ad_h6: 'Kekalkan baris pertama (tajuk) seperti asal.',
+  ad_preview: 'Pratonton',
+  ad_newFor: 'Invois baharu',
+  ad_today: 'Hari ini',
+  ad_viewAll: 'Lihat semua',
+  ad_salesMonth: 'Hasil diperoleh bulan ini',
+  ad_cancelAppt: 'Batal temu janji',
+  ad_rules: 'Peraturan tempahan',
+  ad_demo: 'Data demo',
+  ad_resetDone: 'Data demo diset semula',
+  ad_narrow: 'Admin ini dibuat untuk skrin komputer. Di telefon, gunakan aplikasi telefon.',
+  ad_itemsSheet: 'Item',
+  ad_summary: 'Ringkasan',
+  ad_trendSheet: 'Trend bulanan',
+  ad_month: 'Bulan',
+  ad_metric: 'Ukuran',
+  ad_value: 'Nilai',
+  ad_compare: 'Berbanding',
+  ad_change: 'Perubahan',
   notFound: 'Halaman tidak ditemui', goHome: 'Ke halaman utama', demoOnly: 'Tersedia dalam versi penuh',
 };
 function t(k, v) {
@@ -897,7 +1055,8 @@ const staffName = k => (THER[k] || STAFF[k] || { name: k }).name;
 const SAMPLE_T = { a1: [6, 9, 71], a2: [14, 15, 92], a3: [-3, 2, 68], a4: [0, 1, 58], a5: [-5, 0, 66], a6: [2, 4, 61], a7: [1, 12, 88], a8: [19, 20, 70], a9: [8, 10, 55] };
 const minsDiff = (a, b) => Math.round((new Date(a) - new Date(b)) / 60000);
 function logOf(id, start, mins) {
-  const L = S.tLog[id]; if (L) return L;
+  /* the sample day repeats its appointment ids, so a record only counts for the day it was made */
+  const L = S.tLog[id]; if (L && (!L.sched || sameDay(L.sched, start))) return L;
   const s = SAMPLE_T[id]; if (!s || start.getTime() + mins * 60000 > Date.now()) return {};
   const m = n => new Date(start.getTime() + n * 60000).toISOString();
   return { arr: m(s[0]), start: m(s[1]), end: m(s[1] + s[2]), sample: true };
@@ -968,15 +1127,19 @@ function seed() {
     vouchers: [], claimed: {}, sales: [], approvals: {}, tLog: {}, tExtra: 0, tCount: 0, installDismissed: false,
   };
 }
-let S = LS.get(KEY, null);
-if (!S || S.v !== 4) S = seed();
-S.tLog = S.tLog || {};
-S.team = S.team || {};
-if (!S.claims) S.claims = seedClaims();
-if (!S.invoices) { S.invoices = seedInvoices(); S.invSeq = 41; }
-S.tNotif = S.tNotif || { rem: true, run: true, change: true };
-S.tAck = S.tAck || {}; S.tAdded = S.tAdded || {}; if (S.tCal === undefined) S.tCal = null;
-if (!S.mig4) { const b1 = S.bookings.find(b => b.id === 'b1'); if (b1) b1.staffNew = true; S.mig4 = true; }
+let S = null;
+function loadState() {
+  S = LS.get(KEY, null);
+  if (!S || S.v !== 4) S = seed();
+  S.tLog = S.tLog || {};
+  S.team = S.team || {};
+  if (!S.claims) S.claims = seedClaims();
+  if (!S.invoices) { S.invoices = seedInvoices(); S.invSeq = 41; }
+  S.tNotif = S.tNotif || { rem: true, run: true, change: true };
+  S.tAck = S.tAck || {}; S.tAdded = S.tAdded || {}; if (S.tCal === undefined) S.tCal = null;
+  if (!S.mig4) { const b1 = S.bookings.find(b => b.id === 'b1'); if (b1) b1.staffNew = true; S.mig4 = true; }
+}
+loadState();
 const save = () => LS.set(KEY, S);
 
 const isBooked = b => b.status === 'booked';
@@ -1713,7 +1876,7 @@ function timingData() {
     }
   });
   events.sort((a, b) => new Date(b.at) - new Date(a.at));
-  return { treat, late, last, staff, cx, lost, events };
+  return { treat, late, last, staff, cx, lost, events: events.filter(e => sameDay(e.at, new Date())) };
 }
 function vATiming() {
   const D = timingData();
@@ -1931,6 +2094,7 @@ function vAInvoice(id) {
 }
 function vAMore() {
   const body = `<h1 class="h1">${t('aMore')}</h1>
+  <a class="card row" href="admin/"><span class="row-start"><span class="ic-box">${icon('grid', 20)}</span><span><span class="strong block">${t('ad_fullLink')}</span><span class="small muted">www.appt4u.com/admin</span></span></span>${icon('chevR', 18)}</a>
   <div class="card menu">${menuLink('/a/invoices', 'doc', t('invoices'))}${menuLink('/a/claims', 'receipt', t('claimsT'), (() => { const n = S.claims.filter(c => c.status === 'pending').length; return n ? String(n) : ''; })())}${menuLink('/a/team', 'users', t('team'))}${menuLink('/a/timing', 'clock', t('tmTitle'))}${menuLink('/a/commission', 'coins', t('commission'))}${menuLink('/a/promos', 'gift', t('promotions'))}${menuLink('/a/settings', 'settings', t('settings'))}${menuLink('/a/counter', 'cash', t('recordSale'))}</div>
   <div class="card menu">${menuBtn('lang', 'globe', t('language'), langName())}${menuBtn('roles', 'users', t('switchRole'))}${menuBtn('reset', 'refresh', t('resetDemo'))}${menuBtn('signout', 'logout', t('signOut'))}</div>`;
   return page({ tabs: 'a', active: '/a/more', body });
@@ -2153,7 +2317,7 @@ function render() {
   const dm = path.match(/^\/m\/done\/(\w+)$/);
   if (dm && !S.calAlways && !shownCal.has(dm[1])) { shownCal.add(dm[1]); setTimeout(() => { if (route() === path) calSheet('b:' + dm[1]); }, 450); }
 }
-window.addEventListener('hashchange', render);
+if (MODE === 'app') window.addEventListener('hashchange', render);
 
 /* ------------------------------------------------------------------ side panel (desktop) */
 function renderSide() {
@@ -2163,6 +2327,7 @@ function renderSide() {
     <h1 class="side-title">${t('sideTitle')}</h1>
     <p class="muted">${t('sideText')}</p>
     <div class="stack-sm"><p class="eyebrow">${t('sideRoles')}</p><div class="side-roles">${ROLES.map(r => `<button class="chip ${S.signedIn && S.role === r ? 'on' : ''}" data-act="role" data-role="${r}">${t('r_' + r)}</button>`).join('')}</div></div>
+    <a class="btn btn-primary" href="admin/">${icon('grid', 18)} ${t('ad_fullLink')}</a>
     <div class="row-start gap8 wrap">${langBtn()}<button class="chip" data-act="reset">${t('resetDemo')}</button></div>
     <p class="small muted">${t('sideData')}</p></div>`;
 }
@@ -2234,6 +2399,8 @@ async function copyText(s) {
 function findAppt(id) { return tAppointments(7).find(x => x.id === id) || todayList().find(x => x.id === id) || null; }
 function recLog(id, patch, meta) {
   const a = meta ? null : findAppt(id);
+  const prev = S.tLog[id];
+  if (prev && prev.sched && a && !sameDay(prev.sched, a.start)) { S.tLog[id + '@' + isoDay(prev.sched)] = prev; delete S.tLog[id]; }
   const base = S.tLog[id] || (a ? Object.assign({}, logOf(id, a.start, a.mins)) : {});
   delete base.sample;
   Object.assign(base, meta || (a ? { cid: a.cid, th: a.th, sid: a.sid, sched: a.start.toISOString(), mins: a.mins } : {}));
@@ -2244,6 +2411,22 @@ function logCancel(id, by, noshow, meta) {
   const a = meta ? null : findAppt(id), sched = meta ? meta.sched : a ? a.start.toISOString() : new Date().toISOString();
   const hrs = (new Date(sched) - Date.now()) / 36e5;
   recLog(id, { cx: { by, noshow: !!noshow, at: new Date().toISOString(), last: !!noshow || hrs < 12 } }, meta);
+}
+function cancelAppt(id, byKey) {
+  const a = findAppt(id); if (!a) return false;
+  const noshow = byKey === 'noshow', by = noshow ? 'client' : ['client', 'staff', 'owner'].includes(byKey) ? byKey : 'owner';
+  logCancel(id, by, noshow);
+  const b = S.bookings.find(x => x.id === id);
+  if (b && isBooked(b)) {
+    b.cancelBy = by;
+    const late = (new Date(b.start) - new Date()) / 36e5 < 12;
+    if (by === 'client' && late) {
+      b.status = 'late';
+      if (b.pay === 'package') { const pk = S.packages.find(p => p.id === b.pkg); if (pk) { pk.used++; ledgerAdd(pk.id, 'late', -1, { serviceId: b.serviceId }); } }
+      else if (b.pay === 'stored') { const p = bPrice(b), sid = bBiz(b).id; S.stored[sid] = storedOf(sid) - p; ledgerAdd('stored:' + sid, 'late', -p); }
+    } else b.status = 'cancelled';
+  }
+  S.tAck[id] = true; save(); return true;
 }
 function setLang(l) { if (!LANGS.some(x => x[0] === l)) return; lang = l; LS.set('appt4u-lang', l); document.documentElement.lang = htmlLang(l); closeSheet(true); render(); }
 const ACT = {
@@ -2433,29 +2616,14 @@ const ACT = {
       <div class="stack-xs">${opts.map(([k, l]) => `<button class="opt" data-act="tCancel" data-id="${a.id}" data-by="${k}">${icon(ic[k], 20)}<span class="grow">${t(l)}</span>${icon('chevR', 16)}</button>`).join('')}</div>
       <button class="btn btn-ghost btn-block" data-act="closeSheet">${t('keep')}</button>`);
   },
-  tCancel: el => {
-    const id = el.dataset.id, a = findAppt(id); if (!a) return;
-    const noshow = el.dataset.by === 'noshow', by = noshow ? 'client' : ['client', 'staff', 'owner'].includes(el.dataset.by) ? el.dataset.by : 'owner';
-    logCancel(id, by, noshow);
-    const b = S.bookings.find(x => x.id === id);
-    if (b && isBooked(b)) {
-      b.cancelBy = by;
-      const late = (new Date(b.start) - new Date()) / 36e5 < 12;
-      if (by === 'client' && late) {
-        b.status = 'late';
-        if (b.pay === 'package') { const pk = S.packages.find(p => p.id === b.pkg); if (pk) { pk.used++; ledgerAdd(pk.id, 'late', -1, { serviceId: b.serviceId }); } }
-        else if (b.pay === 'stored') { const p = bPrice(b), sid = bBiz(b).id; S.stored[sid] = storedOf(sid) - p; ledgerAdd('stored:' + sid, 'late', -p); }
-      } else b.status = 'cancelled';
-    }
-    S.tAck[id] = true; save(); closeSheet(); render(); toast(t('cxToast'));
-  },
+  tCancel: el => { if (cancelAppt(el.dataset.id, el.dataset.by)) { closeSheet(); render(); toast(t('cxToast')); } },
 };
-document.addEventListener('click', e => {
+if (MODE === 'app') document.addEventListener('click', e => {
   const el = e.target.closest('[data-act]'); if (!el) return;
   const fn = ACT[el.dataset.act]; if (!fn) return;
   e.preventDefault(); fn(el, e);
 });
-document.addEventListener('input', e => {
+if (MODE === 'app') document.addEventListener('input', e => {
   const el = e.target;
   if (el.id === 'q') { hQuery = el.value; const l = $('#bizlist'); if (l) l.innerHTML = bizRows(); }
   else if (el.id === 'mq') { mQuery = el.value; const l = $('#mlist'); if (l) l.innerHTML = memberRows(); }
@@ -2475,7 +2643,7 @@ document.addEventListener('input', e => {
     const c = $('#invtot'); if (c) c.innerHTML = invTotalsHtml();
   }
 });
-document.addEventListener('change', e => {
+if (MODE === 'app') document.addEventListener('change', e => {
   const el = e.target;
   if (el.id === 'csel') { cdraft.member = el.value; render(); }
   else if (el.id === 'clr' && cl) { const f = el.files && el.files[0]; cl.receipt = f ? f.name : null; render(); }
@@ -2488,7 +2656,7 @@ document.addEventListener('change', e => {
   else if (el.dataset && el.dataset.notif) { S.notif[el.dataset.notif] = el.checked; save(); }
   else if (el.dataset && el.dataset.tnotif) { S.tNotif[el.dataset.tnotif] = el.checked; save(); }
 });
-document.addEventListener('keydown', e => {
+if (MODE === 'app') document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closeSheet();
   if (e.key === 'Enter' && e.target.id === 'phone') ACT.sendCode();
 });
@@ -2497,12 +2665,27 @@ document.addEventListener('keydown', e => {
 let deferredPrompt = null;
 const isStandalone = () => window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
 const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferredPrompt = e; if (route() === '/m/home') render(); });
-window.addEventListener('appinstalled', () => { deferredPrompt = null; S.installDismissed = true; save(); });
-if ('serviceWorker' in navigator && location.protocol !== 'file:') {
+if (MODE === 'app') window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferredPrompt = e; if (route() === '/m/home') render(); });
+if (MODE === 'app') window.addEventListener('appinstalled', () => { deferredPrompt = null; S.installDismissed = true; save(); });
+if (MODE === 'app' && 'serviceWorker' in navigator && location.protocol !== 'file:') {
   window.addEventListener('load', () => { navigator.serviceWorker.register('./sw.js').catch(() => { /* offline support unavailable */ }); });
 }
 
+/* another tab (for example the desktop admin) changed the demo data */
+if (MODE === 'app') window.addEventListener('storage', e => { if (e.key === KEY) { loadState(); render(); } else if (e.key === 'appt4u-lang') { const l = LS.get('appt4u-lang', 'en'); if (l !== lang && LANGS.some(x => x[0] === l)) { lang = l; document.documentElement.lang = htmlLang(l); render(); } } });
+if (MODE === 'app') render();
+
 document.documentElement.lang = htmlLang(lang);
-render();
+window.A4U = {
+  get S() { return S; }, save, reload: loadState,
+  reset() { LS.del(KEY); S = seed(); S.tLog = {}; S.team = {}; S.claims = seedClaims(); S.invoices = seedInvoices(); S.invSeq = 41; save(); },
+  t, get lang() { return lang; }, LANGS, htmlLang,
+  setLang(l) { if (!LANGS.some(x => x[0] === l)) return; lang = l; LS.set('appt4u-lang', l); document.documentElement.lang = htmlLang(l); },
+  esc, icon, logo, rm, hm, pad, fDate, fFull, fDay, fMonth, fMon, today0, addDays, sameDay, isoDay, fromIsoDay, initials, masked, hash, DAY,
+  BIZS, biz, SERVICES, svc, PRODUCTS, product, MEMBERS, member, THER, STAFF, staffName, staffKind, staffRole, staffSalary, hourlyRate, canOT,
+  todayList, findAppt, recLog, cancelAppt, stOf, logOf, minsDiff, startLateOf, timingData, TM, roomName,
+  meilingBalance, activePk, pkgLeft, pkgName, storedOf,
+  invTotals, invStatus, invCust, invLineName, BIZ_INFO, INV_PILL, CL_PILL,
+  SERIES, RANK, range, agg, periodLabel, dPct, dPts, trendSVG, quadSVG, get RP() { return RP; }, STATEMENTS,
+};
 })();
