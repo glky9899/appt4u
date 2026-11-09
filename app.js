@@ -3,6 +3,11 @@
 'use strict';
 /* 'app' renders the phone app; 'admin' (admin/index.html) only shares data and helpers through window.A4U */
 const MODE = document.documentElement.dataset.mode === 'admin' ? 'admin' : 'app';
+/* inside the appt4u iPhone app (Capacitor), calendar and notifications use iOS itself instead of the browser */
+const CAP = window.Capacitor;
+const NATIVE = !!(CAP && CAP.isNativePlatform && CAP.isNativePlatform());
+const PLUGS = {};
+const plug = n => { if (!NATIVE || !CAP.registerPlugin) return null; try { return PLUGS[n] || (PLUGS[n] = CAP.registerPlugin(n)); } catch (e) { return null; } };
 
 /* ------------------------------------------------------------------ storage */
 const KEY = 'appt4u-demo-v3';
@@ -518,6 +523,11 @@ const STR = {
   calDoneFile: ['Calendar file downloaded. Open it to add the event.', '日历文件已下载，打开即可加入。'],
   calDoneIos: ['Tap “Add to Calendar” to finish.', '点「添加到日历」即可完成。'],
   calSafari: ['To add to Apple Calendar, open this page in Safari, or use Google Calendar.', '要加入 Apple 日历，请用 Safari 打开此页面，或改用 Google 日历。'],
+  calAppleApp: ['Opens a new event, already filled in. Tap “Add”.', '打开已填好的新活动，点「添加」。'],
+  calAdded: ['Added to your calendar', '已加入日历'],
+  calDenied: ['appt4u can’t use your calendar. Allow it in Settings › appt4u › Calendars.', 'appt4u 无法使用日历，请在「设置 › appt4u › 日历」中允许。'],
+  notifNoteApp: ['Reminders arrive at 9:00 am on this iPhone, even when appt4u is closed. They go to the owner and people with admin access.', '提醒会在早上 9:00 送达此 iPhone，即使 appt4u 没有打开。提醒只发给老板与拥有管理员权限的人。'],
+  notifBlockedApp: ['Notifications are off for appt4u. Turn them on in Settings › Notifications › appt4u.', 'appt4u 的通知已关闭，请在「设置 › 通知 › appt4u」中开启。'],
   notFound: ['Page not found', '找不到页面'], goHome: ['Go home', '返回首页'], demoOnly: ['Available in the full version', '完整版提供此功能'],
 };
 /* Bahasa Melayu. Any key missing here falls back to English. */
@@ -1021,6 +1031,11 @@ const STR_MS = {
   calDoneFile: 'Fail kalendar dimuat turun. Buka untuk menambah acara.',
   calDoneIos: 'Ketik “Tambah ke Kalendar” untuk selesai.',
   calSafari: 'Untuk menambah ke Kalendar Apple, buka halaman ini dalam Safari, atau gunakan Kalendar Google.',
+  calAppleApp: 'Membuka acara baharu yang sudah diisi. Ketik “Tambah”.',
+  calAdded: 'Ditambah ke kalendar anda',
+  calDenied: 'appt4u tidak dapat menggunakan kalendar anda. Benarkan dalam Tetapan › appt4u › Kalendar.',
+  notifNoteApp: 'Peringatan tiba pada 9:00 pagi di iPhone ini, walaupun appt4u ditutup. Ia dihantar kepada pemilik dan orang yang mempunyai akses admin.',
+  notifBlockedApp: 'Pemberitahuan untuk appt4u dimatikan. Hidupkan dalam Tetapan › Pemberitahuan › appt4u.',
   notFound: 'Halaman tidak ditemui', goHome: 'Ke halaman utama', demoOnly: 'Tersedia dalam versi penuh',
 };
 function t(k, v) {
@@ -1653,6 +1668,7 @@ const calPlat = () => isIOS ? 'ios' : /android/i.test(navigator.userAgent) ? 'an
 const iosInApp = () => isIOS && /CriOS|FxiOS|EdgiOS|FBAN|FBAV|Instagram|Line\/|MicroMessenger|WhatsApp/i.test(navigator.userAgent);
 function calOpts() {
   const p = calPlat(), g = ['google', t('googleCal'), t('calGoogleSub'), 'globe'];
+  if (NATIVE) return [['apple', t('appleCal'), t('calAppleApp'), 'calendar'], g];
   if (p === 'ios') return [['apple', t('appleCal'), t('calAppleIos'), 'calendar'], g, ['ics', t('otherCal'), t('calFileSub'), 'download']];
   if (p === 'mac') return [['apple', t('appleCal'), t('calAppleMac'), 'calendar'], g, ['ics', t('otherCal'), t('calFileSub'), 'download']];
   return [g, ['ics', p === 'android' ? t('otherCalApp') : t('otherCal'), t('calFileSub'), 'download']];
@@ -2017,28 +2033,62 @@ function bdayAttItems(href) {
   return out;
 }
 /* device notifications (local): shown when the owner or an admin opens appt4u */
-const notifState = () => !('Notification' in window) ? 'na' : Notification.permission;
+let nNotif = 'default';
+const LN = () => plug('LocalNotifications');
+const permOf = r => r && r.display === 'granted' ? 'granted' : r && r.display === 'denied' ? 'denied' : 'default';
+const notifState = () => NATIVE ? (LN() ? nNotif : 'na') : !('Notification' in window) ? 'na' : Notification.permission;
 async function askNotify() {
+  if (NATIVE) { try { nNotif = permOf(await LN().requestPermissions()); } catch (e) { nNotif = 'denied'; } return nNotif; }
   if (!('Notification' in window)) return 'na';
   if (Notification.permission !== 'default') return Notification.permission;
   try { return await Notification.requestPermission(); } catch (e) { return 'denied'; }
 }
+const notifId = s => { let h = 7; for (const c of String(s)) h = (h * 31 + c.charCodeAt(0)) | 0; return Math.abs(h) % 2000000000 || 1; };
 function notifyLocal(title, body, url, tag) {
   if (notifState() !== 'granted') return false;
+  if (NATIVE) { LN().schedule({ notifications: [{ id: notifId(tag || title + body), title, body, extra: { url } }] }).catch(() => {}); return true; }
   const opts = { body, icon: '/icons/icon-192.png', badge: '/icons/icon-192.png', tag: tag || 'appt4u', data: { url } };
   const plain = () => { try { const n = new Notification(title, opts); n.onclick = () => { window.focus(); location.href = url; n.close(); }; } catch (e) { /* this browser only allows service-worker notifications */ } };
   if ('serviceWorker' in navigator && navigator.serviceWorker.controller) navigator.serviceWorker.ready.then(r => r.showNotification(title, opts)).catch(plain);
   else plain();
   return true;
 }
+/* iPhone app: hand the next 30 days of birthday reminders to iOS, so they arrive at 9:00 even when appt4u is closed.
+   Only redone when the list changes. BSCHED remembers each reminder's time, so opening the app later doesn't repeat it. */
+const BSCHED = 'appt4u-bday-sched';
+function bdaySchedule(url) {
+  const ln = LN(); if (!ln) return;
+  const now = new Date(), plan = [];
+  bdayPending(33).forEach(x => {
+    if (!x.next) return;
+    [['day', 0], ['before', 3]].forEach(([kind, ahead]) => {
+      const key = `${x.m.id}@${x.next.getFullYear()}-${kind}`;
+      const at = new Date(x.next.getFullYear(), x.next.getMonth(), x.next.getDate() - ahead, 9, 0, 0);
+      if (!S.bdayRem[kind] || S.bdayNotified[key] || at <= now || at - now > 30 * 864e5) return;
+      plan.push({ key, at, body: (ahead ? t('bdayIn', { n: x.m.name, d: ahead }) : t('bdayToday', { n: x.m.name })) + '.' + t('bdayPushTail') });
+    });
+  });
+  const old = LS.get(BSCHED, { sig: '', at: {} }), sig = lang + '|' + plan.map(p => p.key + p.at.getTime()).join(',');
+  if (old.sig === sig) return;
+  const at = {};
+  Object.keys(old.at || {}).forEach(k => { if (new Date(old.at[k]) <= now) at[k] = old.at[k]; });
+  plan.forEach(p => { at[p.key] = p.at.toISOString(); });
+  LS.set(BSCHED, { sig, at });
+  const cancel = Object.keys(old.at || {}).filter(k => new Date(old.at[k]) > now).map(k => ({ id: notifId('bday-' + k) }));
+  (cancel.length ? ln.cancel({ notifications: cancel }) : Promise.resolve()).catch(() => {}).then(() => plan.length && ln.schedule({
+    notifications: plan.map(p => ({ id: notifId('bday-' + p.key), title: t('pushTitle'), body: p.body, schedule: { at: p.at, allowWhileIdle: true }, extra: { url } }))
+  })).catch(() => {});
+}
 function bdayAutoNotify(url) {
   if (notifState() !== 'granted') return;
+  if (NATIVE) bdaySchedule(url);
+  const sched = NATIVE ? LS.get(BSCHED, { at: {} }).at || {} : {};
   let sent = 0;
   bdayPending(3).forEach(x => {
     const kind = x.d === 0 ? 'day' : 'before';
     if (!S.bdayRem[kind]) return;
     const key = `${x.m.id}@${x.next.getFullYear()}-${kind}`;
-    if (S.bdayNotified[key]) return;
+    if (S.bdayNotified[key] || sched[key]) return;
     S.bdayNotified[key] = new Date().toISOString(); sent++;
     notifyLocal(t('pushTitle'), bdayLine(x) + '.' + t('bdayPushTail'), url, 'bday-' + key);
   });
@@ -2050,10 +2100,10 @@ function bdayRemCard(a) {
     <label class="row toggle-row"><span>${t('bdayRemDay')}</span><input type="checkbox" class="switch" data-bdrem="day" ${S.bdayRem.day ? 'checked' : ''}></label>
     <label class="row toggle-row"><span>${t('bdayRemBefore')}</span><input type="checkbox" class="switch" data-bdrem="before" ${S.bdayRem.before ? 'checked' : ''}></label>
     ${st === 'granted' ? `<p class="note sage">${icon('check', 16)}<span>${t('notifOn')}</span></p><button class="btn btn-sm btn-outline" data-${a}="bdTest">${t('notifTest')}</button>`
-      : st === 'denied' ? `<p class="note rose"><span>${t('notifBlocked')}</span></p>`
+      : st === 'denied' ? `<p class="note rose"><span>${t(NATIVE ? 'notifBlockedApp' : 'notifBlocked')}</span></p>`
       : st === 'na' ? `<p class="small muted">${t('notifNA')}</p>`
       : `<button class="btn btn-sm btn-primary" data-${a}="bdAllow">${icon('bell', 16)} ${t('notifAllow')}</button>`}
-    <p class="small muted">${t('notifNote')}</p></div>`;
+    <p class="small muted">${t(NATIVE ? 'notifNoteApp' : 'notifNote')}</p></div>`;
 }
 const setBdRem = (k, on) => { S.bdayRem[k] = !!on; save(); };
 let bdDraft = { mid: null, opt: 'pct15', custom: '' };
@@ -2889,7 +2939,15 @@ function openIcs(ics, name) {
   setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 1500);
   return 'calDoneFile';
 }
+/* iPhone app: iOS's own New Event screen, filled in (times in ms) */
+const nativeEv = e => ({ title: e.title, location: e.location, notes: e.desc, start: new Date(e.start).getTime(), end: new Date(e.end).getTime(), alarmMinutes: e.alarm });
+function nativeCalAdd(e) {
+  const p = plug('AppCalendar'); if (!p) return;
+  p.add(nativeEv(e)).then(r => { if (r && r.added) toast(t('calAdded')); }).catch(() => toast(t('calDenied')));
+}
+/* returns the message key to show afterwards ('' when the iPhone app shows its own screen) */
 function addToCalendar(e, kind) {
+  if (NATIVE && kind !== 'google') { nativeCalAdd(e); return ''; }
   if (kind === 'google') {
     window.open('https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + encodeURIComponent(e.title) + '&dates=' + icsStamp(e.start) + '/' + icsStamp(e.end) +
       '&details=' + encodeURIComponent(e.desc) + '&location=' + encodeURIComponent(e.location), '_blank', 'noopener');
@@ -2981,18 +3039,26 @@ const ACT = {
     const staff = key.startsWith('t:');
     const sw = $('#calAlways'); if (sw && sw.checked) { if (staff) S.tCal = el.dataset.c; else S.calAlways = el.dataset.c; }
     if (staff) S.tAdded[key.slice(2)] = true;
-    save(); const done = addToCalendar(e, effCal(el.dataset.c) || 'google'); closeSheet(); toast(t(done));
+    save(); const done = addToCalendar(e, effCal(el.dataset.c) || 'google'); closeSheet(); if (done) toast(t(done));
     setTimeout(render, 300);
   },
   calDo: el => {
     const key = el.dataset.ev, e = evByKey(key); if (!e) return;
     if (key.startsWith('t:')) { S.tAdded[key.slice(2)] = true; save(); setTimeout(render, 300); }
-    toast(t(addToCalendar(e, effCal(el.dataset.c) || 'google')));
+    const done = addToCalendar(e, effCal(el.dataset.c) || 'google'); if (done) toast(t(done));
   },
   ackNew: el => { S.tAck[el.dataset.id] = true; save(); render(); },
   addWeek: () => {
     const now = new Date(), list = tAppointments(7).filter(a => a.start > now);
     if (!list.length) { toast(t('noAppts')); return; }
+    const p = plug('AppCalendar');
+    if (p) {
+      /* iPhone app: saved straight into the calendar after the person allows it once */
+      p.addMany({ events: list.map(a => nativeEv(evFromAppt(a))) }).then(r => {
+        list.forEach(a => { S.tAdded[a.id] = true; }); save(); render(); toast(t('weekAdded', { n: (r && r.added) || list.length }));
+      }).catch(() => toast(t('calDenied')));
+      return;
+    }
     list.forEach(a => { S.tAdded[a.id] = true; }); save();
     const done = openIcs(icsDoc(list.map(evFromAppt)), 'appt4u-next-7-days.ics');
     toast(done === 'calDoneFile' ? t('calDoneFile') : t('weekAdded', { n: list.length })); setTimeout(render, 300);
@@ -3198,11 +3264,11 @@ if (MODE === 'app') document.addEventListener('keydown', e => {
 
 /* ------------------------------------------------------------------ install & offline */
 let deferredPrompt = null;
-const isStandalone = () => window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+const isStandalone = () => NATIVE || window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
 const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 if (MODE === 'app') window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferredPrompt = e; if (route() === '/m/home') render(); });
 if (MODE === 'app') window.addEventListener('appinstalled', () => { deferredPrompt = null; S.installDismissed = true; save(); });
-if (MODE === 'app' && 'serviceWorker' in navigator && location.protocol !== 'file:') {
+if (MODE === 'app' && !NATIVE && 'serviceWorker' in navigator && location.protocol !== 'file:') {
   window.addEventListener('load', () => { navigator.serviceWorker.register('./sw.js').catch(() => { /* offline support unavailable */ }); });
 }
 
@@ -3210,9 +3276,22 @@ if (MODE === 'app' && 'serviceWorker' in navigator && location.protocol !== 'fil
 if (MODE === 'app') window.addEventListener('storage', e => { if (e.key === KEY) { loadState(); render(); } else if (e.key === 'appt4u-lang') { const l = LS.get('appt4u-lang', 'en'); if (l !== lang && LANGS.some(x => x[0] === l)) { lang = l; document.documentElement.lang = htmlLang(l); render(); } } });
 if (MODE === 'app') render();
 
+/* iPhone app: notification permission, tapping a reminder opens its page, and the computer consoles open in Safari */
+if (MODE === 'app' && NATIVE) {
+  const ln = LN();
+  if (ln) {
+    ln.checkPermissions().then(r => { const v = permOf(r); if (v !== nNotif) { nNotif = v; render(); } }).catch(() => {});
+    ln.addListener('localNotificationActionPerformed', a => { const u = a && a.notification && a.notification.extra && a.notification.extra.url, h = u ? u.indexOf('#') : -1; if (h >= 0) location.hash = u.slice(h); });
+  }
+  document.addEventListener('click', e => {
+    const a = e.target.closest && e.target.closest('a[href="admin/"], a[href="platform/"]');
+    if (a) { e.preventDefault(); e.stopPropagation(); window.open('https://www.appt4u.com/' + a.getAttribute('href'), '_blank'); }
+  }, true);
+}
+
 document.documentElement.lang = htmlLang(lang);
 window.A4U = {
-  get S() { return S; }, save, reload: loadState,
+  get S() { return S; }, save, reload: loadState, NATIVE,
   reset() { LS.del(KEY); S = seed(); S.bday = {}; S.bdayRem = { day: true, before: true }; S.bdayNotified = {}; S.mEdit = {}; S.visits = seedVisits(); applyMemberEdits(); S.tLog = {}; S.team = {}; S.claims = seedClaims(); S.invoices = seedInvoices(); S.invSeq = 41; save(); },
   t, get lang() { return lang; }, LANGS, htmlLang,
   setLang(l) { if (!LANGS.some(x => x[0] === l)) return; lang = l; LS.set('appt4u-lang', l); document.documentElement.lang = htmlLang(l); },
