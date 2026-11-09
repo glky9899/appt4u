@@ -321,8 +321,6 @@ const STR = {
   payHow: ['How was it paid?', '付款方式？'],
   sendWA: ['WhatsApp', 'WhatsApp'],
   printPdf: ['Print / PDF', '打印 / PDF'],
-  einvoice: ['Submit to MyInvois (e-Invoice)', '提交 MyInvois（电子发票）'],
-  einvNote: ['LHDN e-Invoice submission comes in the full version.', 'LHDN 电子发票提交将在完整版提供。'],
   waDemo: ['In the full version this opens WhatsApp with a link to the invoice.', '完整版会打开 WhatsApp 并附上发票链接。'],
   invIssued: ['Invoice {n} issued', '发票 {n} 已开具'],
   invDraftSaved: ['Draft saved', '草稿已保存'],
@@ -643,8 +641,6 @@ const STR_MS = {
   payHow: 'Bagaimana dibayar?',
   sendWA: 'WhatsApp',
   printPdf: 'Cetak / PDF',
-  einvoice: 'Hantar ke MyInvois (e-Invois)',
-  einvNote: 'Penghantaran e-Invois LHDN tersedia dalam versi penuh.',
   waDemo: 'Dalam versi penuh, ini membuka WhatsApp dengan pautan invois.',
   invIssued: 'Invois {n} dikeluarkan',
   invDraftSaved: 'Draf disimpan',
@@ -1930,8 +1926,7 @@ function vAInvoice(id) {
   const acts = x.status === 'draft'
     ? `<div class="row-start gap8"><a class="btn btn-outline grow" href="#/a/invoice/${x.id}/edit">${t('editInv')}</a><button class="btn btn-primary grow" data-act="invIssue" data-id="${x.id}">${t('issueInv')}</button></div>`
     : `${x.status !== 'paid' ? `<button class="btn btn-primary btn-block" data-act="invPaySheet" data-id="${x.id}">${icon('cash', 18)} ${t('markPaidInv')}</button>` : ''}
-      <div class="row-start gap8"><button class="btn btn-outline grow" data-act="toast" data-msg="waDemo">${icon('share', 16)} ${t('sendWA')}</button><button class="btn btn-outline grow" data-act="invPrint">${icon('download', 16)} ${t('printPdf')}</button></div>
-      <button class="btn btn-ghost btn-block" data-act="toast" data-msg="einvNote">${t('einvoice')}</button>`;
+      <div class="row-start gap8"><button class="btn btn-outline grow" data-act="toast" data-msg="waDemo">${icon('share', 16)} ${t('sendWA')}</button><button class="btn btn-outline grow" data-act="invPrint">${icon('download', 16)} ${t('printPdf')}</button></div>`;
   return page({ back: '/a/invoices', title: t('invoices'), body: `${doc}<div class="stack inv-actions">${acts}</div>` });
 }
 function vAMore() {
