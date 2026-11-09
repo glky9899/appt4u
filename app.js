@@ -9,7 +9,11 @@ const LS = {
   set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* storage unavailable: demo still works for this visit */ } },
   del(k) { try { localStorage.removeItem(k); } catch (e) { /* ignore */ } },
 };
-let lang = LS.get('appt4u-lang', null) || ((navigator.language || '').toLowerCase().startsWith('zh') ? 'zh' : 'en');
+const LANGS = [['en', 'English', 'EN'], ['ms', 'Bahasa Melayu', 'BM'], ['zh', '中文', '中文']];
+const navLang = (navigator.language || '').toLowerCase();
+let lang = LS.get('appt4u-lang', null);
+if (!LANGS.some(l => l[0] === lang)) lang = navLang.startsWith('zh') ? 'zh' : navLang.startsWith('ms') ? 'ms' : 'en';
+const htmlLang = l => l === 'zh' ? 'zh-Hans' : l;
 
 /* ------------------------------------------------------------------ strings */
 const STR = {
@@ -179,9 +183,177 @@ const STR = {
   firmPressure: ['Prefers firm pressure', '喜欢较重的力度'], pregnantNote: ['Pregnant — avoid certain essential oils', '孕期——避免部分精油'],
   notFound: ['Page not found', '找不到页面'], goHome: ['Go home', '返回首页'], demoOnly: ['Available in the full version', '完整版提供此功能'],
 };
+/* Bahasa Melayu. Any key missing here falls back to English. */
+const STR_MS = {
+  back: 'Kembali', done: 'Selesai', save: 'Simpan', saved: 'Disimpan', notNow: 'Bukan sekarang',
+  any: 'Sesiapa', mins: '{n} min', today: 'Hari ini',
+  welcomeT: 'Tempah rawatan kecantikan & kesihatan berdekatan anda',
+  welcomeSub: 'Rawatan muka, rambut, kuku dan pilates — tempah dalam beberapa saat, semak pakej anda dan terima peringatan.',
+  signInPhone: 'Log masuk dengan nombor telefon', exploreDemo: 'Cuba demo',
+  demoNote: 'Demo dengan data contoh',
+  phoneTitle: 'Nombor telefon anda', phoneSub: 'Kami akan menghantar kod 6 digit melalui SMS.',
+  sendCode: 'Hantar kod', phoneInvalid: 'Masukkan nombor telefon yang sah',
+  otpTitle: 'Masukkan kod', otpSub: 'Dihantar ke {p}. Demo: mana-mana 6 digit boleh digunakan.',
+  verify: 'Sahkan', otpInvalid: 'Masukkan kod 6 digit',
+  agree: 'Dengan meneruskan, anda bersetuju dengan notis PDPA dan terma tempahan perniagaan yang anda tempah.',
+  chooseRole: 'Lihat demo sebagai',
+  r_member: 'Ahli', r_memberSub: 'Cari salun, tempah, dompet',
+  r_admin: 'Pemilik / admin', r_adminSub: 'Hari ini, diari, kaunter, laporan',
+  r_therapist: 'Terapis (lokum)', r_therapistSub: 'Jadual dan pendapatan',
+  r_agent: 'Ejen / perujuk', r_agentSub: 'Rujukan dan komisen',
+  tabHome: 'Utama', tabBookings: 'Tempahan', tabWallet: 'Dompet', tabProfile: 'Profil',
+  loc: 'Lokasi', locVal: 'Kuala Lumpur, Malaysia', searchPh: 'Cari salun, studio atau rawatan',
+  services: 'Perkhidmatan', nearby: 'Salun & studio berdekatan', viewMap: 'Lihat peta',
+  noResults: 'Tiada padanan berdekatan',
+  cat_all: 'Semua', cat_facial: 'Muka', cat_hair: 'Rambut', cat_nails: 'Kuku', cat_body: 'Badan & spa', cat_pilates: 'Pilates',
+  promoEyebrow: 'Tawaran hari bekerja!', promoTitle: 'Diskaun 20%', promoSub: 'Rawatan muka 10:00–13:00, Isn–Jum', bookNowBtn: 'Tempah sekarang',
+  noNotifs: 'Tiada pemberitahuan baharu', upNext: 'Akan datang', showQR: 'Tunjuk QR',
+  yourWallet: 'Dompet anda di {b}', walletLine: '{s} sesi · {v} nilai tersimpan',
+  aftercareCard: 'Tip penjagaan selepas rawatan muka terakhir',
+  favAdded: 'Disimpan ke kegemaran', favRemoved: 'Dibuang daripada kegemaran',
+  continueN: 'Teruskan ({n})', selectSvc: 'Pilih perkhidmatan',
+  inPackage: 'Dalam pakej anda · baki {n}',
+  installTitle: 'Pasang appt4u', installIOS: 'Ketik Kongsi, kemudian “Tambah ke Skrin Utama”.',
+  installAndroid: 'Tambah ke skrin utama untuk tempahan satu ketikan.', installBtn: 'Pasang',
+  bookTitle: 'Pilih masa', staff: 'Kakitangan', pickDate: 'Tarikh', pickTime: 'Masa', full: 'penuh',
+  payWith: 'Bayar dengan', payPackage: 'Pakej · baki {n}', payStored: 'Nilai tersimpan · {b}',
+  payStore: 'Bayar di kaunter', roomAuto: 'Bilik dan peranti diaturkan untuk anda',
+  policy: 'Pembatalan percuma sehingga {h} jam sebelum.', chooseTime: 'Pilih masa',
+  bookNowAt: 'Tempah sekarang · {p}', totalLine: '{p} · {m} min',
+  booked: 'Tempahan anda berjaya', heldPkg: '1 sesi ditahan daripada pakej anda',
+  heldStored: '{a} ditahan daripada nilai tersimpan', payAtStore: 'Bayar di kaunter pada hari tersebut',
+  addCal: 'Tambah ke kalendar anda?', calWhy: 'Simpan dalam kalendar telefon dengan peringatan 2 jam sebelum.',
+  appleCal: 'Kalendar Apple', googleCal: 'Kalendar Google', otherCal: 'Outlook atau lain-lain (.ics)',
+  alwaysDo: 'Sentiasa buat begini', addTo: 'Tambah ke {c}', addToCalendar: 'Tambah ke kalendar',
+  addedCal: 'Dihantar ke kalendar anda',
+  upcoming: 'Akan datang', past: 'Lepas', noBooking: 'Tiada tempahan akan datang', noPast: 'Belum ada tempahan lepas',
+  findSalon: 'Cari salun', cancel: 'Batal', cancelQ: 'Batalkan tempahan ini?',
+  cancelFreeInfo: 'Masih lebih {h} jam sebelum temu janji, jadi tiada caj dikenakan.',
+  cancelLateInfo: 'Kurang {h} jam lagi: ini pembatalan lewat dan sesi akan ditolak.',
+  keep: 'Kekalkan tempahan', yesCancel: 'Ya, batalkan',
+  cancelledToast: 'Dibatalkan. Tiada caj dikenakan.',
+  lateToast: 'Dibatalkan lewat. Sesi ditolak mengikut polisi.',
+  st_booked: 'Ditempah', st_completed: 'Selesai', st_cancelled: 'Dibatalkan', st_late: 'Batal lewat',
+  walletTitle: 'Dompet', tabPackages: 'Pakej', tabStored: 'Nilai tersimpan', tabVouchers: 'Baucar',
+  remaining: 'Baki {n} sesi', legend: 'Digunakan {u} · Ditempah {h} · Tersedia {a}',
+  validUntil: 'Sah hingga {d}', statement: 'Penyata', available: 'Baki tersedia',
+  heldNote: '{a} ditahan untuk tempahan akan datang',
+  offersT: 'Tawaran untuk dituntut', myVouchers: 'Baucar saya', voucherUse: 'Tunjukkan QR ahli anda di kaunter untuk menggunakannya.',
+  offer1: 'Tambah nilai RM1,000, dapat RM150 percuma', offer1Sub: 'Di kedai, sehingga {d}',
+  offer2: 'Bulan hari jadi: diskaun 15% rawatan muka', offer2Sub: 'Sah sepanjang bulan ini',
+  claim: 'Tuntut', claimed: 'Dituntut', claimedToast: 'Disimpan ke dompet anda sebagai baucar',
+  k_purchase: 'Dibeli di kedai', k_use: 'Digunakan', k_topup: 'Tambah nilai di kedai', k_bonus: 'Bonus tambah nilai',
+  k_late: 'Batal lewat', balShort: 'baki {b}',
+  pdfToast: 'Penyata PDF tersedia dalam versi penuh',
+  goldMember: 'Ahli Emas', myQR: 'QR ahli saya',
+  qrHint: 'Tunjukkan di kaunter untuk bayar, tebus atau daftar masuk.', qrDemo: 'Kod demo — tidak boleh diimbas',
+  skinProfile: 'Profil kulit & persetujuan', myBookings: 'Tempahan saya', favourites: 'Kegemaran',
+  calendarSet: 'Kalendar', calAsk: 'Tanya setiap kali',
+  notifications: 'Pemberitahuan', n_rem: 'Peringatan tempahan', n_offers: 'Tawaran', n_after: 'Tip penjagaan selepas rawatan',
+  n_note: 'Pengesahan dan perubahan tempahan sentiasa dihantar.',
+  language: 'Bahasa', refer: 'Rujuk rakan', switchRole: 'Tukar paparan demo',
+  resetDemo: 'Set semula data demo', resetQ: 'Set semula semua data demo?',
+  resetInfo: 'Tempahan, jualan dan tetapan yang anda ubah di sini akan kembali kepada data contoh.',
+  signOut: 'Log keluar',
+  skinTitle: 'Profil kulit', skinType: 'Jenis kulit', concerns: 'Masalah utama', allergies: 'Alahan & amaran',
+  consent: 'Persetujuan rawatan', signed: 'Ditandatangani', signedOn: 'Ditandatangani {d} · versi 2',
+  photos: 'Foto sebelum/selepas', ph_archive: 'Simpan dalam fail sahaja', ph_marketing: 'Boleh digunakan untuk pemasaran', ph_no: 'Jangan ambil foto',
+  reviewNote: 'Disemak setiap tahun. Terapis anda membacanya sebelum setiap rawatan.',
+  ty_dry: 'Kering', ty_oily: 'Berminyak', ty_combo: 'Kombinasi', ty_sensitive: 'Sensitif', ty_normal: 'Normal',
+  co_dull: 'Kusam', co_pores: 'Liang pori', co_acne: 'Jerawat', co_pig: 'Pigmentasi', co_lines: 'Garis halus',
+  aftercareTitle: 'Penjagaan selepas rawatan', within24: 'Untuk 24 jam akan datang',
+  tip1: 'Elakkan sauna dan mandi air panas', tip2: 'Hentikan seketika pengelupas dan retinoid', tip3: 'Lembapkan kulit dan pakai pelindung matahari',
+  nextSuggested: 'Lawatan seterusnya yang disyorkan', interval: 'Setiap 14 hari · sesi {n} daripada {t}',
+  bookOneTap: 'Tempah {t} dengan {p}', recommended: 'Disyorkan untuk di rumah',
+  serum: 'Serum Pemulih 30ml', inStore: 'Beli di kedai',
+  aToday: 'Hari ini', aDiary: 'Diari', aMembers: 'Ahli', aReports: 'Laporan', aMore: 'Lagi',
+  mainBranch: 'Cawangan utama', recordSale: 'Rekod jualan',
+  kBookings: 'Tempahan', kArrived: 'Telah tiba', kSales: 'Jualan hari ini', kRoom: 'Guna bilik',
+  vsLastWeek: 'Perubahan berbanding hari yang sama minggu lepas.', needs: 'Perlu perhatian',
+  att1: '2 pelanggan belum menandatangani persetujuan', att2: '3 pakej tamat dalam 14 hari',
+  att3: '3 slot kosong petang ini', att4: 'Penyata komisen Kelvin menunggu kelulusan',
+  appts: 'Temu janji hari ini', checkIn: 'Daftar masuk', arrivedSt: 'Telah tiba', doneSt: 'Selesai',
+  diaryNote: 'Masa hanya ditawarkan apabila terapis, bilik dan peranti semuanya kosong.',
+  room1: 'Bilik 1', room2: 'Bilik 2', hydraDevice: 'Peranti Hydra', clean: 'Cuci', lunch: 'Rehat',
+  lg_treat: 'Terapis', lg_room: 'Bilik / peranti', lg_mine: 'Mei Ling (demo ahli)', lg_clean: 'Cuci / rehat',
+  search: 'Cari nama',
+  seg_all: 'Semua', seg_vip: 'VIP', seg_loyal: 'Setia', seg_new: 'Baharu', seg_atrisk: 'Berisiko', seg_away: 'Ada baki, tidak datang', seg_lost: 'Tidak aktif',
+  act_vip: 'Ucapkan terima kasih sendiri dan tawarkan tempahan keutamaan.', act_loyal: 'Tawarkan pakej yang lebih besar.',
+  act_new: 'Galakkan lawatan kedua.', act_atrisk: 'Hubungi mereka atau hantar tawaran untuk kembali.',
+  act_away: 'Ingatkan mereka masih ada baki sesi.', act_lost: 'Hantar tawaran kos rendah untuk menarik mereka kembali.',
+  lastVisit: 'Lawatan terakhir {n} hari lalu', balLeft: 'Baki {b}', noMembers: 'Tiada ahli ditemui',
+  ltv: 'Jumlah perbelanjaan', visits12: 'Lawatan, 12 bulan lepas', balanceLeft: 'Baki',
+  pkgsBought: 'Pakej dibeli', rebuy: 'Beli semula setiap', weeks: '~{n} minggu',
+  lastVisitL: 'Lawatan terakhir', daysAgo: '{n} hari lalu', introBy: 'Diperkenalkan oleh {n}',
+  notes: 'Nota terapis', note1: 'Kulit sensitif; alah kepada asid salisilik. Lebih suka waktu petang.',
+  noteGen: 'Suka sesi yang tenang. Gemar rangkaian pelembap.',
+  consentOk: 'Persetujuan ditandatangani', consentMissing: 'Persetujuan belum ditandatangani',
+  customer: 'Pelanggan', item: 'Item', payMethod: 'Kaedah bayaran',
+  m_cash: 'Tunai', m_card: 'Kad', m_duitnow: 'DuitNow QR', m_ewallet: 'E-dompet',
+  receiptNo: 'No. resit kaunter', soldBy: 'Dijual oleh', frontDesk: 'Sara · Kaunter depan',
+  introducer: 'Perujuk', none: 'Tiada', total: 'Jumlah', needReceipt: 'Masukkan nombor resit kaunter',
+  saleDone: 'Jualan direkodkan', addedTo: 'Ditambah ke dompet {n}', pushSent: 'Resit dihantar kepada ahli melalui pemberitahuan',
+  commLines: 'Rekod komisen dicipta', newSale: 'Jualan baharu', seeMember: 'Lihat dalam aplikasi ahli',
+  productOnly: 'Jualan produk — tiada apa-apa ditambah ke dompet', plusBonus: '{a} + bonus {b}',
+  rTitle: 'Laporan', p_month: 'Bulan', p_quarter: 'Suku tahun', p_year: '12 bulan',
+  c_prev: 'vs tempoh lepas', c_ly: 'vs tahun lepas',
+  r_cash: 'Tunai diterima', r_earned: 'Hasil diperoleh', r_unused: 'Nilai pakej belum digunakan',
+  r_active: 'Pelanggan aktif / bulan', r_avg: 'Belanja setiap pelanggan / bulan', r_ret: 'Pelanggan kembali',
+  r_ren: 'Pembaharuan pakej', r_new: 'Pelanggan baharu',
+  trend: 'Tunai vs hasil diperoleh · 13 bulan', cashL: 'Tunai diterima', earnedL: 'Hasil diperoleh',
+  why: 'Mengapa hasil berubah', whySub: 'Hasil = pelanggan × lawatan setiap orang × belanja setiap lawatan',
+  w_cust: 'Pelanggan', w_visits: 'Lawatan/orang', w_spend: 'Belanja / lawatan',
+  unusedT: 'Nilai pakej belum digunakan', unusedSub: 'Sesi yang telah dibayar pelanggan tetapi belum digunakan',
+  rf_open: 'Baki awal', rf_sold: '+ Pakej dijual', rf_used: '− Digunakan (diperoleh)',
+  rf_exp: '− Tamat tempoh tanpa digunakan', rf_adj: '± Bayaran balik & pelarasan', rf_close: 'Baki akhir',
+  byExpiry: 'Nilai belum digunakan mengikut tarikh tamat', e30: '≤ 30 hari', e90: '31–90 hari', e180: '91–180 hari', eLater: '> 180 hari',
+  custN: '{n} pelanggan',
+  ranking: 'Kedudukan rawatan', mt_rev: 'Hasil', mt_sessions: 'Sesi', mt_profit: 'Untung / jam', mt_growth: 'Pertumbuhan',
+  highest: 'Tertinggi', lowest: 'Terendah',
+  quad: 'Populariti vs keuntungan', q_star: 'Bintang', q_work: 'Tulang belakang', q_gem: 'Permata tersembunyi', q_weak: 'Lemah',
+  quadNote: 'Bintang: promosikan. Tulang belakang: naikkan harga atau kurangkan kos. Permata tersembunyi: lebihkan pemasaran. Lemah: ubah suai atau hentikan.',
+  axSessions: 'Sesi / bulan →', axProfit: 'Untung / jam ↑',
+  topCust: 'Pelanggan teratas · 12 bulan lepas', conc: '10% pelanggan teratas menyumbang {p} hasil.',
+  c_spend: 'Belanja', c_visits: 'Lawatan', c_avg: 'Purata / lawatan', sample: 'Data contoh',
+  commission: 'Penyata komisen', promotions: 'Promosi', settings: 'Tetapan perniagaan',
+  approve: 'Luluskan', approved: 'Diluluskan', markPaid: 'Tanda dibayar', paidSt: 'Dibayar',
+  stmtFor: 'Penyata untuk {m}', sessionsN: '{n} sesi', salesComm: 'Komisen jualan 5%', introComm: 'Perujuk 10%',
+  promoStats: 'Dipaparkan {a} · dituntut {b} · digunakan {c}', promoConv: '{a} pelanggan baharu · {b} membeli pakej',
+  pr1: 'Bonus tambah nilai RM150', pr2: 'Hari jadi diskaun 15%', pr3: 'Rawatan muka hari bekerja diskaun 20%', pr4: 'Rawatan muka pertama RM98',
+  set_window: 'Tempoh tempahan', set_cut: 'Batal percuma sehingga', set_grace: 'Dikira tidak hadir selepas',
+  set_buffer: 'Masa pembersihan', set_expiry: 'Tempoh sah pakej', set_rem: 'Peringatan', set_brand: 'Warna jenama',
+  v_7d: '7 hari lebih awal', v_12h: '12 jam sebelum', v_15m: 'Lewat 15 minit', v_buf: '15 minit',
+  v_6m: '6 bulan', v_rem: '24 jam dan 2 jam sebelum', editFull: 'Ubah tetapan tersedia dalam versi penuh.',
+  hi: 'Hai, {n}', tToday: 'Hari ini', tEarnings: 'Pendapatan', earnedMonth: 'Pendapatan bulan ini',
+  startS: 'Daftar masuk', completeS: 'Selesai', inProg: 'Sedang berjalan', commAdded: 'Komisen +{a} ditambah',
+  lines: 'Bulan ini', payoutHist: 'Bayaran', paidRef: 'Dibayar {d} · ruj. {r}',
+  calFeed: 'Suapan kalendar peribadi', calFeedSub: 'Langgan sekali dalam Kalendar Google atau Apple dan tempahan anda sentiasa diselaraskan.',
+  copy: 'Salin', copied: 'Disalin',
+  gHome: 'Utama', gShare: 'Kongsi', gPayouts: 'Bayaran', myRef: 'Rujukan saya',
+  thisMonth: 'Bulan ini', pendingApp: 'Menunggu kelulusan', lastPaid: '{m} dibayar: {a}',
+  joined: 'Sertai {d}', purchased: 'Telah membeli', trial: 'Percubaan',
+  agentRule: 'Anda dapat 10% daripada pembelian rakan anda selama 6 bulan.',
+  yourLink: 'Pautan peribadi anda', shareWA: 'Kongsi di WhatsApp', msgPreview: 'Pratonton mesej',
+  waMsg: 'Hai! Cuba {b} — tempah dalam talian dalam beberapa saat dan dapatkan rawatan muka pertama dengan harga RM98: {l}',
+  sideTitle: 'Demo interaktif',
+  sideText: 'Aplikasi web mudah alih untuk studio dan salun. Di telefon anda, buka www.appt4u.com dan tambah ke Skrin Utama — ia dibuka skrin penuh seperti aplikasi biasa.',
+  sideRoles: 'Lihat sebagai', sideData: 'Perniagaan dan data contoh sahaja. Perubahan anda kekal dalam pelayar ini.',
+  tSchedule: 'Jadual', newBooking: 'Tempahan baharu', gotIt: 'Faham', inCal: 'Dalam kalendar',
+  syncT: 'Selaraskan kalendar anda', syncSub: 'Masukkan temu janji ke dalam kalendar telefon anda supaya tidak terlepas.',
+  addWeek: 'Tambah 7 hari akan datang', subscribe: 'Segerak automatik',
+  subInfo: 'Langgan sekali dan temu janji yang baharu, dialihkan atau dibatalkan dikemas kini dalam kalendar anda secara automatik. Berfungsi dengan Google, Apple dan Outlook.',
+  subDemo: 'Suapan langsung diaktifkan dalam versi penuh. Dalam demo ini, gunakan “Tambah 7 hari akan datang”.',
+  noAppts: 'Tiada temu janji pada hari ini', apptsN: '{n} temu janji',
+  remSet: 'Peringatan', rem2h: 'Pemberitahuan 2 jam sebelum setiap temu janji', runSheet: 'Senarai tugas harian pada 8:00 pagi', newPush: 'Makluman segera untuk tempahan baharu, dialihkan atau dibatalkan',
+  calPrivacy: 'Kalendar anda hanya menunjukkan nama pertama pelanggan dan perkhidmatan. Nota kesihatan kekal dalam appt4u.',
+  weekAdded: '{n} temu janji dihantar ke kalendar anda',
+  calWhyT: 'Anda menerima peringatan 30 minit sebelum, dengan nama pertama pelanggan dan bilik.',
+  firmPressure: 'Suka tekanan kuat', pregnantNote: 'Hamil — elakkan minyak pati tertentu',
+  notFound: 'Halaman tidak ditemui', goHome: 'Ke halaman utama', demoOnly: 'Tersedia dalam versi penuh',
+};
 function t(k, v) {
   const e = STR[k];
-  let s = e ? (lang === 'zh' ? e[1] : e[0]) : k;
+  let s = e ? (lang === 'zh' ? e[1] : lang === 'ms' && STR_MS[k] != null ? STR_MS[k] : e[0]) : k;
   if (v) for (const n in v) s = s.split('{' + n + '}').join(v[n]);
   return s;
 }
@@ -200,12 +372,16 @@ const sameDay = (a, b) => { a = new Date(a); b = new Date(b); return a.getFullYe
 const EN_D = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const EN_M = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const ZH_D = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
-const fDay = d => { d = new Date(d); return lang === 'zh' ? `${d.getMonth() + 1}月${d.getDate()}日 ${ZH_D[d.getDay()]}` : `${EN_D[d.getDay()]} ${d.getDate()} ${EN_M[d.getMonth()]}`; };
-const fDate = d => { d = new Date(d); return lang === 'zh' ? `${d.getMonth() + 1}月${d.getDate()}日` : `${d.getDate()} ${EN_M[d.getMonth()]}`; };
-const fFull = d => { d = new Date(d); return lang === 'zh' ? `${d.getFullYear()}年${d.getMonth() + 1}月${d.getDate()}日` : `${d.getDate()} ${EN_M[d.getMonth()]} ${d.getFullYear()}`; };
-const fMonth = d => { d = new Date(d); return lang === 'zh' ? `${d.getFullYear()}年${d.getMonth() + 1}月` : `${EN_M[d.getMonth()]} ${d.getFullYear()}`; };
-const fMon = d => { d = new Date(d); return lang === 'zh' ? `${d.getMonth() + 1}月` : EN_M[d.getMonth()]; };
-const dayShort = d => (lang === 'zh' ? ZH_D : EN_D)[new Date(d).getDay()];
+const MS_D = ['Ahd', 'Isn', 'Sel', 'Rab', 'Kha', 'Jum', 'Sab'];
+const MS_M = ['Jan', 'Feb', 'Mac', 'Apr', 'Mei', 'Jun', 'Jul', 'Ogo', 'Sep', 'Okt', 'Nov', 'Dis'];
+const MON = () => lang === 'ms' ? MS_M : EN_M;
+const WD = () => lang === 'ms' ? MS_D : EN_D;
+const fDay = d => { d = new Date(d); return lang === 'zh' ? `${d.getMonth() + 1}月${d.getDate()}日 ${ZH_D[d.getDay()]}` : `${WD()[d.getDay()]} ${d.getDate()} ${MON()[d.getMonth()]}`; };
+const fDate = d => { d = new Date(d); return lang === 'zh' ? `${d.getMonth() + 1}月${d.getDate()}日` : `${d.getDate()} ${MON()[d.getMonth()]}`; };
+const fFull = d => { d = new Date(d); return lang === 'zh' ? `${d.getFullYear()}年${d.getMonth() + 1}月${d.getDate()}日` : `${d.getDate()} ${MON()[d.getMonth()]} ${d.getFullYear()}`; };
+const fMonth = d => { d = new Date(d); return lang === 'zh' ? `${d.getFullYear()}年${d.getMonth() + 1}月` : `${MON()[d.getMonth()]} ${d.getFullYear()}`; };
+const fMon = d => { d = new Date(d); return lang === 'zh' ? `${d.getMonth() + 1}月` : MON()[d.getMonth()]; };
+const dayShort = d => (lang === 'zh' ? ZH_D : WD())[new Date(d).getDay()];
 const rm = (n, dp = 0) => 'RM' + Number(n).toLocaleString('en-MY', { minimumFractionDigits: dp, maximumFractionDigits: dp });
 
 /* ------------------------------------------------------------------ icons, photos & art */
@@ -255,7 +431,7 @@ const IMG = {
   facial: '1570172619644-dfd03ed5d881', mask: '1616394584738-fc6e612e71b9', salon: '1560066984-138dadb4c035', stylist: '1562322140-8baeececf3df',
   pclass: '1588286840104-8957b019727f', pmat: '1518611012118-696072aa579a', pink: '1521590832167-7bcbfaa6381f', nails: '1607779097040-26e80aa78e66', spa: '1512290923902-8a9f81dc236c',
 };
-const SERUM = '<svg viewBox="0 0 56 56" aria-hidden="true"><rect x="20" y="24" width="16" height="22" rx="5" fill="#DCE4FF" stroke="#111827" stroke-width="1.4"/><rect x="23" y="19" width="10" height="5" rx="1.5" fill="#111827"/><path d="M24.5 19v-6a3.5 3.5 0 0 1 7 0v6z" fill="#111827"/><rect x="23" y="31" width="10" height="8" rx="1.5" fill="#fff"/></svg>';
+const SERUM = '<svg viewBox="0 0 56 56" aria-hidden="true"><rect x="20" y="24" width="16" height="22" rx="5" fill="#F4E9CC" stroke="#111827" stroke-width="1.4"/><rect x="23" y="19" width="10" height="5" rx="1.5" fill="#111827"/><path d="M24.5 19v-6a3.5 3.5 0 0 1 7 0v6z" fill="#111827"/><rect x="23" y="31" width="10" height="8" rx="1.5" fill="#fff"/></svg>';
 
 function fakeQR(seed, size = 176) {
   const n = 25, c = size / n; let r = '';
@@ -332,6 +508,35 @@ const PRODUCTS = [
   { id: 'serum', type: 'product', price: 168, name: { en: 'Repair Serum 30ml', zh: '修护精华 30ml' } },
 ];
 const product = id => PRODUCTS.find(p => p.id === id);
+const MS_DATA = {
+  ther: { joanne: 'Terapis kanan', weiling: 'Terapis', aida: 'Artis kuku & bulu mata', marcus: 'Penggaya kanan', ying: 'Pakar warna rambut', sarah: 'Jurulatih', hana: 'Jurulatih', nina: 'Artis kuku', mei: 'Artis bulu mata' },
+  biz: {
+    lumiere: { area: 'Bangsar, Kuala Lumpur', hours: '10 pagi–8 malam, setiap hari', tabs: ['Muka', 'Bulu mata & kuku', 'Badan & kulit kepala'],
+      desc: 'Rawatan muka yang mengutamakan kesihatan kulit, penjagaan bulu mata dan kuku, serta rawatan badan yang menenangkan. Ahli boleh menggunakan pakej dan nilai tersimpan terus dalam aplikasi.' },
+    glow: { area: 'Mont Kiara, Kuala Lumpur', hours: '9 pagi–9 malam, Isnin–Ahad', tabs: ['Potong rambut', 'Warna', 'Rawatan'],
+      desc: 'Potongan rambut yang kemas, pewarnaan dan penjagaan kulit kepala oleh penggaya kanan, dengan konsultasi percuma pada lawatan pertama.' },
+    coreflow: { area: 'Damansara Heights, KL', hours: '7 pagi–10 malam, Isnin–Sabtu', tabs: ['Kelas berkumpulan', 'Persendirian'],
+      desc: 'Kelas reformer kecil sehingga 8 orang, serta sesi persendirian dan sesi berdua.' },
+    polished: { area: 'Bukit Bintang, Kuala Lumpur', hours: '10 pagi–10 malam, Isnin–Ahad', tabs: ['Kuku', 'Bulu mata'],
+      desc: 'Kuku gel, pedikur dan set bulu mata dalam studio merah jambu yang tenang.' },
+  },
+  svc: {
+    hydra: ['Rawatan Muka Hydrating Glow', 'Hydra'], deep: ['Rawatan Muka Pembersihan Mendalam', 'Pembersihan'], calm: ['Rawatan Penenang Kulit Sensitif', 'Penenang'],
+    lash: ['Sambungan Bulu Mata (Klasik)', 'Bulu mata'], gel: ['Manikur Gel', 'Kuku gel'], body: ['Urutan Badan Aromaterapi', 'Badan'], scalp: ['Rawatan Detoks Kulit Kepala', 'Kulit kepala'],
+    cutw: ['Potong rambut wanita'], cutm: ['Potong rambut lelaki'], wash: ['Cuci & blow-dry rambut'], root: ['Warna akar rambut'], bala: ['Balayage'],
+    kera: ['Rawatan keratin'], spa: ['Spa kulit kepala'], reformer: ['Reformer Flow (berkumpulan)'], mat: ['Pilates Mat (berkumpulan)'],
+    priv: ['Reformer persendirian 1:1'], duet: ['Sesi berdua (2 orang)'], gelm: ['Manikur gel'], gelp: ['Pedikur gel'], lset: ['Set bulu mata klasik'], llift: ['Lash lift & warna'],
+  },
+  prod: { 'p-hydra6': 'Hydrating Glow · 6 sesi', 'p-deep5': 'Pembersihan Mendalam · 5 sesi', 'p-lash4': 'Sambungan Bulu Mata · 4 sesi', topup1000: 'Nilai tersimpan RM1,000 (+RM150)', serum: 'Serum Pemulih 30ml' },
+};
+Object.keys(THER).forEach(k => { THER[k].title.ms = MS_DATA.ther[k] || THER[k].title.en; });
+BIZS.forEach(b => {
+  const m = MS_DATA.biz[b.id] || {};
+  b.name.ms = b.name.en; b.area.ms = m.area || b.area.en; b.hours.ms = m.hours || b.hours.en; b.desc.ms = m.desc || b.desc.en;
+  b.tabs.forEach((tb, i) => { tb[3] = (m.tabs && m.tabs[i]) || tb[1]; });
+});
+SERVICES.forEach(s => { const m = MS_DATA.svc[s.id] || []; s.name.ms = m[0] || s.name.en; if (s.short) s.short.ms = m[1] || s.short.en; });
+PRODUCTS.forEach(p => { p.name.ms = MS_DATA.prod[p.id] || p.name.en; });
 const MEMBERS = [
   { id: 'meiling', name: 'Mei Ling Tan', tier: 'gold', seg: 'vip', last: 11, ltv: 6240, visits: 18, pk: 3, rebuy: 8, intro: 'Kelvin', consent: true },
   { id: 'grace', name: 'Grace Lim', tier: 'gold', seg: 'vip', last: 4, ltv: 5880, visits: 22, bal: 1200, pk: 4, rebuy: 7, consent: true },
@@ -440,7 +645,10 @@ function page({ tabs, active, body, back, title, cls, right }) {
 }
 const redirect = p => { setTimeout(() => go(p), 0); return '<main class="main" id="main"></main>'; };
 const mark = (l, dark) => `<span class="mark ${dark ? 'dark' : ''}">${l || 'L'}</span>`;
-const langBtn = () => `<button class="lang" data-act="lang">${lang === 'zh' ? 'EN' : '中文'}</button>`;
+const langName = () => (LANGS.find(l => l[0] === lang) || LANGS[0])[1];
+const langBtn = () => `<div class="langseg" role="group" aria-label="${t('language')}">${LANGS.map(([k, , s]) => `<button class="${k === lang ? 'on' : ''}" data-act="setLang" data-l="${k}" lang="${htmlLang(k)}" aria-pressed="${k === lang}">${s}</button>`).join('')}</div>`;
+const logo = cls => `<img class="${cls}" src="icons/logo.png" alt="appt4u" width="960" height="263">`;
+const appIcon = () => '<img class="app-icon" src="icons/icon-192.png" alt="" width="40" height="40">';
 const kpi = (l, v, d) => `<div class="kpi"><span class="kpi-l">${l}</span><span class="kpi-v">${v}</span>${d || ''}</div>`;
 const delta = (txt, dir) => `<span class="delta ${dir}">${dir === 'up' ? '▲' : dir === 'down' ? '▼' : '•'} ${txt}</span>`;
 const statrow = (l, v) => `<div class="statrow"><span>${l}</span><b>${v}</b></div>`;
@@ -452,7 +660,7 @@ const pic = (id, w, cls) => `<img class="${cls}" src="${photo(id, w)}" alt="" lo
 function vWelcome() {
   return `<div class="welcome">
   <div class="welcome-photo"><img src="${photo(IMG.salon, 900)}" alt="" decoding="async">
-    <div class="welcome-top"><span class="brand-chip">${mark('a', true)}<span class="wordmark">appt4u</span></span>${langBtn()}</div></div>
+    <div class="welcome-top"><span class="brand-chip">${logo('logo-chip')}</span>${langBtn()}</div></div>
   <div class="welcome-body">
     <h1 class="display">${t('welcomeT')}</h1>
     <p class="lead">${t('welcomeSub')}</p>
@@ -486,18 +694,18 @@ function installBanner() {
   if (isIOS) msg = t('installIOS');
   else if (deferredPrompt) { msg = t('installAndroid'); btn = `<button class="btn btn-sm btn-primary" data-act="install">${t('installBtn')}</button>`; }
   else return '';
-  return `<div class="card banner"><div class="row-start">${mark('a', true)}<div><p class="strong">${t('installTitle')}</p><p class="small muted">${msg}</p></div></div><div class="row-start gap8">${btn}<button class="icon-btn" data-act="dismissInstall" aria-label="${t('notNow')}">${icon('x', 18)}</button></div></div>`;
+  return `<div class="card banner"><div class="row-start">${appIcon()}<div><p class="strong">${t('installTitle')}</p><p class="small muted">${msg}</p></div></div><div class="row-start gap8">${btn}<button class="icon-btn" data-act="dismissInstall" aria-label="${t('notNow')}">${icon('x', 18)}</button></div></div>`;
 }
 function upcomingCard(b) {
   const d = new Date(b.start), B = bBiz(b);
-  return `<div class="card upc"><span class="datebox"><span>${lang === 'zh' ? (d.getMonth() + 1) + '月' : EN_M[d.getMonth()]}</span><b>${d.getDate()}</b></span>
+  return `<div class="card upc"><span class="datebox"><span>${lang === 'zh' ? (d.getMonth() + 1) + '月' : MON()[d.getMonth()]}</span><b>${d.getDate()}</b></span>
   <a class="grow" href="#/m/bookings"><span class="eyebrow">${t('upNext')}</span><span class="strong block">${bName(b)}</span><span class="small muted">${B.name[lang]} · ${dayShort(d)} ${hm(d)}</span></a>
   <button class="icon-btn qr-btn" data-act="qr" aria-label="${t('showQR')}">${icon('qr', 20)}</button></div>`;
 }
 function bizRows() {
   const q = hQuery.trim().toLowerCase();
-  const list = BIZS.filter(b => (hCat === 'all' || b.cats.includes(hCat)) && (!q || b.name.en.toLowerCase().includes(q) || b.name.zh.includes(q) || b.area.en.toLowerCase().includes(q) ||
-    SERVICES.some(s => s.biz === b.id && (s.name.en.toLowerCase().includes(q) || s.name.zh.includes(q)))));
+  const hit = o => Object.values(o).some(v => v.toLowerCase().includes(q));
+  const list = BIZS.filter(b => (hCat === 'all' || b.cats.includes(hCat)) && (!q || hit(b.name) || hit(b.area) || SERVICES.some(s => s.biz === b.id && hit(s.name))));
   if (!list.length) return `<p class="muted center" style="padding:12px 0">${t('noResults')}</p>`;
   return list.map(b => `<a class="card biz" href="#/m/biz/${b.id}">${pic(b.thumb, 240, 'biz-img')}<div class="biz-body">
     <div class="row" style="align-items:flex-start"><span class="biz-name">${b.name[lang]}</span><span class="small muted nowrap">${t('km', { n: b.dist })}</span></div>
@@ -541,7 +749,7 @@ function vBiz(id, tab) {
   <div class="stack-sm"><h1 class="h1">${B.name[lang]}</h1>
     <div class="meta"><span>${icon('pin', 17)} ${B.area[lang]}</span><span>${icon('clock', 17)} ${B.hours[lang]}</span><span class="rating" style="color:var(--ink)">${star()} <b>${B.rating}</b> <span class="muted">${t('reviews', { n: B.reviews })}</span></span></div></div>
   <p class="muted">${B.desc[lang]}</p>
-  <nav class="tabs-u">${B.tabs.map(([k, en, zh]) => `<a class="${k === tab ? 'on' : ''}" href="#/m/biz/${id}/${k}">${lang === 'zh' ? zh : en}</a>`).join('')}</nav>
+  <nav class="tabs-u">${B.tabs.map(([k, en, zh, ms]) => `<a class="${k === tab ? 'on' : ''}" href="#/m/biz/${id}/${k}">${lang === 'zh' ? zh : lang === 'ms' ? ms : en}</a>`).join('')}</nav>
   <div class="stack-xs">${rows}</div>
   <div class="sticky-cta"><button class="btn btn-primary btn-block" data-act="continue" ${n ? '' : 'disabled'}>${n ? t('continueN', { n }) : t('selectSvc')}</button></div>`;
   return page({ back: '/m/home', right: `<button class="icon-btn ${fav ? 'fav-on' : ''}" data-act="fav" data-id="${id}" aria-label="${t('favourites')}" aria-pressed="${fav}">${icon('heart')}</button>`, body });
@@ -687,7 +895,7 @@ function vMe() {
     ${menuLink('/m/home', 'heart', t('favourites'), favNames)}
     ${menuBtn('calSettings', 'clock', t('calendarSet'), S.calAlways ? calName(S.calAlways) : t('calAsk'))}
     ${menuBtn('notifSettings', 'bell', t('notifications'))}
-    ${menuBtn('lang', 'globe', t('language'), lang === 'zh' ? '中文' : 'English')}
+    ${menuBtn('lang', 'globe', t('language'), langName())}
     ${menuBtn('refer', 'gift', t('refer'))}
   </div>
   <div class="card menu">${menuBtn('roles', 'users', t('switchRole'))}${menuBtn('reset', 'refresh', t('resetDemo'))}${menuBtn('signout', 'logout', t('signOut'))}</div>`;
@@ -906,7 +1114,7 @@ function agg(ix) {
 }
 function periodLabel(a) {
   if (a.n === 1) return fMonth(a.last);
-  return lang === 'zh' ? `${fMonth(a.first)} – ${fMon(a.last)}` : `${EN_M[a.first.getMonth()]} ${a.first.getFullYear()} – ${fMonth(a.last)}`;
+  return lang === 'zh' ? `${fMonth(a.first)} – ${fMon(a.last)}` : `${MON()[a.first.getMonth()]} ${a.first.getFullYear()} – ${fMonth(a.last)}`;
 }
 function dPct(cur, base, goodUp) {
   const p = (cur - base) / base * 100, dir = Math.abs(p) < 0.5 ? 'flat' : (p > 0) === (goodUp !== false) ? 'up' : 'down';
@@ -924,8 +1132,8 @@ function trendSVG() {
   [0, max / 2, max].forEach(v => { g += `<line x1="${x0}" x2="${x1}" y1="${y(v)}" y2="${y(v)}" stroke="#EEF0F4"/><text x="${x0 - 5}" y="${y(v) + 3}" text-anchor="end" font-size="9" fill="#6B7280">${v ? v / 1000 + 'k' : '0'}</text>`; });
   ms.forEach((m, i) => {
     const cx = x0 + gw * i + gw / 2;
-    g += `<rect x="${(cx - bw - 1).toFixed(1)}" y="${y(m.cash).toFixed(1)}" width="${bw.toFixed(1)}" height="${(y1 - y(m.cash)).toFixed(1)}" rx="2" fill="#A9BCFF"><title>${fMonth(m.d)} · ${t('cashL')} ${rm(m.cash)}</title></rect>`;
-    g += `<rect x="${(cx + 1).toFixed(1)}" y="${y(m.earned).toFixed(1)}" width="${bw.toFixed(1)}" height="${(y1 - y(m.earned)).toFixed(1)}" rx="2" fill="#2F5DED"><title>${fMonth(m.d)} · ${t('earnedL')} ${rm(m.earned)}</title></rect>`;
+    g += `<rect x="${(cx - bw - 1).toFixed(1)}" y="${y(m.cash).toFixed(1)}" width="${bw.toFixed(1)}" height="${(y1 - y(m.cash)).toFixed(1)}" rx="2" fill="#E2C98C"><title>${fMonth(m.d)} · ${t('cashL')} ${rm(m.cash)}</title></rect>`;
+    g += `<rect x="${(cx + 1).toFixed(1)}" y="${y(m.earned).toFixed(1)}" width="${bw.toFixed(1)}" height="${(y1 - y(m.earned)).toFixed(1)}" rx="2" fill="#93701F"><title>${fMonth(m.d)} · ${t('earnedL')} ${rm(m.earned)}</title></rect>`;
     if (i % 2 === 0) g += `<text x="${cx.toFixed(1)}" y="${y1 + 14}" text-anchor="middle" font-size="9" fill="#6B7280">${fMon(m.d)}</text>`;
   });
   return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${t('trend')}">${g}</svg>`;
@@ -934,10 +1142,10 @@ function quadSVG() {
   const W = 340, H = 250, x0 = 26, x1 = 334, y0 = 12, y1 = 222, XM = 80, YM = 140;
   const X = v => x0 + Math.min(v, XM) / XM * (x1 - x0), Y = v => y1 - v / YM * (y1 - y0);
   const tx = X(40), ty = Y(70);
-  let g = `<rect x="${tx}" y="${y0}" width="${x1 - tx}" height="${ty - y0}" fill="#EEF2FF"/>`;
+  let g = `<rect x="${tx}" y="${y0}" width="${x1 - tx}" height="${ty - y0}" fill="#FBF6EA"/>`;
   g += `<line x1="${tx}" x2="${tx}" y1="${y0}" y2="${y1}" stroke="#E2E5EB" stroke-dasharray="4 4"/><line x1="${x0}" x2="${x1}" y1="${ty}" y2="${ty}" stroke="#E2E5EB" stroke-dasharray="4 4"/>`;
-  g += `<line x1="${x0}" x2="${x1}" y1="${y1}" y2="${y1}" stroke="#C7D2FE"/><line x1="${x0}" x2="${x0}" y1="${y0}" y2="${y1}" stroke="#C7D2FE"/>`;
-  const lab = (x, y, s, anchor) => `<text x="${x}" y="${y}" font-size="10" fill="#2F5DED" font-weight="700" text-anchor="${anchor}">${s}</text>`;
+  g += `<line x1="${x0}" x2="${x1}" y1="${y1}" y2="${y1}" stroke="#E8D6A8"/><line x1="${x0}" x2="${x0}" y1="${y0}" y2="${y1}" stroke="#E8D6A8"/>`;
+  const lab = (x, y, s, anchor) => `<text x="${x}" y="${y}" font-size="10" fill="#93701F" font-weight="700" text-anchor="${anchor}">${s}</text>`;
   g += lab(x1 - 4, y0 + 13, t('q_star'), 'end') + lab(x0 + 6, y0 + 13, t('q_gem'), 'start') + lab(x1 - 4, y1 - 6, t('q_work'), 'end') + lab(x0 + 6, y1 - 6, t('q_weak'), 'start');
   RANK.forEach(r => {
     const s = svc(r.id), px = X(r.sessions), py = Y(r.profit), right = px > 240;
@@ -956,7 +1164,7 @@ function vAReports() {
   rows.sort((a, b) => val(b) - val(a));
   const maxV = Math.max(...rows.map(r => Math.abs(val(r))));
   const fmtV = r => RP.metric === 'rev' ? rm(r.rev) : RP.metric === 'sessions' ? r.sessions : RP.metric === 'profit' ? rm(r.profit) + '/h' : (r.growth > 0 ? '+' : '') + r.growth + '%';
-  const bucketsP = [0.125, 0.234, 0.384, 0.257], bucketsN = [14, 27, 41, 33], bucketsC = ['#B42318', '#F5B301', '#2F5DED', '#027A48'];
+  const bucketsP = [0.125, 0.234, 0.384, 0.257], bucketsN = [14, 27, 41, 33], bucketsC = ['#B42318', '#F5B301', '#93701F', '#027A48'];
   const top = MEMBERS.slice().sort((a, b) => b.ltv - a.ltv).slice(0, 5);
   const body = `<div class="row"><h1 class="h1">${t('rTitle')}</h1><span class="pill grey">${t('sample')}</span></div>
   ${ctrl}
@@ -972,7 +1180,7 @@ function vAReports() {
     ${kpi(t('r_ren'), cur.renewal.toFixed(0) + '%', dPts(cur.renewal, base.renewal))}
   </div>
   <section class="card stack-sm"><h2 class="h2">${t('trend')}</h2><div class="chart">${trendSVG()}</div>
-    <div class="legend"><span><i style="background:#A9BCFF"></i>${t('cashL')}</span><span><i style="background:#2F5DED"></i>${t('earnedL')}</span></div></section>
+    <div class="legend"><span><i style="background:#E2C98C"></i>${t('cashL')}</span><span><i style="background:#93701F"></i>${t('earnedL')}</span></div></section>
   <section class="card stack-sm"><h2 class="h2">${t('why')}</h2><p class="small muted">${t('whySub')}</p>
     <div class="drivers">
       <div class="driver"><span class="small muted">${t('w_cust')}</span><b>${Math.round(cur.active)}</b>${dPct(cur.active, base.active)}</div>
@@ -1004,7 +1212,7 @@ function vAReports() {
 function vAMore() {
   const body = `<h1 class="h1">${t('aMore')}</h1>
   <div class="card menu">${menuLink('/a/commission', 'coins', t('commission'))}${menuLink('/a/promos', 'gift', t('promotions'))}${menuLink('/a/settings', 'settings', t('settings'))}${menuLink('/a/counter', 'cash', t('recordSale'))}</div>
-  <div class="card menu">${menuBtn('lang', 'globe', t('language'), lang === 'zh' ? '中文' : 'English')}${menuBtn('roles', 'users', t('switchRole'))}${menuBtn('reset', 'refresh', t('resetDemo'))}${menuBtn('signout', 'logout', t('signOut'))}</div>`;
+  <div class="card menu">${menuBtn('lang', 'globe', t('language'), langName())}${menuBtn('roles', 'users', t('switchRole'))}${menuBtn('reset', 'refresh', t('resetDemo'))}${menuBtn('signout', 'logout', t('signOut'))}</div>`;
   return page({ tabs: 'a', active: '/a/more', body });
 }
 const STATEMENTS = [
@@ -1036,7 +1244,7 @@ function vAPromos() {
 function vASettings() {
   const body = `<h1 class="h1">${t('settings')}</h1>
   <div class="card flat" style="padding:4px 16px">${statrow(t('set_window'), t('v_7d'))}${statrow(t('set_cut'), t('v_12h'))}${statrow(t('set_grace'), t('v_15m'))}${statrow(t('set_buffer'), t('v_buf'))}${statrow(t('set_expiry'), t('v_6m'))}${statrow(t('set_rem'), t('v_rem'))}</div>
-  <div class="card stack-sm"><p class="strong">${t('set_brand')}</p><div class="row-start gap8">${['#FFFFFF', '#111827', '#2F5DED', '#B42318', '#027A48'].map(c => `<span style="width:36px;height:36px;border-radius:18px;background:${c};border:1px solid var(--line-2)"></span>`).join('')}</div></div>
+  <div class="card stack-sm"><p class="strong">${t('set_brand')}</p><div class="row-start gap8">${['#FFFFFF', '#111827', '#93701F', '#B42318', '#027A48'].map(c => `<span style="width:36px;height:36px;border-radius:18px;background:${c};border:1px solid var(--line-2)"></span>`).join('')}</div></div>
   <p class="small muted">${t('editFull')}</p>`;
   return page({ back: '/a/more', title: t('settings'), body });
 }
@@ -1117,7 +1325,7 @@ function vTMe() {
     <label class="row toggle-row"><span>${t('runSheet')}</span><input type="checkbox" class="switch" data-tnotif="run" ${S.tNotif.run ? 'checked' : ''}></label>
     <label class="row toggle-row"><span>${t('newPush')}</span><input type="checkbox" class="switch" data-tnotif="change" ${S.tNotif.change ? 'checked' : ''}></label></div>
   <div class="card stack-sm"><p class="strong">${t('calFeed')}</p><p class="small muted">${t('calFeedSub')}</p><div class="copybox">${icon('link', 18)}<span class="grow">${link}</span><button class="btn btn-sm btn-soft" data-act="copy" data-v="${link}">${t('copy')}</button></div><p class="small muted">${t('calPrivacy')}</p></div>
-  <div class="card menu"><button class="menu-item" data-act="calSettings" data-who="t">${icon('calendar', 20)}<span class="grow">${t('calendarSet')}</span><span class="val">${S.tCal ? calName(S.tCal) : t('calAsk')}</span>${icon('chevR', 16)}</button>${menuBtn('lang', 'globe', t('language'), lang === 'zh' ? '中文' : 'English')}${menuBtn('roles', 'users', t('switchRole'))}${menuBtn('signout', 'logout', t('signOut'))}</div>`;
+  <div class="card menu"><button class="menu-item" data-act="calSettings" data-who="t">${icon('calendar', 20)}<span class="grow">${t('calendarSet')}</span><span class="val">${S.tCal ? calName(S.tCal) : t('calAsk')}</span>${icon('chevR', 16)}</button>${menuBtn('lang', 'globe', t('language'), langName())}${menuBtn('roles', 'users', t('switchRole'))}${menuBtn('signout', 'logout', t('signOut'))}</div>`;
   return page({ tabs: 't', active: '/t/me', body });
 }
 
@@ -1195,11 +1403,11 @@ window.addEventListener('hashchange', render);
 function renderSide() {
   const el = $('#side'); if (!el) return;
   el.innerHTML = `<div class="side-inner">
-    <div class="side-brand"><span class="mark dark lg">a</span><span class="wordmark">appt4u</span></div>
+    <div class="side-brand">${logo('logo-side')}</div>
     <h1 class="side-title">${t('sideTitle')}</h1>
     <p class="muted">${t('sideText')}</p>
     <div class="stack-sm"><p class="eyebrow">${t('sideRoles')}</p><div class="side-roles">${ROLES.map(r => `<button class="chip ${S.signedIn && S.role === r ? 'on' : ''}" data-act="role" data-role="${r}">${t('r_' + r)}</button>`).join('')}</div></div>
-    <div class="row-start gap8"><button class="chip" data-act="lang">${lang === 'zh' ? 'English' : '中文'}</button><button class="chip" data-act="reset">${t('resetDemo')}</button></div>
+    <div class="row-start gap8 wrap">${langBtn()}<button class="chip" data-act="reset">${t('resetDemo')}</button></div>
     <p class="small muted">${t('sideData')}</p></div>`;
 }
 
@@ -1266,9 +1474,10 @@ async function copyText(s) {
     ta.remove();
   }
 }
-function setLang(l) { lang = l; LS.set('appt4u-lang', l); document.documentElement.lang = l === 'zh' ? 'zh-Hans' : 'en'; closeSheet(true); render(); }
+function setLang(l) { if (!LANGS.some(x => x[0] === l)) return; lang = l; LS.set('appt4u-lang', l); document.documentElement.lang = htmlLang(l); closeSheet(true); render(); }
 const ACT = {
-  lang: () => setLang(lang === 'zh' ? 'en' : 'zh'),
+  lang: () => openSheet(`<h2 class="h2">${t('language')}</h2><div class="stack-xs">${LANGS.map(([k, n]) => `<button class="opt ${k === lang ? 'on' : ''}" data-act="setLang" data-l="${k}" lang="${htmlLang(k)}"><span class="radio"></span><span>${n}</span></button>`).join('')}</div>`),
+  setLang: el => setLang(el.dataset.l),
   roles: () => rolesSheet(),
   role: el => { S.signedIn = true; S.role = el.dataset.role; save(); closeSheet(true); go(el.dataset.to || HOME[S.role]); },
   sendCode: () => { const v = ($('#phone').value || '').replace(/[^\d ]/g, '').trim(); if (v.replace(/\D/g, '').length < 8) { toast(t('phoneInvalid')); return; } S.phone = v; save(); go('/otp'); },
@@ -1412,6 +1621,6 @@ if ('serviceWorker' in navigator && location.protocol !== 'file:') {
   window.addEventListener('load', () => { navigator.serviceWorker.register('./sw.js').catch(() => { /* offline support unavailable */ }); });
 }
 
-document.documentElement.lang = lang === 'zh' ? 'zh-Hans' : 'en';
+document.documentElement.lang = htmlLang(lang);
 render();
 })();
